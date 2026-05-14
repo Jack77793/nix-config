@@ -1,0 +1,19 @@
+{
+  imports = [
+    ./networking
+    ./boot.nix
+    ./btrfs.nix
+    ./fwupd.nix
+    ./i18n.nix
+    ./locate.nix
+    ./nix.nix
+    ./packages.nix
+    ./persistence.nix
+    ./power.nix
+    ./secrets.nix
+    ./secureboot.nix
+    ./smartd.nix
+    ./snapper.nix
+    ./zram.nix
+  ];
+}
