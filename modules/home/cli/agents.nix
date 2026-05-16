@@ -1,4 +1,9 @@
-{ osConfig, pkgs, ... }:
+{
+  osConfig,
+  pkgs,
+  myPkgs,
+  ...
+}:
 
 {
   programs = {
@@ -36,14 +41,23 @@
           grep = "allow";
           glob = "allow";
           lsp = "allow";
-          todowrite = "allow";
           webfetch = "allow";
           websearch = "allow";
           question = "allow";
+          bash = {
+            "ls *" = "allow";
+            "git diff *" = "allow";
+            "git log *" = "allow";
+            "git status *" = "allow";
+          };
         };
         share = "disabled";
       };
       tui.theme = "nord";
+      skills = {
+        humanizer = "${myPkgs.humanizer}/share/humanizer/SKILL.md";
+        humanizer-zh = "${myPkgs.humanizer-zh}/share/humanizer-zh/SKILL.md";
+      };
     };
 
     gemini-cli = {
