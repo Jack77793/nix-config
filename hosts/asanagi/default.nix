@@ -3,6 +3,7 @@
   impermanence,
   home-manager,
   myVars,
+  myPkgs,
   pkgs,
   ...
 }:
@@ -36,7 +37,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = {
-      inherit myVars nixfmt-rs;
+      inherit myVars myPkgs nixfmt-rs;
     };
 
     users.${myVars.username} = {
