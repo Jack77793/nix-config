@@ -1,7 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, myPkgs, ... }:
 
 {
-  programs.pandoc.enable = true;
+  programs.pandoc = {
+    enable = true;
+    templates = {
+      "eisvogel.latex" = "${myPkgs.eisvogel-template}/share/eisvogel.latex";
+      "eisvogel.beamer" = "${myPkgs.eisvogel-template}/share/eisvogel.beamer";
+    };
+  };
 
   home.packages = with pkgs; [
     texliveFull
