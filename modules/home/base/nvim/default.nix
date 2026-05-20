@@ -115,7 +115,30 @@
         config = builtins.readFile ./config/plugins/surround.lua;
       }
       {
-        plugin = nvim-treesitter.withAllGrammars;
+        plugin = (
+          nvim-treesitter.withPlugins (
+            p: with p; [
+              bash
+              c
+              cpp
+              css
+              html
+              ini
+              json
+              latex
+              lua
+              make
+              markdown
+              nix
+              python
+              rust
+              toml
+              vim
+              xml
+              yaml
+            ]
+          )
+        );
         type = "lua";
         config = builtins.readFile ./config/plugins/treesitter.lua;
       }
