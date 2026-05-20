@@ -7,6 +7,7 @@
       "/var/log"
       "/var/lib/systemd/coredump"
       "/var/lib/nixos"
+      "/var/lib/AccountsService"
     ];
     files = [
       "/etc/machine-id"

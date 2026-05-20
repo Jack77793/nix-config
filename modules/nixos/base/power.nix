@@ -12,4 +12,8 @@
     power-profiles-daemon.enable = false;
     tlp.enable = false;
   };
+
+  environment.persistence."/nix/persist".directories = [
+    "/var/lib/upower"
+  ];
 }
