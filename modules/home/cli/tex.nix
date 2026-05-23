@@ -1,6 +1,12 @@
-{ pkgs, myPkgs, ... }:
-
 {
+  osConfig,
+  lib,
+  pkgs,
+  myPkgs,
+  ...
+}:
+
+lib.mkIf osConfig.custom.desktop.enable {
   programs.pandoc = {
     enable = true;
     templates = {

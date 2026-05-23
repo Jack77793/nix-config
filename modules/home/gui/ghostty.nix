@@ -1,4 +1,6 @@
-{
+{ osConfig, lib, ... }:
+
+lib.mkIf osConfig.custom.desktop.enable {
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;

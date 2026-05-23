@@ -1,6 +1,12 @@
-{ pkgs, myPkgs, ... }:
-
 {
+  osConfig,
+  lib,
+  pkgs,
+  myPkgs,
+  ...
+}:
+
+lib.mkIf osConfig.custom.desktop.enable {
   home.packages = with pkgs; [
     (spotify.overrideAttrs (old: {
       buildInputs = (old.buildInputs or [ ]) ++ [

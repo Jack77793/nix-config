@@ -1,6 +1,11 @@
-{ pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+lib.mkIf config.custom.desktop.enable {
   programs = {
     steam = {
       enable = true;

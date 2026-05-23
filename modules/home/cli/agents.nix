@@ -1,11 +1,12 @@
 {
   osConfig,
+  lib,
   pkgs,
   myPkgs,
   ...
 }:
 
-{
+lib.mkIf osConfig.custom.desktop.enable {
   programs = {
     opencode = {
       enable = true;

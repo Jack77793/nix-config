@@ -1,6 +1,11 @@
-{ config, ... }:
-
 {
+  config,
+  osConfig,
+  lib,
+  ...
+}:
+
+lib.mkIf osConfig.custom.desktop.enable {
   programs.aria2 = {
     enable = true;
     settings = {

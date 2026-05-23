@@ -1,6 +1,11 @@
-{ pkgs, ... }:
-
 {
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
+
+lib.mkIf osConfig.custom.desktop.enable {
   services.fluidsynth = {
     enable = true;
     extraOptions = [ "--sample-rate 48000" ];

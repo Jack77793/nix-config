@@ -1,6 +1,11 @@
-{ pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+lib.mkIf config.custom.virtualization.enable {
   virtualisation = {
     docker.enable = false;
     podman = {

@@ -1,4 +1,6 @@
-{
+{ config, lib, ... }:
+
+lib.mkIf config.custom.desktop.enable {
   services.fprintd = {
     enable = true;
   };

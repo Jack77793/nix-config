@@ -1,6 +1,11 @@
-{ pkgs, ... }:
-
 {
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
+
+lib.mkIf osConfig.custom.desktop.enable {
   home.packages = with pkgs; [
     android-tools
     libva-utils

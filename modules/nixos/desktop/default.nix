@@ -1,12 +1,10 @@
 {
   imports = [
-    ./dae.nix
     ./fonts.nix
     ./fprint.nix
     ./gaming.nix
-    ./gnome.nix
+    ./gui.nix
     ./peripherals.nix
-    ./virtualization.nix
     ./xdg.nix
   ];
 }

@@ -1,7 +1,11 @@
-{ pkgs, ... }:
-
 {
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
 
+lib.mkIf (osConfig.custom.desktop.enable && osConfig.custom.desktop.gui == "gnome") {
   programs.gnome-shell = {
     enable = true;
     extensions = [

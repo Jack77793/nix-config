@@ -1,3 +1,5 @@
+{ config, ... }:
+
 {
   imports = [
     ./avahi.nix
@@ -10,8 +12,12 @@
 
   services.resolved.enable = true;
 
-  networking.timeServers = [
-    "ntp.ntsc.ac.cn"
-    "ntp.aliyun.com"
-  ];
+  networking = {
+    hostName = config.custom.hostname;
+
+    timeServers = [
+      "ntp.ntsc.ac.cn"
+      "ntp.aliyun.com"
+    ];
+  };
 }

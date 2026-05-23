@@ -1,49 +1,61 @@
-{ pkgs, ... }:
-
 {
-  home.packages = with pkgs; [
-    audacity
-    bleachbit
-    calibre
-    citations
-    decibels
-    endeavour
-    file-roller
-    foliate
-    fractal
-    gimp-with-plugins
-    gnome-calendar
-    gnome-characters
-    gnome-clocks
-    gnome-logs
-    gnome-mines
-    gnome-power-manager
-    gnome-shell-extensions
-    gnome-sound-recorder
-    gnome-sudoku
-    gnome-system-monitor
-    gnome-weather
-    goldendict-ng
-    crosspipe
-    localsend
-    loupe
-    mediainfo-gui
-    meld
-    musescore
-    newsflash
-    qalculate-gtk
-    picard
-    remmina
-    resources
-    snapshot
-    tangram
-    telegram-desktop
-    qbittorrent-enhanced
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
 
-    osu-lazer-bin
+lib.mkMerge [
+  (lib.mkIf osConfig.custom.desktop.enable {
+    home.packages = with pkgs; [
+      audacity
+      bleachbit
+      calibre
+      file-roller
+      foliate
+      gimp-with-plugins
+      gnome-power-manager
+      goldendict-ng
+      crosspipe
+      localsend
+      mediainfo-gui
+      meld
+      musescore
+      qalculate-gtk
+      picard
+      remmina
+      telegram-desktop
+      qbittorrent-enhanced
 
-    qq
-    wechat
-    wemeet
-  ];
-}
+      osu-lazer-bin
+
+      qq
+      wechat
+      wemeet
+    ];
+  })
+
+  (lib.mkIf (osConfig.custom.desktop.enable && osConfig.custom.desktop.gui == "gnome") {
+    home.packages = with pkgs; [
+      citations
+      decibels
+      endeavour
+      fractal
+      gnome-calendar
+      gnome-characters
+      gnome-clocks
+      gnome-logs
+      gnome-mines
+      gnome-shell-extensions
+      gnome-sound-recorder
+      gnome-sudoku
+      gnome-system-monitor
+      gnome-weather
+      loupe
+      newsflash
+      resources
+      snapshot
+      tangram
+    ];
+  })
+]

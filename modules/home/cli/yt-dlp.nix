@@ -1,4 +1,6 @@
-{
+{ osConfig, lib, ... }:
+
+lib.mkIf osConfig.custom.desktop.enable {
   programs.yt-dlp = {
     enable = true;
     settings = {

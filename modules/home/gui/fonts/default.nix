@@ -1,4 +1,6 @@
-{
+{ osConfig, lib, ... }:
+
+lib.mkIf osConfig.custom.desktop.enable {
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {

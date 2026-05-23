@@ -1,4 +1,6 @@
-{
+{ osConfig, lib, ... }:
+
+lib.mkIf osConfig.custom.desktop.enable {
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       font-name = "sans-serif 12";

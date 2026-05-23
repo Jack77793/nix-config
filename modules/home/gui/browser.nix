@@ -6,7 +6,7 @@
   ...
 }:
 
-{
+lib.mkIf osConfig.custom.desktop.enable {
   programs.chromium = {
     enable = true;
     commandLineArgs = [

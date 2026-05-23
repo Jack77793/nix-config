@@ -1,6 +1,11 @@
-{ pkgs, ... }:
-
 {
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
+
+lib.mkIf osConfig.custom.desktop.enable {
   programs.mpv = {
     enable = true;
     config = {

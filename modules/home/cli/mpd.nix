@@ -1,6 +1,11 @@
-{ pkgs, ... }:
-
 {
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
+
+lib.mkIf osConfig.custom.desktop.enable {
   services.mpd = {
     enable = true;
     extraConfig = ''
