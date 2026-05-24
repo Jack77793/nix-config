@@ -4,10 +4,7 @@
 }:
 
 {
-  imports = [
-    ../../modules
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   custom = {
     hostname = "Asanagi";

@@ -39,20 +39,12 @@
       nixpkgs,
       ...
     }@inputs:
-    let
-      myVars = import ./modules/vars.nix;
-      myPkgs = import ./pkgs;
-      mkMyPkgs =
-        system: builtins.mapAttrs (_: path: nixpkgs.legacyPackages.${system}.callPackage path { }) myPkgs;
-    in
     {
       nixosConfigurations = {
         Asanagi = nixpkgs.lib.nixosSystem {
-          specialArgs = inputs // {
-            inherit myVars;
-            myPkgs = mkMyPkgs "x86_64-linux";
-          };
+          specialArgs = inputs;
           modules = [
+            ./modules
             ./hosts/asanagi
           ];
         };

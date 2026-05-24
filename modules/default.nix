@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   ...
 }:
 
@@ -8,6 +9,13 @@
     ./nixos
     ./home
   ];
+
+  config = {
+    _module.args = {
+      myVars = import ./vars.nix;
+      myPkgs = builtins.mapAttrs (_: path: pkgs.callPackage path { }) (import ../pkgs);
+    };
+  };
 
   options.custom = {
     desktop = {
