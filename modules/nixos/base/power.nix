@@ -7,6 +7,12 @@
       ppdSettings.main.default = "balanced";
     };
 
+    logind.settings.Login = {
+      HandleLidSwitch = "suspend";
+      HandlePowerKey = "suspend";
+      KillUserProcesses = false;
+    };
+
     upower.enable = true;
 
     power-profiles-daemon.enable = false;
