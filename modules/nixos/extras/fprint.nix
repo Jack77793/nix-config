@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-lib.mkIf config.custom.desktop.enable {
+lib.mkIf config.custom.fingerprint.enable {
   services.fprintd = {
     enable = true;
   };

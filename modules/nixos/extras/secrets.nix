@@ -1,4 +1,6 @@
 {
+  config,
+  lib,
   agenix,
   myVars,
   mySecrets,
@@ -6,11 +8,7 @@
   ...
 }:
 
-{
-  imports = [
-    agenix.nixosModules.default
-  ];
-
+lib.mkIf config.custom.agenix.enable {
   environment.systemPackages = [
     agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];

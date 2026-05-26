@@ -1,15 +1,11 @@
 {
-  lanzaboote,
+  config,
   pkgs,
   lib,
   ...
 }:
 
-{
-  imports = [
-    lanzaboote.nixosModules.lanzaboote
-  ];
-
+lib.mkIf config.custom.secureboot.enable {
   environment.systemPackages = [ pkgs.sbctl ];
 
   boot = {

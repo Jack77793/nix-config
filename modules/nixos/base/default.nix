@@ -10,8 +10,6 @@
     ./packages.nix
     ./persistence.nix
     ./power.nix
-    ./secrets.nix
-    ./secureboot.nix
     ./smartd.nix
     ./snapper.nix
     ./users.nix

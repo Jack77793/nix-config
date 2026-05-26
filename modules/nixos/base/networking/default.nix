@@ -6,8 +6,6 @@
     ./firewall.nix
     ./nm.nix
     ./openssh.nix
-    ./sing-box.nix
-    ./tailscale.nix
   ];
 
   services.resolved.enable = true;
