@@ -1,4 +1,6 @@
-{
+{ config, lib, ... }:
+
+lib.mkIf (config.custom.networking.manager == "nm") {
   networking = {
     networkmanager = {
       enable = true;
@@ -30,5 +32,4 @@
       mode = "0700";
     }
   ];
-
 }

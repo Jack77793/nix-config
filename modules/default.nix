@@ -30,9 +30,20 @@
       };
     };
 
-    hostname = lib.mkOption {
-      default = "";
-      type = lib.types.str;
+    networking = {
+      hostname = lib.mkOption {
+        default = "";
+        type = lib.types.str;
+      };
+
+      manager = lib.mkOption {
+        type = lib.types.enum [
+          "nm"
+          "networkd"
+        ];
+        default = "nm";
+        description = "network backend to use. when set to networkd, systemd-networkd network unit(s) must be configured per host";
+      };
     };
 
     agenix.enable = lib.mkEnableOption "enable agenix";

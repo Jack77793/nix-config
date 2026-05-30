@@ -7,7 +7,10 @@
   imports = [ ./hardware-configuration.nix ];
 
   custom = {
-    hostname = "Asanagi";
+    networking = {
+      hostname = "Asanagi";
+      manager = "nm";
+    };
 
     desktop = {
       enable = true;
