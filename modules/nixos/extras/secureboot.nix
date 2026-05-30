@@ -5,7 +5,7 @@
   ...
 }:
 
-lib.mkIf config.custom.secureboot.enable {
+lib.mkIf config.custom.extras.secureboot.enable {
   environment.systemPackages = [ pkgs.sbctl ];
 
   boot = {

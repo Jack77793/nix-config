@@ -5,7 +5,7 @@
   ...
 }:
 
-lib.mkIf config.custom.virtualization.enable {
+lib.mkIf config.custom.extras.virtualization.enable {
   virtualisation = {
     docker.enable = false;
     podman = {

@@ -46,13 +46,16 @@
       };
     };
 
-    agenix.enable = lib.mkEnableOption "enable agenix";
     defaultUser.enable = lib.mkEnableOption "enable default user";
-    dae.enable = lib.mkEnableOption "enable dae";
-    fingerprint.enable = lib.mkEnableOption "enable fingerprint";
-    secureboot.enable = lib.mkEnableOption "enable secureboot";
-    sing-box.enable = lib.mkEnableOption "enable sing-box";
-    tailscale.enable = lib.mkEnableOption "enable tailscale";
-    virtualization.enable = lib.mkEnableOption "enable virtualization";
+
+    extras = {
+      agenix.enable = lib.mkEnableOption "enable agenix";
+      dae.enable = lib.mkEnableOption "enable dae";
+      fingerprint.enable = lib.mkEnableOption "enable fingerprint";
+      secureboot.enable = lib.mkEnableOption "enable secureboot";
+      sing-box.enable = lib.mkEnableOption "enable sing-box";
+      tailscale.enable = lib.mkEnableOption "enable tailscale";
+      virtualization.enable = lib.mkEnableOption "enable virtualization";
+    };
   };
 }

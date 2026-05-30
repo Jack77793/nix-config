@@ -8,7 +8,7 @@
   ...
 }:
 
-lib.mkIf config.custom.agenix.enable {
+lib.mkIf config.custom.extras.agenix.enable {
   environment.systemPackages = [
     agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];

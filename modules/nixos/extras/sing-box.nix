@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-lib.mkIf config.custom.sing-box.enable {
+lib.mkIf config.custom.extras.sing-box.enable {
   services.sing-box.enable = true;
 
   systemd.services.sing-box.environment = {

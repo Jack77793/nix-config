@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-lib.mkIf config.custom.tailscale.enable {
+lib.mkIf config.custom.extras.tailscale.enable {
   services.tailscale = {
     enable = true;
     interfaceName = "tailscale0";
