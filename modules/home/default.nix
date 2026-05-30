@@ -1,4 +1,5 @@
 {
+  config,
   home-manager,
   myVars,
   myPkgs,
@@ -16,7 +17,7 @@
       inherit myVars myPkgs nixfmt-rs;
     };
 
-    users.${myVars.username} = {
+    users.${config.custom.mainUser} = {
       imports = [
         ./base
         ./cli
@@ -24,8 +25,8 @@
       ];
       programs.home-manager.enable = true;
       home = {
-        username = myVars.username;
-        homeDirectory = "/home/${myVars.username}";
+        username = config.custom.mainUser;
+        homeDirectory = "/home/${config.custom.mainUser}";
       };
     };
   };

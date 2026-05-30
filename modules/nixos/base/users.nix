@@ -18,4 +18,5 @@ lib.mkIf config.custom.defaultUser.enable {
       openssh.authorizedKeys.keys = myVars.sshKeys;
     };
   };
+  custom.mainUser = myVars.username;
 }

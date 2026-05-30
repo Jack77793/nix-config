@@ -1,10 +1,10 @@
-{ myVars, ... }:
+{ config, ... }:
 
 {
   services.snapper.configs = {
     home = {
       SUBVOLUME = "/home";
-      ALLOW_USERS = [ myVars.username ];
+      ALLOW_USERS = [ config.custom.mainUser ];
       TIMELINE_CREATE = true;
       TIMELINE_CLEANUP = true;
 

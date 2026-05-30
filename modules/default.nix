@@ -47,6 +47,11 @@
     };
 
     defaultUser.enable = lib.mkEnableOption "enable default user";
+    mainUser = lib.mkOption {
+      default = "";
+      type = lib.types.str;
+      description = "the username of main user, will be automatically set if defaultUser is set";
+    };
 
     extras = {
       agenix.enable = lib.mkEnableOption "enable agenix";

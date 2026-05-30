@@ -1,5 +1,5 @@
 {
-  myVars,
+  config,
   ...
 }:
 
@@ -30,6 +30,6 @@
     };
   };
 
-  home-manager.users.${myVars.username}.home.stateVersion = "25.11";
+  home-manager.users.${config.custom.mainUser}.home.stateVersion = "25.11";
   system.stateVersion = "25.11"; # Did you read the comment?
 }

@@ -25,13 +25,13 @@ lib.mkIf config.custom.extras.agenix.enable {
       "chromium" = {
         file = "${mySecrets}/chromium.age";
         mode = "0400";
-        owner = myVars.username;
+        owner = config.custom.mainUser;
         group = "users";
       };
       "gemini" = {
         file = "${mySecrets}/gemini.age";
         mode = "0400";
-        owner = myVars.username;
+        owner = config.custom.mainUser;
       };
       "config.dae" = {
         file = "${mySecrets}/config.dae.age";
@@ -40,7 +40,7 @@ lib.mkIf config.custom.extras.agenix.enable {
       "opencode-ds" = {
         file = "${mySecrets}/opencode-ds.age";
         mode = "0400";
-        owner = myVars.username;
+        owner = config.custom.mainUser;
       };
     };
   };
