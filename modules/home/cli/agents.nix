@@ -35,6 +35,7 @@ lib.mkIf osConfig.custom.desktop.enable {
         lsp = true;
         provider = {
           deepseek.options.apiKey = "{file:${osConfig.age.secrets.opencode-ds.path}}";
+          google.options.apiKey = "{file:${osConfig.age.secrets.gemini.path}}";
         };
         permission = {
           "*" = "ask";
@@ -42,6 +43,7 @@ lib.mkIf osConfig.custom.desktop.enable {
           grep = "allow";
           glob = "allow";
           lsp = "allow";
+          todowrite = "allow";
           webfetch = "allow";
           websearch = "allow";
           question = "allow";
