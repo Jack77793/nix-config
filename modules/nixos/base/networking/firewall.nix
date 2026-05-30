@@ -5,21 +5,10 @@
       enable = true;
       allowedTCPPorts = [
         9000
-        53317
       ];
-      allowedTCPPortRanges = [
-        {
-          from = 1714;
-          to = 1764;
-        }
-      ];
+      # allowedTCPPortRanges = [];
       # allowedUDPPorts = [];
-      allowedUDPPortRanges = [
-        {
-          from = 1714;
-          to = 1764;
-        }
-      ];
+      # allowedUDPPortRanges = [];
     };
   };
 }
