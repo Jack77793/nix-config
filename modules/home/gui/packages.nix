@@ -8,6 +8,8 @@
 lib.mkMerge [
   (lib.mkIf osConfig.custom.desktop.enable {
     home.packages = with pkgs; [
+      mesa-demos
+
       audacity
       bleachbit
       calibre

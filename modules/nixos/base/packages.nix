@@ -6,6 +6,7 @@
     wget
     kexec-tools
     smartmontools
+    psmisc
 
     sbctl
 
