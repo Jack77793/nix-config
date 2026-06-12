@@ -14,7 +14,6 @@ lib.mkIf (osConfig.custom.desktop.enable && osConfig.custom.desktop.gui == "gnom
       { package = pkgs.gnomeExtensions.caffeine; }
       { package = pkgs.gnomeExtensions.clipboard-indicator; }
       { package = pkgs.gnomeExtensions.gsconnect; }
-      { package = pkgs.gnomeExtensions.screentospace; }
     ];
   };
 

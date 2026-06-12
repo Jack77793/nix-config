@@ -6,7 +6,7 @@
     [
       zip
       xz
-      unzip
+      unzipNLS
       p7zip
       unrar
       zstd
@@ -23,6 +23,7 @@
       lm_sensors
       pciutils
       usbutils
+      vulkan-tools
 
       fastfetch
       duf
