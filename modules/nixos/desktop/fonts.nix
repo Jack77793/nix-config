@@ -7,6 +7,7 @@
 
 lib.mkIf config.custom.desktop.enable {
   fonts = {
+    enableDefaultPackages = false;
     packages = with pkgs; [
       arphic-ukai
       iosevka
