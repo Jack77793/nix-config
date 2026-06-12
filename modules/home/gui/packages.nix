@@ -13,6 +13,7 @@ lib.mkMerge [
       audacity
       bleachbit
       calibre
+      davinci-resolve
       file-roller
       foliate
       gimp-with-plugins
