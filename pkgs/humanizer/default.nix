@@ -2,10 +2,10 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "humanizer";
-  version = "20260401";
+  version = "20260607";
   src = fetchurl {
-    url = "https://raw.githubusercontent.com/blader/humanizer/8b3a17889fbf12bedae20974a3c9f9de746ed754/SKILL.md";
-    sha256 = "1s0q7gdafy0gk3875c485acyykx0mvb2wplfhm4zzh49y588nqc5";
+    url = "https://raw.githubusercontent.com/blader/humanizer/9600f2b7241cb4eed6ad803abee5ea01d67fe8e4/SKILL.md";
+    sha256 = "18za2jhq21hbxxbr2xdvnibgkgw8jxivl7r8zwy4qgm6jvfqbn1d";
   };
 
   dontUnpack = true;
