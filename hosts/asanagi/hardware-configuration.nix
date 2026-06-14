@@ -110,9 +110,22 @@
         "autodefrag"
       ];
     };
+
+    "/tmp" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [
+        "rw"
+        "nr_inodes=10k"
+        "noexec"
+        "nodev"
+        "nosuid"
+        "size=50%"
+      ];
+    };
   };
 
-  swapDevices = [ { device = "/dev/mapper/asanagi-swap"; } ];
+  #swapDevices = [ { device = "/dev/mapper/asanagi-swap"; } ];
 
   hardware.graphics = {
     enable = true;
