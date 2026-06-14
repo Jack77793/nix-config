@@ -16,7 +16,8 @@ lib.mkIf osConfig.custom.desktop.enable {
           buildInputs = [ pkgs.makeWrapper ];
           postBuild = ''
             wrapProgram $out/bin/opencode \
-            --set OPENCODE_DISABLE_LSP_DOWNLOAD "true"
+            --set OPENCODE_DISABLE_LSP_DOWNLOAD "true" \
+            --set TMPDIR "/var/tmp"
           '';
         }
       );
