@@ -1,0 +1,17 @@
+[eisvogel-template]
+source = "github"
+github = "Wandmalfarbe/pandoc-latex-template"
+use_latest_release = true
+prefix = "v"
+
+[humanizer]
+source = "github"
+github = "blader/humanizer"
+
+[humanizer-zh]
+source = "github"
+github = "op7418/Humanizer-zh"
+
+[spotify-adblock]
+source = "github"
+github = "abba23/spotify-adblock"
