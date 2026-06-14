@@ -1,25 +1,12 @@
 {
   osConfig,
   lib,
-  pkgs,
   ...
 }:
 
 lib.mkIf osConfig.custom.desktop.enable {
   programs.prismlauncher = {
     enable = true;
-    package = (
-      pkgs.prismlauncher.override {
-        additionalPrograms = with pkgs; [
-          glfw
-        ];
-        jdks = with pkgs; [
-          zulu8
-          zulu17
-          zulu21
-        ];
-      }
-    );
     settings = {
       ApplicationTheme = "system";
       AutoCloseConsole = true;

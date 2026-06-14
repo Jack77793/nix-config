@@ -2,7 +2,6 @@
   osConfig,
   lib,
   pkgs,
-  myPkgs,
   ...
 }:
 
@@ -10,8 +9,8 @@ lib.mkIf osConfig.custom.desktop.enable {
   programs.pandoc = {
     enable = true;
     templates = {
-      "eisvogel.latex" = "${myPkgs.eisvogel-template}/share/eisvogel.latex";
-      "eisvogel.beamer" = "${myPkgs.eisvogel-template}/share/eisvogel.beamer";
+      "eisvogel.latex" = "${pkgs.eisvogel-template}/share/eisvogel.latex";
+      "eisvogel.beamer" = "${pkgs.eisvogel-template}/share/eisvogel.beamer";
     };
   };
 

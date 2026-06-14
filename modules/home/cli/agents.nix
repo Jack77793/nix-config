@@ -2,7 +2,6 @@
   osConfig,
   lib,
   pkgs,
-  myPkgs,
   ...
 }:
 
@@ -58,8 +57,8 @@ lib.mkIf osConfig.custom.desktop.enable {
       };
       tui.theme = "nord";
       skills = {
-        humanizer = "${myPkgs.humanizer}/share/humanizer/SKILL.md";
-        humanizer-zh = "${myPkgs.humanizer-zh}/share/humanizer-zh/SKILL.md";
+        humanizer = "${pkgs.humanizer}/share/humanizer/SKILL.md";
+        humanizer-zh = "${pkgs.humanizer-zh}/share/humanizer-zh/SKILL.md";
       };
     };
   };

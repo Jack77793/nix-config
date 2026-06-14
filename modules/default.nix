@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   ...
 }:
 
@@ -13,10 +12,9 @@
   config = {
     _module.args = {
       myVars = import ./vars.nix;
-      myPkgs = builtins.mapAttrs (_: path: pkgs.callPackage path { }) (import ../pkgs).packages;
     };
 
-    nixpkgs.overlays = (import ../pkgs).overlays;
+    nixpkgs.overlays = (import ../pkgs);
   };
 
   options.custom = {

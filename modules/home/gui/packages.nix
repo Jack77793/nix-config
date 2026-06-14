@@ -27,6 +27,7 @@ lib.mkMerge [
       qalculate-gtk
       picard
       remmina
+      spotify
       telegram-desktop
       qbittorrent-enhanced
 

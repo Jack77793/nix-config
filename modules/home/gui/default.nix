@@ -11,7 +11,6 @@
     ./obs-studio.nix
     ./packages.nix
     ./prismlauncher.nix
-    ./spotify.nix
     ./thunderbird.nix
   ];
 }
