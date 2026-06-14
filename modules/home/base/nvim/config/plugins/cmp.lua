@@ -14,7 +14,7 @@ require("cmp").setup({
 		["<C-j>"] = require("cmp").mapping.select_next_item(),
 	}),
 	sources = require("cmp").config.sources({
-		{ name = "nvim_lsp", max_item_count = 240 },
+		-- @extended_sources@
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
 		{ name = "path" },

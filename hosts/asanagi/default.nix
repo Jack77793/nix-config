@@ -19,6 +19,8 @@
 
     defaultUser.enable = true;
 
+    nvim.extended = true;
+
     extras = {
       agenix.enable = true;
       dae.enable = true;

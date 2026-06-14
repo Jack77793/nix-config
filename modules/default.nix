@@ -53,6 +53,8 @@
       description = "the username of main user, will be automatically set if defaultUser is set";
     };
 
+    nvim.extended = lib.mkEnableOption "enable extended neovim";
+
     extras = {
       agenix.enable = lib.mkEnableOption "enable agenix";
       dae.enable = lib.mkEnableOption "enable dae";
