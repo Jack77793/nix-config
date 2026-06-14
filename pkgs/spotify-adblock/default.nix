@@ -6,18 +6,18 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "spotify-adblock";
-  version = "20260313";
+  version = "20260607";
   src = fetchFromGitHub {
     owner = "abba23";
     repo = "spotify-adblock";
-    rev = "813d3451c53126bf1941baaf8dd37f1152c3f412";
-    hash = "sha256-nwiX2wCZBKRTNPhmrurWQWISQdxgomdNwcIKG2kSQsE=";
+    rev = "9aeadd3cfd4d50212059720c09f662f149942fec";
+    hash = "sha256-3X7vScKmnb65wJ4xWAT2AeyAMPTGzKZCFA549zm9gLc=";
   };
-  cargoHash = "sha256-oGpe+kBf6kBboyx/YfbQBt1vvjtXd1n2pOH6FNcbF8M=";
+  cargoHash = "sha256-gxGetdqaoJa/ZF1VnW6UXJyJfLBGZxZnyKpT/Qk/8Og=";
 
   patchPhase = ''
-    substituteInPlace src/lib.rs \
-    --replace 'config.toml' $out/etc/spotify-adblock/config.toml
+    substituteInPlace src/config.rs \
+    --replace '/etc' $out/etc
   '';
 
   buildPhase = "make";
