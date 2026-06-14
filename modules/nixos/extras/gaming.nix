@@ -5,7 +5,7 @@
   ...
 }:
 
-lib.mkIf config.custom.desktop.enable {
+lib.mkIf config.custom.extras.gaming.enable {
   programs = {
     steam = {
       enable = true;

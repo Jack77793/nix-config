@@ -59,6 +59,7 @@
       agenix.enable = lib.mkEnableOption "enable agenix";
       dae.enable = lib.mkEnableOption "enable dae";
       fingerprint.enable = lib.mkEnableOption "enable fingerprint";
+      gaming.enable = lib.mkEnableOption "enable gaming related accessories";
       secureboot.enable = lib.mkEnableOption "enable secureboot";
       sing-box.enable = lib.mkEnableOption "enable sing-box";
       tailscale.enable = lib.mkEnableOption "enable tailscale";
