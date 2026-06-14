@@ -6,5 +6,5 @@
     spotify-adblock = ./spotify-adblock;
   };
 
-  overlays = [ ];
+  overlays = [ (final: prev: { wechat = prev.callPackage ./wechat { }; }) ];
 }
