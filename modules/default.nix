@@ -13,20 +13,18 @@
     _module.args = {
       myVars = import ./vars.nix;
     };
-
     nixpkgs.overlays = (import ../pkgs);
   };
 
   options.custom = {
     desktop = {
-      enable = lib.mkEnableOption "enable gui and other related configs";
+      enable = lib.mkEnableOption "gui and other related configs";
       gui = lib.mkOption {
         type = lib.types.enum [
-          ""
           "gnome"
         ];
-        default = "";
-        description = "the graphical user interface will be used";
+        default = "gnome";
+        description = "The graphical user interface will be used";
       };
     };
 
@@ -34,6 +32,7 @@
       hostname = lib.mkOption {
         default = "";
         type = lib.types.str;
+        description = "Hostname of the machine";
       };
 
       manager = lib.mkOption {
@@ -42,28 +41,28 @@
           "networkd"
         ];
         default = "nm";
-        description = "network backend to use. when set to networkd, systemd-networkd network unit(s) must be configured per host";
+        description = "The network backend to use. when set to networkd, systemd-networkd network unit(s) must be configured per host";
       };
     };
 
-    defaultUser.enable = lib.mkEnableOption "enable default user";
+    defaultUser.enable = lib.mkEnableOption "default user";
     mainUser = lib.mkOption {
       default = "";
       type = lib.types.str;
-      description = "the username of main user, will be automatically set if defaultUser is set";
+      description = "The username of main user, will be automatically set if defaultUser is set";
     };
 
-    nvim.extended = lib.mkEnableOption "enable extended neovim";
+    nvim.extended = lib.mkEnableOption "extended neovim";
 
     extras = {
-      agenix.enable = lib.mkEnableOption "enable agenix";
-      dae.enable = lib.mkEnableOption "enable dae";
-      fingerprint.enable = lib.mkEnableOption "enable fingerprint";
-      gaming.enable = lib.mkEnableOption "enable gaming related accessories";
-      secureboot.enable = lib.mkEnableOption "enable secureboot";
-      sing-box.enable = lib.mkEnableOption "enable sing-box";
-      tailscale.enable = lib.mkEnableOption "enable tailscale";
-      virtualization.enable = lib.mkEnableOption "enable virtualization";
+      agenix.enable = lib.mkEnableOption "agenix";
+      dae.enable = lib.mkEnableOption "dae";
+      fingerprint.enable = lib.mkEnableOption "fingerprint";
+      gaming.enable = lib.mkEnableOption "gaming related accessories";
+      secureboot.enable = lib.mkEnableOption "secureboot";
+      sing-box.enable = lib.mkEnableOption "sing-box";
+      tailscale.enable = lib.mkEnableOption "tailscale";
+      virtualization.enable = lib.mkEnableOption "virtualization";
     };
   };
 }
