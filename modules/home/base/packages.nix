@@ -1,4 +1,10 @@
-{ nixfmt-rs, pkgs, ... }:
+{
+  nixfmt-rs,
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   home.packages =
@@ -35,19 +41,22 @@
       whois
 
       (python3.withPackages (
-        ps: with ps; [
-          python-lsp-server
-          python-lsp-jsonrpc
-          python-lsp-black
-          python-lsp-ruff
-          pyls-isort
-          pyls-flake8
-          black
-          isort
-          flake8
-
-          secretstorage
-        ]
+        ps:
+        with ps;
+        (
+          lib.optionals osConfig.custom.nvim.extended [
+            python-lsp-server
+            python-lsp-jsonrpc
+            python-lsp-black
+            python-lsp-ruff
+            pyls-isort
+            pyls-flake8
+            black
+            isort
+            flake8
+          ]
+          ++ lib.optionals osConfig.custom.desktop.enable [ secretstorage ]
+        )
       ))
     ]
     ++ [ nixfmt-rs.packages.${pkgs.stdenv.hostPlatform.system}.default ];
