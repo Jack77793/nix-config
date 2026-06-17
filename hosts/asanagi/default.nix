@@ -7,19 +7,9 @@
   imports = [ ./hardware-configuration.nix ];
 
   custom = {
-    networking = {
-      hostname = "Asanagi";
-      manager = "nm";
-    };
+    profile = "desktop";
 
-    desktop = {
-      enable = true;
-      gui = "gnome";
-    };
-
-    defaultUser.enable = true;
-
-    nvim.extended = true;
+    networking.hostname = "Asanagi";
 
     extras = {
       agenix.enable = true;

@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   ...
 }:
@@ -9,12 +10,35 @@
     ./home
   ];
 
-  config = {
-    _module.args = {
-      myVars = import ./vars.nix;
-    };
-    nixpkgs.overlays = (import ../pkgs);
-  };
+  config = lib.mkMerge [
+    {
+      _module.args = {
+        myVars = import ./vars.nix;
+      };
+      nixpkgs.overlays = (import ../pkgs);
+    }
+
+    (lib.mkIf (config.custom.profile == "desktop") {
+      custom = {
+        desktop = {
+          enable = lib.mkDefault true;
+          gui = lib.mkDefault "gnome";
+        };
+        networking.manager = lib.mkDefault "nm";
+        defaultUser.enable = lib.mkDefault true;
+        nvim.extended = lib.mkDefault true;
+      };
+    })
+
+    (lib.mkIf (config.custom.profile == "headless") {
+      custom = {
+        desktop.enable = lib.mkDefault false;
+        networking.manager = lib.mkDefault "networkd";
+        defaultUser.enable = lib.mkDefault true;
+        nvim.extended = lib.mkDefault false;
+      };
+    })
+  ];
 
   options.custom = {
     desktop = {
@@ -63,6 +87,15 @@
       sing-box.enable = lib.mkEnableOption "sing-box";
       tailscale.enable = lib.mkEnableOption "tailscale";
       virtualization.enable = lib.mkEnableOption "virtualization";
+    };
+
+    profile = lib.mkOption {
+      type = lib.types.enum [
+        "desktop"
+        "headless"
+      ];
+      default = "headless";
+      description = "The profile to be used";
     };
   };
 }
