@@ -48,6 +48,12 @@
             ./hosts/asanagi
           ];
         };
+        Akashi = nixpkgs.lib.nixosSystem {
+          specialArgs = inputs;
+          modules = [
+            ./hosts/akashi
+          ];
+        };
       };
     };
 }

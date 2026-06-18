@@ -21,3 +21,11 @@ rebuild: ## Rebuild and switch current host
 check: ## Check whether the flake evaluates and run its tests
 	@echo -e "\033[32mChecking the flake...\033[0m"
 	nix flake check --verbose
+
+livecd: ## Build the livecd `Akashi`
+	@echo -e "\033[32mBuilding the iso image...\033[0m"
+	nix build .#nixosConfigurations.Akashi.config.system.build.isoImage
+
+runiso: ## Run the built iso image
+	@echo -e "\033[32mRunning the iso image...\033[0m"
+	qemu-system-x86_64 -enable-kvm -m 2G -smp $(shell nproc) -vga virtio -display sdl -nic user,hostfwd=tcp::2222-:22 -cdrom result/iso/nixos-*.iso
