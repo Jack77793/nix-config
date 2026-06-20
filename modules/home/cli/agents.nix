@@ -41,6 +41,11 @@ lib.mkIf osConfig.custom.desktop.enable {
         skills = [
           "${pkgs.humanizer}/humanizer"
           "${pkgs.humanizer-zh}/humanizer-zh"
+          "${pkgs.anthropics-skills}/doc-coauthoring"
+          "${pkgs.anthropics-skills}/docx"
+          "${pkgs.anthropics-skills}/pdf"
+          "${pkgs.anthropics-skills}/pptx"
+          "${pkgs.anthropics-skills}/xlsx"
         ];
         rewind = {
           silentCheckpoints = true;
@@ -167,6 +172,11 @@ lib.mkIf osConfig.custom.desktop.enable {
       skills = {
         humanizer = "${pkgs.humanizer}/humanizer/SKILL.md";
         humanizer-zh = "${pkgs.humanizer-zh}/humanizer-zh/SKILL.md";
+        doc-coauthoring = "${pkgs.anthropics-skills}/doc-coauthoring/SKILL.md";
+        docx = "${pkgs.anthropics-skills}/docx/SKILL.md";
+        pdf = "${pkgs.anthropics-skills}/pdf/SKILL.md";
+        pptx = "${pkgs.anthropics-skills}/pptx/SKILL.md";
+        xlsx = "${pkgs.anthropics-skills}/xlsx/SKILL.md";
       };
     };
   };
