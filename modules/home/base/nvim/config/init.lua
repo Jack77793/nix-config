@@ -33,9 +33,7 @@ vim.opt.incsearch = true
 vim.opt.cmdheight = 1
 -- autoreload
 vim.opt.autoread = true
-vim.opt.autoread = true
 -- disable wrapping
-vim.opt.wrap = false
 vim.opt.wrap = false
 -- mouse supporting
 vim.opt.mouse = "a"
@@ -56,5 +54,4 @@ vim.opt.wildmenu = true
 vim.opt.clipboard:prepend("unnamedplus")
 -- decoration
 vim.opt.background = "dark"
-vim.opt.termguicolors = true
 vim.opt.termguicolors = true
