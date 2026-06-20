@@ -1,3 +1,7 @@
+[anthropics-skills]
+source = "github"
+github = "anthropics/skills"
+
 [eisvogel-template]
 source = "github"
 github = "Wandmalfarbe/pandoc-latex-template"
