@@ -2,7 +2,6 @@
   config,
   lib,
   agenix,
-  myVars,
   mySecrets,
   pkgs,
   ...
