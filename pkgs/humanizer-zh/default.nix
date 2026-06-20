@@ -11,7 +11,7 @@ stdenvNoCC.mkDerivation rec {
   dontUnpack = true;
 
   installPhase = ''
-    mkdir -p $out/share/humanizer-zh
-    cp $src $out/share/humanizer-zh/SKILL.md
+    mkdir -p $out/humanizer-zh
+    cp $src $out/humanizer-zh/SKILL.md
   '';
 }

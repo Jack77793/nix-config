@@ -39,8 +39,8 @@ lib.mkIf osConfig.custom.desktop.enable {
           "npm:@juicesharp/rpiv-ask-user-question"
         ];
         skills = [
-          "${pkgs.humanizer}/share/humanizer"
-          "${pkgs.humanizer-zh}/share/humanizer-zh"
+          "${pkgs.humanizer}/humanizer"
+          "${pkgs.humanizer-zh}/humanizer-zh"
         ];
         rewind = {
           silentCheckpoints = true;
@@ -165,8 +165,8 @@ lib.mkIf osConfig.custom.desktop.enable {
       };
       tui.theme = "nord";
       skills = {
-        humanizer = "${pkgs.humanizer}/share/humanizer/SKILL.md";
-        humanizer-zh = "${pkgs.humanizer-zh}/share/humanizer-zh/SKILL.md";
+        humanizer = "${pkgs.humanizer}/humanizer/SKILL.md";
+        humanizer-zh = "${pkgs.humanizer-zh}/humanizer-zh/SKILL.md";
       };
     };
   };
