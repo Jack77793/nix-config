@@ -30,7 +30,7 @@ lib.mkIf osConfig.custom.desktop.enable {
       ];
     };
     configFile = {
-      steam = {
+      steam = lib.mkIf osConfig.custom.extras.gaming.enable {
         enable = true;
         priority = 75;
         source = ./config/steam.conf;

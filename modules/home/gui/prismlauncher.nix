@@ -4,7 +4,7 @@
   ...
 }:
 
-lib.mkIf osConfig.custom.desktop.enable {
+lib.mkIf osConfig.custom.extras.gaming.enable {
   programs.prismlauncher = {
     enable = true;
     settings = {

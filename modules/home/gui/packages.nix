@@ -31,8 +31,6 @@ lib.mkMerge [
       telegram-desktop
       qbittorrent-enhanced
 
-      osu-lazer-bin
-
       qq
       wechat
       wemeet
@@ -49,10 +47,8 @@ lib.mkMerge [
       gnome-characters
       gnome-clocks
       gnome-logs
-      gnome-mines
       gnome-shell-extensions
       gnome-sound-recorder
-      gnome-sudoku
       gnome-system-monitor
       gnome-weather
       loupe
@@ -60,6 +56,15 @@ lib.mkMerge [
       resources
       snapshot
       tangram
+    ];
+  })
+
+  (lib.mkIf osConfig.custom.extras.gaming.enable {
+    home.packages = with pkgs; [
+      gnome-mines
+      gnome-sudoku
+      mindustry-wayland
+      osu-lazer-bin
     ];
   })
 ]
