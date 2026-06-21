@@ -38,16 +38,36 @@
         nvim.extended = lib.mkDefault false;
       };
     })
+
+    (lib.mkIf (!config.custom.desktop.enable) {
+      assertions = [
+        {
+          assertion = config.custom.desktop.gui == null;
+          message = "desktop.gui must be null when desktop.enable is false.";
+        }
+      ];
+    })
+
+    (lib.mkIf config.custom.extras.gaming.enable {
+      assertions = [
+        {
+          assertion = config.custom.desktop.enable;
+          message = "Gaming option cannot be enabled without desktop enabled.";
+        }
+      ];
+    })
   ];
 
   options.custom = {
     desktop = {
       enable = lib.mkEnableOption "gui and other related configs";
       gui = lib.mkOption {
-        type = lib.types.enum [
-          "gnome"
-        ];
-        default = "gnome";
+        type = lib.types.nullOr (
+          lib.types.enum [
+            "gnome"
+          ]
+        );
+        default = null;
         description = "The graphical user interface will be used";
       };
     };

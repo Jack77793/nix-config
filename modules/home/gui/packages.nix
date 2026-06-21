@@ -37,7 +37,7 @@ lib.mkMerge [
     ];
   })
 
-  (lib.mkIf (osConfig.custom.desktop.enable && osConfig.custom.desktop.gui == "gnome") {
+  (lib.mkIf (osConfig.custom.desktop.gui == "gnome") {
     home.packages = with pkgs; [
       citations
       decibels

@@ -35,7 +35,7 @@ lib.mkMerge [
     };
   })
 
-  (lib.mkIf (config.custom.desktop.enable && config.custom.desktop.gui == "gnome") {
+  (lib.mkIf (config.custom.desktop.gui == "gnome") {
     services = {
       xserver.enable = false;
       displayManager.gdm.enable = true;

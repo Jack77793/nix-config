@@ -53,7 +53,7 @@ lib.mkMerge [
     ];
   })
 
-  (lib.mkIf (config.custom.desktop.enable && config.custom.desktop.gui == "gnome") {
+  (lib.mkIf (config.custom.desktop.gui == "gnome") {
     xdg = {
       mime = {
         addedAssociations = {
