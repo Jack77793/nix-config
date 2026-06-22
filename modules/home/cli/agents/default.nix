@@ -10,6 +10,7 @@ lib.mkIf osConfig.custom.desktop.enable {
   programs = {
     pi-coding-agent = {
       enable = true;
+      context = ./AGENTS.md;
       extraPackages = with pkgs; [
         nodejs
         ffmpeg

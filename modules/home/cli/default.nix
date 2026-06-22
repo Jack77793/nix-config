@@ -1,6 +1,6 @@
 {
   imports = [
-    ./agents.nix
+    ./agents
     ./aria2.nix
     ./cava.nix
     ./fluidsynth.nix
