@@ -29,8 +29,6 @@
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixfmt-rs.url = "github:Mic92/nixfmt-rs";
   };
 
   outputs =

@@ -199,58 +199,7 @@
         "url": "ssh://git@github.com/Jack77793/nix-secrets.git"
       }
     },
-    "nixfmt-rs": {
-      "inputs": {
-        "nixpkgs": "nixpkgs",
-        "treefmt-nix": "treefmt-nix"
-      },
-      "locked": {
-        "lastModified": 1781122127,
-        "narHash": "sha256-0ezcrOVyqeF0dasXC27owF0+/ER1GS5g7qpXY8mQG0Q=",
-        "owner": "Mic92",
-        "repo": "nixfmt-rs",
-        "rev": "08637b39ab56b0ec9d9156e879d8640e46578f6f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "nixfmt-rs",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1780749050,
-        "narHash": "sha256-3av0pIjlOWQ6rDbNOmpUSvbNnJkGORQKKjb4LtCZsIY=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "a799d3e3886da994fa307f817a6bc705ae538eeb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1770107345,
-        "narHash": "sha256-tbS0Ebx2PiA1FRW8mt8oejR0qMXmziJmPaU1d4kYY9g=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "4533d9293756b63904b7238acb84ac8fe4c8c2c4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
       "locked": {
         "lastModified": 1781074563,
         "narHash": "sha256-md8WlXOlfnIeHeOScMTTHFyf2d6iaTwPl2apR5EQ3P4=",
@@ -296,8 +245,7 @@
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
         "mySecrets": "mySecrets",
-        "nixfmt-rs": "nixfmt-rs",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs"
       }
     },
     "rust-overlay": {
@@ -333,24 +281,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "treefmt-nix": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1780220602,
-        "narHash": "sha256-eynAfOmbmxJnkp7YewvCEbShNnnYJ9gLLqkzsYtBPeM=",
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "rev": "db947814a175b7ca6ded66e21383d938df01c227",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "treefmt-nix",
         "type": "github"
       }
     }

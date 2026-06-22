@@ -2,7 +2,6 @@
   config,
   home-manager,
   myVars,
-  nixfmt-rs,
   ...
 }:
 
@@ -13,7 +12,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = {
-      inherit myVars nixfmt-rs;
+      inherit myVars;
     };
 
     users.${config.custom.mainUser} = {
