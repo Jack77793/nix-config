@@ -56,128 +56,6 @@ lib.mkIf osConfig.custom.desktop.enable {
           };
         };
       };
-      models = {
-        providers = {
-          deepseek = {
-            api = "openai-completions";
-            apiKey = "!cat ${osConfig.age.secrets.opencode-ds.path}";
-            baseUrl = "https://api.deepseek.com";
-            models = [
-              {
-                id = "deepseek-v4-pro";
-                name = "DeepSeek V4 Pro";
-                reasoning = true;
-                contextWindow = 1000000;
-                maxTokens = 384000;
-                input = [ "text" ];
-                cost = {
-                  input = 1.74;
-                  output = 3.48;
-                  cacheRead = 0.145;
-                  cacheWrite = 0;
-                };
-                thinkingLevelMap = {
-                  minimal = null;
-                  low = null;
-                  medium = null;
-                  high = "high";
-                  xhigh = "max";
-                };
-                compat = {
-                  requiresReasoningContentOnAssistantMessages = true;
-                  thinkingFormat = "deepseek";
-                };
-              }
-              {
-                id = "deepseek-v4-flash";
-                name = "DeepSeek V4 Flash";
-                reasoning = true;
-                contextWindow = 1000000;
-                maxTokens = 384000;
-                input = [ "text" ];
-                cost = {
-                  input = 0.14;
-                  output = 0.28;
-                  cacheRead = 0.028;
-                  cacheWrite = 0;
-                };
-                thinkingLevelMap = {
-                  minimal = null;
-                  low = null;
-                  medium = null;
-                  high = "high";
-                  xhigh = "max";
-                };
-                compat = {
-                  requiresReasoningContentOnAssistantMessages = true;
-                  thinkingFormat = "deepseek";
-                };
-              }
-            ];
-          };
-        };
-      };
-    };
-
-    opencode = {
-      enable = true;
-      package = (
-        pkgs.symlinkJoin {
-          name = "opencode.wrapped";
-          paths = [ pkgs.opencode ];
-          buildInputs = [ pkgs.makeWrapper ];
-          postBuild = ''
-            wrapProgram $out/bin/opencode \
-            --set OPENCODE_DISABLE_LSP_DOWNLOAD "true" \
-            --set TMPDIR "/var/tmp"
-          '';
-        }
-      );
-      extraPackages = with pkgs; [
-        bash-language-server
-        clang-tools
-        lua-language-server
-        nixd
-        pyright
-        rust-analyzer
-      ];
-      settings = {
-        autoupdate = false;
-        formatter = true;
-        lsp = true;
-        provider = {
-          deepseek.options.apiKey = "{file:${osConfig.age.secrets.opencode-ds.path}}";
-          google.options.apiKey = "{file:${osConfig.age.secrets.gemini.path}}";
-        };
-        permission = {
-          "*" = "ask";
-          read = "allow";
-          grep = "allow";
-          glob = "allow";
-          lsp = "allow";
-          todowrite = "allow";
-          webfetch = "allow";
-          websearch = "allow";
-          question = "allow";
-          bash = {
-            "ls *" = "allow";
-            "git diff *" = "allow";
-            "git log *" = "allow";
-            "git status *" = "allow";
-          };
-        };
-        share = "disabled";
-      };
-      tui.theme = "nord";
-      skills = {
-        humanizer = "${pkgs.humanizer}/humanizer/SKILL.md";
-        humanizer-zh = "${pkgs.humanizer-zh}/humanizer-zh/SKILL.md";
-        doc-coauthoring = "${pkgs.anthropics-skills}/doc-coauthoring/SKILL.md";
-        docx = "${pkgs.anthropics-skills}/docx/SKILL.md";
-        pdf = "${pkgs.anthropics-skills}/pdf/SKILL.md";
-        pptx = "${pkgs.anthropics-skills}/pptx/SKILL.md";
-        xlsx = "${pkgs.anthropics-skills}/xlsx/SKILL.md";
-      };
     };
   };
 
@@ -187,6 +65,10 @@ lib.mkIf osConfig.custom.desktop.enable {
         google = {
           type = "api_key";
           key = "!cat ${osConfig.age.secrets.gemini.path}";
+        };
+        deepseek = {
+          type = "api_key";
+          key = "!cat ${osConfig.age.secrets.opencode-ds.path}";
         };
       };
       "${config.programs.pi-coding-agent.configDir}/pi-permissions.jsonc".text = builtins.toJSON {
