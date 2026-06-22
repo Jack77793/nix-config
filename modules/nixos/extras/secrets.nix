@@ -36,8 +36,8 @@ lib.mkIf config.custom.extras.agenix.enable {
         file = "${mySecrets}/config.dae.age";
         mode = "0400";
       };
-      "opencode-ds" = {
-        file = "${mySecrets}/opencode-ds.age";
+      "deepseek" = {
+        file = "${mySecrets}/deepseek.age";
         mode = "0400";
         owner = config.custom.mainUser;
       };

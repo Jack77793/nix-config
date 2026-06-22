@@ -68,7 +68,7 @@ lib.mkIf osConfig.custom.desktop.enable {
         };
         deepseek = {
           type = "api_key";
-          key = "!cat ${osConfig.age.secrets.opencode-ds.path}";
+          key = "!cat ${osConfig.age.secrets.deepseek.path}";
         };
       };
       "${config.programs.pi-coding-agent.configDir}/pi-permissions.jsonc".text = builtins.toJSON {
