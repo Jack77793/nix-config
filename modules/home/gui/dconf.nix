@@ -22,9 +22,5 @@ lib.mkIf osConfig.custom.desktop.enable {
       "date_modified"
       "detailed_type"
     ];
-    "org/gnome/mutter".experimental-features = [
-      "scale-monitor-framebuffer"
-      "xwayland-native-scaling"
-    ];
   };
 }

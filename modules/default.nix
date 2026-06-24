@@ -16,6 +16,7 @@
         myVars = import ./vars.nix;
       };
       nixpkgs.overlays = (import ../pkgs);
+      system.stateVersion = config.custom.stateVersion;
     }
 
     (lib.mkIf (config.custom.profile == "desktop") {
@@ -116,6 +117,12 @@
       ];
       default = "headless";
       description = "The profile to be used";
+    };
+
+    stateVersion = lib.mkOption {
+      default = "";
+      type = lib.types.str;
+      description = "The state version of host, will be applied to system and home-manager";
     };
   };
 }

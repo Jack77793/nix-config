@@ -25,6 +25,7 @@
       home = {
         username = config.custom.mainUser;
         homeDirectory = "/home/${config.custom.mainUser}";
+        stateVersion = config.custom.stateVersion;
       };
     };
   };

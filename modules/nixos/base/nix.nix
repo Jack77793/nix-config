@@ -21,5 +21,5 @@
     channel.enable = false;
   };
 
-  nixpkgs.config.allowUnfree = lib.mkForce true;
+  nixpkgs.config.allowUnfree = lib.mkDefault true;
 }

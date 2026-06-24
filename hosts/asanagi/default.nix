@@ -21,8 +21,13 @@
       tailscale.enable = true;
       virtualization.enable = true;
     };
+
+    stateVersion = "25.11";
   };
 
-  home-manager.users.${config.custom.mainUser}.home.stateVersion = "25.11";
-  system.stateVersion = "25.11"; # Did you read the comment?
+  home-manager.users.${config.custom.mainUser}.dconf.settings."org/gnome/mutter".experimental-features =
+    [
+      "scale-monitor-framebuffer"
+      "xwayland-native-scaling"
+    ];
 }
