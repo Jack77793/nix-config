@@ -33,20 +33,20 @@ A personal NixOS configuration flake for multiple hosts.
 
 ## Components
 
-| Category | Desktop NixOS |
-|----------|---------------|
-| Desktop Environment | Gnome (Mutter) |
-| Display Manager | GDM |
-| Shell | Zsh |
-| Terminal Emulator | Ghostty |
-| Terminal Multiplexer | Tmux |
-| Editor | Neovim |
-| Browser | Chromium |
-| Network Manager | NetworkManager (iwd) |
-| Input Method | IBus (Rime, Anthy) |
-| Media Player | mpv, mpd (ncmpcpp) |
-| Filesystem | tmpfs /, Btrfs on LUKS |
-| Secure Boot | lanzaboote |
+| Category             | Desktop NixOS          |
+| -------------------- | ---------------------- |
+| Desktop Environment  | Gnome (Mutter)         |
+| Display Manager      | GDM                    |
+| Shell                | Zsh                    |
+| Terminal Emulator    | Ghostty                |
+| Terminal Multiplexer | Tmux                   |
+| Editor               | Neovim                 |
+| Browser              | Chromium               |
+| Network Manager      | NetworkManager (iwd)   |
+| Input Method         | IBus (Rime, Anthy)     |
+| Media Player         | mpv, mpd (ncmpcpp)     |
+| Filesystem           | tmpfs /, Btrfs on LUKS |
+| Secure Boot          | lanzaboote             |
 
 ## Secrets Management
 
