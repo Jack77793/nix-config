@@ -29,14 +29,36 @@
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      treefmt-nix,
       ...
     }@inputs:
+    let
+      eachSystem =
+        f:
+        nixpkgs.lib.genAttrs (builtins.attrNames nixpkgs.legacyPackages) (
+          system: f nixpkgs.legacyPackages.${system}
+        );
+
+      treefmtEval = eachSystem (
+        pkgs:
+        treefmt-nix.lib.evalModule pkgs {
+          projectRootFile = "flake.nix";
+          programs.nixfmt.enable = true;
+          programs.prettier.enable = true;
+          programs.shfmt.enable = true;
+          programs.stylua.enable = true;
+          settings.global.excludes = [ "result/*" ];
+        }
+      );
+    in
     {
       nixosConfigurations = {
         Asanagi = nixpkgs.lib.nixosSystem {
@@ -53,5 +75,7 @@
           ];
         };
       };
+
+      formatter = eachSystem (pkgs: treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
     };
 }
