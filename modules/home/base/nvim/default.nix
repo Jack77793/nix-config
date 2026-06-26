@@ -54,7 +54,6 @@
           type = "lua";
           config = builtins.readFile ./config/plugins/betterescape.lua;
         }
-        # { plugin = codewindow-nvim; type = "lua"; config = builtins.readFile ./config/plugins/codewindow.lua; }
         {
           plugin = gitsigns-nvim;
           type = "lua";

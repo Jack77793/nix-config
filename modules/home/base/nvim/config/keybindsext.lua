@@ -1,12 +1,11 @@
-local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
-
 -- telescope
-map("n", "ff", "<Cmd>Telescope fd<CR>", opts)
-map("n", "fg", "<Cmd>Telescope live_grep<CR>", opts)
-map("n", "fb", "<Cmd>Telescope buffers<CR>", opts)
-map("n", "fh", "<Cmd>Telescope help_tags<CR>", opts)
+local telescope = require("telescope.builtin")
+vim.keymap.set("n", "ff", telescope.find_files, { desc = "Telescope find files" })
+vim.keymap.set("n", "fg", telescope.live_grep, { desc = "Telescope live grep" })
+vim.keymap.set("n", "fb", telescope.buffers, { desc = "Telescope buffers" })
+vim.keymap.set("n", "fh", telescope.help_tags, { desc = "Telescope help tags" })
 
+-- conform
 vim.keymap.set({ "n", "v" }, "=", function()
 	if #require("conform").list_formatters(0) > 0 then
 		return "gq"
@@ -25,9 +24,13 @@ end, { expr = true, desc = "Format line with conform or fallback to treesitter i
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+vim.keymap.set("n", "[d", function()
+	vim.diagnostic.jump({ count = -1, float = true })
+end, { desc = "Previous diagnostic" })
+vim.keymap.set("n", "]d", function()
+	vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = "Next diagnostic" })
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
@@ -51,7 +54,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		--     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		-- end, opts)
 		-- vim.keymap.set("n", "gDD", vim.lsp.buf.type_definition, opts)
-		vim.keymap.set("n", "gr", vim.lsp.buf.rename, opts)
+		vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
 		-- vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 		-- vim.keymap.set("n", "gf", function()
