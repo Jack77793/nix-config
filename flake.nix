@@ -68,6 +68,13 @@
             ./hosts/asanagi
           ];
         };
+        Amagi = nixpkgs.lib.nixosSystem {
+          specialArgs = inputs;
+          modules = [
+            ./modules
+            ./hosts/amagi
+          ];
+        };
         Akashi = nixpkgs.lib.nixosSystem {
           specialArgs = inputs;
           modules = [
