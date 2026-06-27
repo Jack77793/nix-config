@@ -1,6 +1,7 @@
 {
   osConfig,
   lib,
+  myVars,
   ...
 }:
 
@@ -18,6 +19,14 @@ lib.mkIf osConfig.custom.extras.gaming.enable {
       EnableFeralGamemode = true;
       EnableMangoHud = true;
       IconTheme = "flat";
+      IgnoreJavaWizard = true;
+      JvmArgs = "-Djava.io.tmpdir=/run/user/${
+        toString osConfig.users.users.${myVars.username}.uid
+      }/prismlauncher";
+      Language = "zh";
+      PreLaunchCommand = "mkdir -p /run/user/${
+        toString osConfig.users.users.${myVars.username}.uid
+      }/prismlauncher";
       ShowConsole = true;
       TheCat = false;
       UseNativeGLFW = true;
