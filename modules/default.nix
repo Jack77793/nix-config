@@ -107,7 +107,10 @@
       secureboot.enable = lib.mkEnableOption "secureboot";
       sing-box.enable = lib.mkEnableOption "sing-box";
       tailscale.enable = lib.mkEnableOption "tailscale";
-      virtualization.enable = lib.mkEnableOption "virtualization";
+      virtualization = {
+        podman.enable = lib.mkEnableOption "podman";
+        qemu.enable = lib.mkEnableOption "qemu";
+      };
     };
 
     profile = lib.mkOption {

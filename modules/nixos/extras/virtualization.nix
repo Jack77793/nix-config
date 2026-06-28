@@ -5,11 +5,11 @@
   ...
 }:
 
-lib.mkIf config.custom.extras.virtualization.enable {
+{
   virtualisation = {
     docker.enable = false;
     podman = {
-      enable = true;
+      enable = config.custom.extras.virtualization.podman.enable;
       defaultNetwork.settings.dns_enabled = true;
       autoPrune = {
         enable = true;
@@ -19,7 +19,10 @@ lib.mkIf config.custom.extras.virtualization.enable {
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    qemu_kvm
-  ];
+  environment.systemPackages = lib.optionals config.custom.extras.virtualization.qemu.enable (
+    with pkgs;
+    [
+      qemu_kvm
+    ]
+  );
 }

@@ -19,7 +19,10 @@
       secureboot.enable = true;
       sing-box.enable = true;
       tailscale.enable = true;
-      virtualization.enable = true;
+      virtualization = {
+        podman.enable = true;
+        qemu.enable = true;
+      };
     };
 
     stateVersion = "25.11";
