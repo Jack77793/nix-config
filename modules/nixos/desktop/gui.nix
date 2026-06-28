@@ -62,7 +62,15 @@ lib.mkMerge [
       pathsToLink = [
         "/share/nautilus-python/extensions"
       ];
-      sessionVariables.NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4";
+      sessionVariables = {
+        GST_PLUGIN_SYSTEM_PATH_1_0 = lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" [
+          pkgs.gst_all_1.gst-plugins-good
+          pkgs.gst_all_1.gst-plugins-bad
+          pkgs.gst_all_1.gst-plugins-ugly
+          pkgs.gst_all_1.gst-libav
+        ];
+        NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4";
+      };
     };
 
     programs = {
