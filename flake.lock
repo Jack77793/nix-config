@@ -126,11 +126,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782423922,
-        "narHash": "sha256-qPNd6lUohHP5gcJhqQ7rLV87RwIx0xYR2A4Frb9Zjc4=",
+        "lastModified": 1782749631,
+        "narHash": "sha256-slFTUgDy0KTPA4LBAmC/9SngDq8GCPdX+ZR0yQHHN1E=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5d320ab301cfaaca7d32514f13815d19d109f5f4",
+        "rev": "5d72a29fc36ac21adae6ae35568fe5ee6700850f",
         "type": "github"
       },
       "original": {
@@ -185,10 +185,10 @@
     "mySecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1782118343,
-        "narHash": "sha256-lYKLzKyLX1j19PftBvbABX+cCu7Z5GzqYL+y2yorS4A=",
+        "lastModified": 1782636524,
+        "narHash": "sha256-5e7MweGbalmZgH4yMhlnfIRmYX+oNWi7Z8oe/kxDGak=",
         "ref": "refs/heads/master",
-        "rev": "30e4eece434ad06888144f3f5dafe5b1889945d4",
+        "rev": "77d53784849d2e5d5759f814039da91f9b295f7f",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Jack77793/nix-secrets.git"
@@ -201,11 +201,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1782467914,
-        "narHash": "sha256-pGvFkM8N0xEkIIXDe5YYfbEAvHrk4IxBrjB/x8OomhE=",
+        "lastModified": 1782723713,
+        "narHash": "sha256-oPXCU/SSUokcGaJREHibG1CBX3+s/W7orDWQOZDsEeQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e73de5be04e0eff4190a1432b946d469c794e7b4",
+        "rev": "b5aa0fbd538984f6e3d201be0005b4463d8b09f8",
         "type": "github"
       },
       "original": {
