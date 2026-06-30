@@ -2,6 +2,7 @@
   imports = [
     ./nvim
     ./shell
+    ./fastfetch.nix
     ./git.nix
     ./htop.nix
     ./packages.nix

@@ -3,6 +3,7 @@
     ./fonts
     ./browser.nix
     ./dconf.nix
+    ./foliate.nix
     ./ghostty.nix
     ./gnome.nix
     ./keepassxc.nix

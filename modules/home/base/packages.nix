@@ -29,7 +29,6 @@
     usbutils
     vulkan-tools
 
-    fastfetch
     duf
     gdu
     gnumake

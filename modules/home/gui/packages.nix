@@ -15,7 +15,6 @@ lib.mkMerge [
       calibre
       davinci-resolve
       file-roller
-      foliate
       gimp-with-plugins
       gnome-power-manager
       goldendict-ng
