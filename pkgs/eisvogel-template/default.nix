@@ -2,11 +2,11 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "eisvogel-template";
-  version = "3.5.0";
+  version = "3.5.1";
 
   src = fetchTarball {
     url = "https://github.com/Wandmalfarbe/pandoc-latex-template/releases/download/v${version}/Eisvogel-${version}.tar.gz";
-    sha256 = "065b3m7qa1i4jqzcxhnnv3affd7afvvkw586l9kikqxhgxls8mvc";
+    sha256 = "1f47w7zpnqm60kkmwg3n3vpb64l10ayjfi4c3m047bqm1kicl5xd";
   };
 
   installPhase = ''
