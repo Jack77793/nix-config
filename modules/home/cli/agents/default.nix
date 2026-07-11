@@ -12,8 +12,8 @@ lib.mkIf osConfig.custom.desktop.enable {
       enable = true;
       context = ./AGENTS.md;
       extraPackages = with pkgs; [
-        nodejs
         ffmpeg
+        nodejs
         yt-dlp
       ];
       settings = {
@@ -34,9 +34,10 @@ lib.mkIf osConfig.custom.desktop.enable {
         packages = [
           "npm:pi-mono-context"
           "npm:pi-mono-context-guard"
-          "npm:pi-permission-system"
           "npm:pi-web-access"
           "npm:pi-rewind-hook"
+          "npm:pi-mcp-adapter"
+          "npm:@gotgenes/pi-permission-system"
           "npm:@juicesharp/rpiv-ask-user-question"
         ];
         skills = [
@@ -49,7 +50,7 @@ lib.mkIf osConfig.custom.desktop.enable {
           "${pkgs.anthropics-skills}/xlsx"
         ];
         rewind = {
-          silentCheckpoints = true;
+          silentCheckpoints = false;
           retention = {
             maxSnapshots = 256;
             maxAgeDays = 7;
@@ -72,28 +73,69 @@ lib.mkIf osConfig.custom.desktop.enable {
           key = "!cat ${osConfig.age.secrets.deepseek.path}";
         };
       };
-      "${config.programs.pi-coding-agent.configDir}/pi-permissions.jsonc".text = builtins.toJSON {
-        defaultPolicy = {
-          tools = "ask";
-          bash = "ask";
-          mcp = "ask";
-          skills = "ask";
-          special = "ask";
-        };
-        tools = {
-          read = "allow";
-          write = "ask";
-          grep = "allow";
-          find = "allow";
-          ls = "allow";
-          ask_user_question = "allow";
-        };
-        bash = {
-          "git *" = "ask";
-          "git diff *" = "allow";
-          "git log *" = "allow";
-          "git status *" = "allow";
-          "rm -rf *" = "deny";
+      "${config.programs.pi-coding-agent.configDir}/extensions/pi-permission-system/config.json".text =
+        builtins.toJSON
+          {
+            permission = {
+              "*" = "ask";
+              path = {
+                "*" = "allow";
+                "*.env" = "deny";
+                "*.env.*" = "deny";
+                "~/.ssh" = "deny";
+                "~/.ssh/*" = "deny";
+                "~/.gnupg" = "deny";
+                "~/.gnupg/*" = "deny";
+              };
+              read = "allow";
+              write = "ask";
+              grep = "allow";
+              find = "allow";
+              ls = "allow";
+              bash = {
+                "*" = "ask";
+                "git diff *" = "allow";
+                "git log *" = "allow";
+                "git show *" = "allow";
+                "git status *" = "allow";
+                "gh issue list *" = "allow";
+                "gh issue view *" = "allow";
+                "gh pr diff *" = "allow";
+                "gh pr list *" = "allow";
+                "gh pr view *" = "allow";
+                "gh repo list *" = "allow";
+                "gh repo view *" = "allow";
+                "nix build *" = "allow";
+                "nix eval *" = "allow";
+                "nix flake check *" = "allow";
+                "nix flake metadata *" = "allow";
+                "nix flake show *" = "allow";
+                "nix search *" = "allow";
+                "nix store ls *" = "allow";
+                "nix store verify *" = "allow";
+                "rm -rf *" = "deny";
+                "sudo *" = "deny";
+              };
+              mcp = "ask";
+              skills = "ask";
+              external_directory = "ask";
+              ask_user_question = "allow";
+              web_search = "allow";
+              fetch_content = "allow";
+            };
+          };
+      "${config.xdg.configHome}/mcp/mcp.json".text = builtins.toJSON {
+        mcpServers = {
+          chrome-devtools = {
+            command = "npx";
+            args = [
+              "-y"
+              "chrome-devtools-mcp@latest"
+              "--no-usage-statistics"
+              "--executable-path=${pkgs.chromium}/bin/chromium"
+              "--isolated"
+            ];
+          };
         };
       };
       "${config.programs.pi-coding-agent.configDir}/../web-search.json.template".text = builtins.toJSON {
@@ -106,6 +148,9 @@ lib.mkIf osConfig.custom.desktop.enable {
       pi-web-access = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         sed "s|@geminiApiKey@|$(cat ${osConfig.age.secrets.gemini.path})|g" ${config.programs.pi-coding-agent.configDir}/../web-search.json.template > ${config.programs.pi-coding-agent.configDir}/../web-search.json
         chmod 600 ${config.programs.pi-coding-agent.configDir}/../web-search.json
+      '';
+      pi-mcp-sync = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        rm -f ${config.programs.pi-coding-agent.configDir}/mcp.json
       '';
     };
   };
