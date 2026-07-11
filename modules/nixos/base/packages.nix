@@ -2,18 +2,16 @@
 
 {
   environment.systemPackages = with pkgs; [
-    git
-    wget
-    kexec-tools
-    smartmontools
-    psmisc
-
-    sbctl
-
     btrfs-progs
     dosfstools
     e2fsprogs
     exfatprogs
+    git
+    kexec-tools
+    psmisc
+    sbctl
+    smartmontools
+    wget
     xfsprogs
   ];
 

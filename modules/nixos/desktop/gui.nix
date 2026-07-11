@@ -14,13 +14,14 @@ lib.mkMerge [
 
     environment = {
       systemPackages = with pkgs; [
+        ffmpeg-headless
+        ffmpegthumbnailer
         gdk-pixbuf
-        libheif.bin
+        libavif
+        libheif
         libheif.out
         libjxl
         webp-pixbuf-loader
-        ffmpeg-headless
-        ffmpegthumbnailer
       ];
 
       pathsToLink = [

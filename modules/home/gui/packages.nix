@@ -8,27 +8,27 @@
 lib.mkMerge [
   (lib.mkIf osConfig.custom.desktop.enable {
     home.packages = with pkgs; [
-      mesa-demos
-
       audacity
       bleachbit
       calibre
+      crosspipe
       davinci-resolve
       file-roller
       gimp-with-plugins
       gnome-power-manager
       goldendict-ng
-      crosspipe
+      libreoffice-fresh
       localsend
       mediainfo-gui
       meld
+      mesa-demos
       musescore
-      qalculate-gtk
       picard
+      qalculate-gtk
+      qbittorrent-enhanced
       remmina
       spotify
       telegram-desktop
-      qbittorrent-enhanced
 
       qq
       wechat

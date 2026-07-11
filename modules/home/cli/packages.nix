@@ -8,23 +8,31 @@
 lib.mkIf osConfig.custom.desktop.enable {
   home.packages = with pkgs; [
     android-tools
-    libva-utils
-
     caddy
     cdrtools
-    (ffmpeg.override { withUnfree = true; })
+    ddcutil
+    dig
+    dmidecode
+    (ffmpeg.override {
+      withJxl = true;
+      withUnfree = true;
+      withVpl = true;
+    })
     exiftool
     fio
     tokei
     nmap
     hugo
+    imagemagick
     libreoffice-fresh
+    libva-utils
     lilypond
     mediainfo
     mpc
     nvme-cli
     nvtopPackages.intel
     playerctl
+    pnpm
     qpdf
     scrcpy
     shntool

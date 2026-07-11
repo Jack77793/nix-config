@@ -9,6 +9,7 @@
     ./packages.nix
     ./rclone.nix
     ./tex.nix
+    ./uv.nix
     ./yt-dlp.nix
   ];
 }

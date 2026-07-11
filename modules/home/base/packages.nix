@@ -7,35 +7,32 @@
 
 {
   home.packages = with pkgs; [
-    zip
-    xz
-    unzipNLS
-    p7zip
-    unrar
-    zstd
-    squashfsTools
-
+    alsa-utils
+    duf
     file
-    which
+    gawk
+    gdu
+    gnupg
+    gnumake
     gnused
     gnutar
-    gawk
-    gnupg
-    nixfmt
-
-    alsa-utils
     lm_sensors
+    net-tools
+    nixfmt
+    p7zip
     pciutils
+    rsync
+    squashfsTools
+    unrar
+    unzipNLS
     usbutils
     vulkan-tools
-
-    duf
-    gdu
-    gnumake
-    net-tools
-    rsync
-    xxd
+    which
     whois
+    xxd
+    xz
+    zip
+    zstd
 
     (python3.withPackages (
       ps:
