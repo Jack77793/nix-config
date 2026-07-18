@@ -25,6 +25,7 @@
           gnumake
           lua-language-server
           nixd
+          prettier
           rust-analyzer
           rustfmt
           shellcheck
