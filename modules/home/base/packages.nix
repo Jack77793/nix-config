@@ -39,15 +39,11 @@
       with ps;
       (
         lib.optionals osConfig.custom.nvim.extended [
-          python-lsp-server
-          python-lsp-jsonrpc
-          python-lsp-black
-          python-lsp-ruff
-          pyls-isort
-          pyls-flake8
           black
-          isort
           flake8
+          isort
+          python-lsp-server
+          rope
         ]
         ++ lib.optionals osConfig.custom.desktop.enable [ secretstorage ]
       )

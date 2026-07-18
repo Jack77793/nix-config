@@ -15,6 +15,23 @@ vim.lsp.config("lua_ls", {
 	},
 })
 
+vim.lsp.config("pylsp", {
+	settings = {
+		pylsp = {
+			plugins = {
+				autopep8 = { enabled = false },
+				yapf = { enabled = false },
+				pycodestyle = { enabled = false },
+				pyflakes = { enabled = false },
+				mccabe = { enabled = false },
+				flake8 = { enabled = true },
+				rope = { enabled = true },
+			},
+			configurationSources = { "flake8" },
+		},
+	},
+})
+
 for _, v in ipairs(lss) do
 	vim.lsp.config(v, {
 		capabilities = capabilities,
