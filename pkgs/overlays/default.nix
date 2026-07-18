@@ -1,5 +1,4 @@
 final: prev: {
-  fwupd = (import ./fwupd) { inherit (prev) fwupd; };
   prismlauncher = (import ./prismlauncher) {
     inherit (prev)
       prismlauncher
