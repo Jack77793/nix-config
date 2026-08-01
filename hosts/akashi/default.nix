@@ -32,6 +32,16 @@
     fastfetch-unwrapped
   ];
 
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      domain = true;
+      userServices = true;
+    };
+  };
+
   programs = {
     git = {
       enable = true;
