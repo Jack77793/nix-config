@@ -104,6 +104,7 @@
       dae.enable = lib.mkEnableOption "dae";
       fingerprint.enable = lib.mkEnableOption "fingerprint";
       gaming.enable = lib.mkEnableOption "gaming related accessories";
+      qbittorrent.enable = lib.mkEnableOption "qbittorrent service";
       secureboot.enable = lib.mkEnableOption "secureboot";
       sing-box.enable = lib.mkEnableOption "sing-box";
       tailscale.enable = lib.mkEnableOption "tailscale";
