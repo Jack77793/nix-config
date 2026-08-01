@@ -7,6 +7,7 @@
     ./secrets.nix
     ./secureboot.nix
     ./sing-box.nix
+    ./smartdns.nix
     ./tailscale.nix
     ./virtualization.nix
   ];

@@ -107,6 +107,7 @@
       qbittorrent.enable = lib.mkEnableOption "qbittorrent service";
       secureboot.enable = lib.mkEnableOption "secureboot";
       sing-box.enable = lib.mkEnableOption "sing-box";
+      smartdns.enable = lib.mkEnableOption "smartdns";
       tailscale.enable = lib.mkEnableOption "tailscale";
       virtualization = {
         podman.enable = lib.mkEnableOption "podman";
