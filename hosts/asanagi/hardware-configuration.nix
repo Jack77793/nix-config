@@ -125,7 +125,7 @@
     };
   };
 
-  #swapDevices = [ { device = "/dev/mapper/asanagi-swap"; } ];
+  swapDevices = [ { device = "/dev/mapper/asanagi-swap"; } ];
 
   hardware.graphics = {
     enable = true;

@@ -22,6 +22,7 @@ lib.mkMerge [
       mediainfo-gui
       meld
       mesa-demos
+      moonlight-qt
       musescore
       picard
       qalculate-gtk

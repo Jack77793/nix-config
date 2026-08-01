@@ -16,7 +16,7 @@ lib.mkIf osConfig.custom.desktop.enable {
       cache-secs = 300;
       cscale = "ewa_lanczossharp";
       embeddedfonts = false;
-      hwdec = "vaapi-copy";
+      hwdec = "vaapi";
       icc-profile-auto = true;
       interpolation = true;
       osd-bar = false;
