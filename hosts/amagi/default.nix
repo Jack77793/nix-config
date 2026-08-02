@@ -21,7 +21,11 @@
     stateVersion = "26.11";
   };
 
-  networking.useDHCP = false;
+  networking = {
+    useDHCP = false;
+    nameservers = [ "192.168.1.72" ];
+  };
+
   systemd.network.networks."20-ethernet" = {
     matchConfig.Name = "en*";
     address = [ "192.168.1.73/24" ];
