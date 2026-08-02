@@ -61,11 +61,17 @@
     in
     {
       nixosConfigurations = {
-        Asanagi = nixpkgs.lib.nixosSystem {
+        Akashi = nixpkgs.lib.nixosSystem {
+          specialArgs = inputs;
+          modules = [
+            ./hosts/akashi
+          ];
+        };
+        Akitsushima = nixpkgs.lib.nixosSystem {
           specialArgs = inputs;
           modules = [
             ./modules
-            ./hosts/asanagi
+            ./hosts/akitsushima
           ];
         };
         Amagi = nixpkgs.lib.nixosSystem {
@@ -75,10 +81,11 @@
             ./hosts/amagi
           ];
         };
-        Akashi = nixpkgs.lib.nixosSystem {
+        Asanagi = nixpkgs.lib.nixosSystem {
           specialArgs = inputs;
           modules = [
-            ./hosts/akashi
+            ./modules
+            ./hosts/asanagi
           ];
         };
       };

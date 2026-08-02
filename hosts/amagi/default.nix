@@ -44,7 +44,7 @@
     };
   };
 
-    programs.dconf.enable = true;
+  programs.dconf.enable = true;
 
   home-manager.users.${config.custom.mainUser} = {
     home.packages = with pkgs; [
