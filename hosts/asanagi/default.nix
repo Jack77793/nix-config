@@ -4,7 +4,10 @@
 }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./secrets.nix
+  ];
 
   custom = {
     profile = "desktop";
