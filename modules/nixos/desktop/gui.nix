@@ -32,7 +32,6 @@ lib.mkMerge [
     programs = {
       dconf.enable = true;
       seahorse.enable = true;
-      evince.enable = true;
     };
   })
 
@@ -58,6 +57,7 @@ lib.mkMerge [
       systemPackages = with pkgs; [
         nautilus
         nautilus-python
+        papers
       ];
 
       pathsToLink = [

@@ -30,7 +30,6 @@ lib.mkMerge [
           "application/zip" = "org.gnome.FileRoller.desktop";
 
           "application/epub+zip" = "com.github.johnfactotum.Foliate.desktop";
-          "application/pdf" = "org.gnome.Evince.desktop";
           "application/x-musescore" = "org.musescore.MuseScore.desktop";
         };
       };
@@ -60,6 +59,7 @@ lib.mkMerge [
           "audio/midi" = "org.gnome.Decibels.desktop";
         };
         defaultApplications = {
+          "application/pdf" = "org.gnome.Papers.desktop";
           "audio/*" = "org.gnome.Decibels.desktop";
           "image/*" = "org.gnome.Loupe.desktop";
           "text/x-bibtex" = "org.gnome.World.Citations.desktop";
