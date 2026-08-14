@@ -6,12 +6,12 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "spotify-adblock";
-  version = "20260607";
+  version = "20260812";
   src = fetchFromGitHub {
     owner = "abba23";
     repo = "spotify-adblock";
-    rev = "9aeadd3cfd4d50212059720c09f662f149942fec";
-    hash = "sha256-3X7vScKmnb65wJ4xWAT2AeyAMPTGzKZCFA549zm9gLc=";
+    rev = "403b3491cc89d0207c2aa5c349991ba420d97cd1";
+    hash = "sha256-R1xM/a+EzFd3I94EVCphbW+M114x6CtIeCOi9Fd9tpc=";
   };
   cargoHash = "sha256-gxGetdqaoJa/ZF1VnW6UXJyJfLBGZxZnyKpT/Qk/8Og=";
 
