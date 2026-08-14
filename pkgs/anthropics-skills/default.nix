@@ -2,12 +2,12 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "anthropics-skills";
-  version = "20260609";
+  version = "20260813";
   src = fetchFromGitHub {
     owner = "anthropics";
     repo = "skills";
-    rev = "57546260929473d4e0d1c1bb75297be2fdfa1949";
-    hash = "sha256-1D9otXxDvmKASBu/vtAEWv6kE+U+jG4OxZpRLZbGEF0=";
+    rev = "f6656c1256d5a8adfa37db9110046ef20bac644c";
+    hash = "sha256-5/0f5AnGWX3oM+M9Xm/zSmooz11+S1YRdFPmAX+DXi0=";
   };
 
   installPhase = ''
