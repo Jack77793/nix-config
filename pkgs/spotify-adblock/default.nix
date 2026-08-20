@@ -1,17 +1,12 @@
-{
-  rustPlatform,
-  fetchFromGitHub,
-  ...
-}:
+{ rustPlatform, ... }:
 
 rustPlatform.buildRustPackage rec {
   pname = "spotify-adblock";
-  version = "20260812";
-  src = fetchFromGitHub {
-    owner = "abba23";
-    repo = "spotify-adblock";
-    rev = "403b3491cc89d0207c2aa5c349991ba420d97cd1";
-    hash = "sha256-R1xM/a+EzFd3I94EVCphbW+M114x6CtIeCOi9Fd9tpc=";
+  version = "1.1.1";
+
+  src = fetchTarball {
+    url = "https://github.com/abba23/${pname}/archive/refs/tags/v${version}/v${version}.tar.gz";
+    sha256 = "15xngmbz98i3g142ps1ibvbqqvvdc4m5816y4dvmgk44mzylqp27";
   };
   cargoHash = "sha256-gxGetdqaoJa/ZF1VnW6UXJyJfLBGZxZnyKpT/Qk/8Og=";
 

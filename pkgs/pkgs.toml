@@ -19,3 +19,5 @@ github = "op7418/Humanizer-zh"
 [spotify-adblock]
 source = "github"
 github = "abba23/spotify-adblock"
+use_latest_release = true
+prefix = "v"
