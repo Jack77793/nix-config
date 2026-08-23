@@ -38,6 +38,6 @@ lib.mkIf osConfig.custom.desktop.enable {
     shntool
     vorbis-tools
     wl-clipboard
-    winePackages.stagingFull
+    wineWow64Packages.staging
   ];
 }
