@@ -2,6 +2,11 @@
 source = "github"
 github = "anthropics/skills"
 
+[dsh]
+source = "github"
+github = "deepseek-ai/deepseek-harness"
+use_max_tag = true
+
 [eisvogel-template]
 source = "github"
 github = "Wandmalfarbe/pandoc-latex-template"
