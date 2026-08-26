@@ -7,12 +7,15 @@
 }:
 
 lib.mkIf osConfig.custom.desktop.enable {
+  home.packages = with pkgs; [ dsh ];
+
   programs = {
     pi-coding-agent = {
       enable = true;
       context = ./AGENTS.md;
       extraPackages = with pkgs; [
         ffmpeg
+        mcp-nixos
         nodejs
         yt-dlp
       ];
@@ -30,14 +33,15 @@ lib.mkIf osConfig.custom.desktop.enable {
           maxRetries = 3;
         };
         terminal.showImages = true;
-        defaultModel = "deepseek-v4-pro";
+        defaultModel = "deepseek-v4-flash";
         packages = [
-          "npm:pi-mono-context"
-          "npm:pi-mono-context-guard"
-          "npm:pi-web-access"
-          "npm:pi-rewind-hook"
+          "npm:pi-codex-goal"
           "npm:pi-mcp-adapter"
+          "npm:pi-mono-context"
+          "npm:pi-rewind-hook"
+          "npm:pi-web-access"
           "npm:@gotgenes/pi-permission-system"
+          "npm:@gotgenes/pi-subagents"
           "npm:@juicesharp/rpiv-ask-user-question"
         ];
         skills = [
@@ -122,6 +126,12 @@ lib.mkIf osConfig.custom.desktop.enable {
               ask_user_question = "allow";
               web_search = "allow";
               fetch_content = "allow";
+              create_goal = "allow";
+              get_goal = "allow";
+              update_goal = "allow";
+              subagent = "allow";
+              get_subagent_result = "allow";
+              steer_subagent = "allow";
             };
           };
       "${config.xdg.configHome}/mcp/mcp.json".text = builtins.toJSON {
@@ -135,6 +145,10 @@ lib.mkIf osConfig.custom.desktop.enable {
               "--executable-path=${pkgs.chromium}/bin/chromium"
               "--isolated"
             ];
+          };
+          nixos = {
+            command = "mcp-nixos";
+            lifecycle = "lazy";
           };
         };
       };
