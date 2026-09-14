@@ -15,7 +15,7 @@
 
 stdenv.mkDerivation rec {
   pname = "dsh";
-  version = "0.1.1-rc.2";
+  version = "0.1.5-rc.2";
 
   env = {
     pnpm_config_offline = "true";
@@ -23,13 +23,13 @@ stdenv.mkDerivation rec {
     pnpm_config_side_effects_cache = "false";
   };
 
-  landlockPackageDir = "native/landlock-run/packages/${stdenv.hostPlatform.node.platform}-${stdenv.hostPlatform.node.arch}";
+  landlockPackageDir = "native/system/packages/${stdenv.hostPlatform.node.platform}-${stdenv.hostPlatform.node.arch}";
 
   src = fetchFromGitHub {
     owner = "deepseek-ai";
     repo = "deepseek-harness";
     rev = "dsh-v${version}";
-    hash = "sha256-bgZnSElEbiilAx2R6rCnov54ORBnLcgOe+PItKQbMAg=";
+    hash = "sha256-SB8LYf3kV6qQBTQyQway54u3NXvL5SXR2f+65fstn30=";
     leaveDotGit = true;
     postFetch = ''
       cd "$out"
@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     inherit pname version src;
     inherit pnpm;
     fetcherVersion = 4;
-    hash = "sha256-+PsdK9u3ZKv4XtSc8tBKKP48J/95/CGTMIUf8Q8dbok=";
+    hash = "sha256-/VnxXqJ3MUXIPB4rXOKu5FtArYVjyEry4ptRNHxYnrc=";
   };
 
   nativeBuildInputs = [
@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
     mkdir -p "${landlockPackageDir}/bin"
     ${musl.dev}/bin/musl-gcc -std=c11 -Os -Wall -Wextra -Werror -static -s \
       -o "${landlockPackageDir}/bin/landlock-run" \
-      native/landlock-run/packages/entry/src/main.c
+      native/system/packages/entry/src/main.c
     chmod 755 "${landlockPackageDir}/bin/landlock-run"
 
     substituteInPlace packages/terminal/terminal-bash/src/config.ts \
