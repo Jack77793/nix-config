@@ -7,6 +7,12 @@ source = "github"
 github = "deepseek-ai/deepseek-harness"
 use_max_tag = true
 
+[dsh-context]
+source = "github"
+github = "bowenliang123/dsh-context"
+use_latest_release = true
+prefix = "v"
+
 [eisvogel-template]
 source = "github"
 github = "Wandmalfarbe/pandoc-latex-template"
