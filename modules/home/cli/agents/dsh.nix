@@ -1,5 +1,4 @@
 {
-  config,
   osConfig,
   lib,
   pkgs,
@@ -11,6 +10,20 @@ lib.mkIf osConfig.custom.desktop.enable {
     packages = with pkgs; [ dsh ];
 
     file = {
+      ".dsh/profiles/web/package.json".text = builtins.toJSON {
+        name = "dsh-profile-web";
+        private = true;
+        dsh.profile = {
+          bundles = [
+            "@deepseek-ai/dsh-base"
+            "@deepseek-ai/dsh-web-app"
+            "dsh-context"
+          ];
+          patchReload = "live";
+        };
+      };
+      ".dsh/profiles/web/node_modules/dsh-context".source = "${pkgs.dsh-context}/pkg";
+
       ".dsh/skills/humanizer".source = "${pkgs.humanizer}/humanizer";
       ".dsh/skills/humanizer-zh".source = "${pkgs.humanizer-zh}/humanizer-zh";
       ".dsh/skills/doc-coauthoring".source = "${pkgs.anthropics-skills}/doc-coauthoring";
