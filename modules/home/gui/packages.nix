@@ -17,7 +17,7 @@ lib.mkMerge [
       gimp-with-plugins
       gnome-power-manager
       goldendict-ng
-      libreoffice-fresh
+      libreoffice
       localsend
       mediainfo-gui
       meld

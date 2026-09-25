@@ -24,7 +24,6 @@ lib.mkIf osConfig.custom.desktop.enable {
     nmap
     hugo
     imagemagick
-    libreoffice-fresh
     libva-utils
     lilypond
     mediainfo

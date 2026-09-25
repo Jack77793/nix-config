@@ -28,10 +28,7 @@ lib.mkIf osConfig.custom.desktop.enable {
     '';
   };
 
-  services.mpd-mpris = {
-    enable = true;
-    mpd.useLocal = true;
-  };
+  services.mpd-mpris.enable = true;
 
   programs.ncmpcpp = {
     enable = true;
