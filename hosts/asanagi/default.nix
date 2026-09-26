@@ -19,6 +19,7 @@
       dae.enable = true;
       fingerprint.enable = true;
       gaming.enable = true;
+      agentSandbox.enable = true;
       secureboot.enable = true;
       sing-box.enable = true;
       tailscale.enable = true;

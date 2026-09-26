@@ -141,6 +141,7 @@ lib.mkIf osConfig.custom.desktop.enable {
               "chrome-devtools-mcp@latest"
               "--no-usage-statistics"
               "--executable-path=${pkgs.chromium}/bin/chromium"
+              "--headless"
               "--isolated"
             ];
           };
