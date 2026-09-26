@@ -13,8 +13,11 @@ lib.mkIf osConfig.custom.desktop.enable {
       context = ./AGENTS.md;
       extraPackages = with pkgs; [
         ffmpeg
+        git
+        jq
         mcp-nixos
         nodejs
+        ripgrep
         yt-dlp
       ];
       settings = {
@@ -31,7 +34,8 @@ lib.mkIf osConfig.custom.desktop.enable {
           maxRetries = 3;
         };
         terminal.showImages = true;
-        defaultModel = "deepseek/deepseek-flash";
+        defaultProvider = "deepseek";
+        defaultModel = "deepseek-flash";
         packages = [
           "npm:pi-codex-goal"
           "npm:pi-mcp-adapter"
@@ -79,9 +83,8 @@ lib.mkIf osConfig.custom.desktop.enable {
         builtins.toJSON
           {
             permission = {
-              "*" = "ask";
+              "*" = "allow";
               path = {
-                "*" = "allow";
                 "*.env" = "deny";
                 "*.env.*" = "deny";
                 "~/.ssh" = "deny";
@@ -89,47 +92,11 @@ lib.mkIf osConfig.custom.desktop.enable {
                 "~/.gnupg" = "deny";
                 "~/.gnupg/*" = "deny";
               };
-              read = "allow";
-              write = "ask";
-              grep = "allow";
-              find = "allow";
-              ls = "allow";
               bash = {
-                "*" = "ask";
-                "git diff *" = "allow";
-                "git log *" = "allow";
-                "git show *" = "allow";
-                "git status *" = "allow";
-                "gh issue list *" = "allow";
-                "gh issue view *" = "allow";
-                "gh pr diff *" = "allow";
-                "gh pr list *" = "allow";
-                "gh pr view *" = "allow";
-                "gh repo list *" = "allow";
-                "gh repo view *" = "allow";
-                "nix build *" = "allow";
-                "nix eval *" = "allow";
-                "nix flake check *" = "allow";
-                "nix flake metadata *" = "allow";
-                "nix flake show *" = "allow";
-                "nix search *" = "allow";
-                "nix store ls *" = "allow";
-                "nix store verify *" = "allow";
+                "*" = "allow";
                 "rm -rf *" = "deny";
                 "sudo *" = "deny";
               };
-              mcp = "ask";
-              skills = "ask";
-              external_directory = "ask";
-              ask_user_question = "allow";
-              web_search = "allow";
-              fetch_content = "allow";
-              create_goal = "allow";
-              get_goal = "allow";
-              update_goal = "allow";
-              subagent = "allow";
-              get_subagent_result = "allow";
-              steer_subagent = "allow";
             };
           };
       "${config.xdg.configHome}/mcp/mcp.json".text = builtins.toJSON {
@@ -151,17 +118,8 @@ lib.mkIf osConfig.custom.desktop.enable {
           };
         };
       };
-      "${config.programs.pi-coding-agent.configDir}/../web-search.json.template".text = builtins.toJSON {
-        provider = "gemini";
-        geminiApiKey = "@geminiApiKey@";
-        summaryModel = "deepseek/deepseek-flash";
-      };
     };
     activation = {
-      pi-web-access = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        sed "s|@geminiApiKey@|$(cat ${osConfig.age.secrets.gemini.path})|g" ${config.programs.pi-coding-agent.configDir}/../web-search.json.template > ${config.programs.pi-coding-agent.configDir}/../web-search.json
-        chmod 600 ${config.programs.pi-coding-agent.configDir}/../web-search.json
-      '';
       pi-mcp-sync = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         rm -f ${config.programs.pi-coding-agent.configDir}/mcp.json
       '';

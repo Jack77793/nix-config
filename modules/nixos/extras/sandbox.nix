@@ -42,7 +42,6 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
       "--bind-ro=${
         config.home-manager.users.${hostUser}.xdg.configHome
       }/mcp/mcp.json:${guestHome}/.config/mcp/mcp.json"
-      "--bind-ro=${hostPiRoot}/web-search.json:${guestHome}/.pi/web-search.json:idmap"
       "--bind-ro=${hostPi.configDir}/npm:${guestPiDir}/npm:idmap"
       "--bind-ro=${config.age.secrets."gemini-sandbox".path}:${config.age.secrets.gemini.path}:idmap"
       "--bind-ro=${config.age.secrets."deepseek-sandbox".path}:${config.age.secrets.deepseek.path}:idmap"
