@@ -9,6 +9,7 @@ let
   hostHome = config.users.users.${hostUser}.home;
   hostPi = config.home-manager.users.${hostUser}.programs.pi-coding-agent;
   hostPiRoot = dirOf hostPi.configDir;
+  hostGitConfig = "${config.home-manager.users.${hostUser}.xdg.configHome}/git/config";
   guestName = "asuka";
   guestHome = hostHome;
   guestPiDir = "${guestHome}/.pi/agent";
@@ -39,6 +40,7 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
       "--bind-ro=${hostPi.configDir}/AGENTS.md:${guestPiDir}/AGENTS.md"
       "--bind-ro=${hostPi.configDir}/auth.json:${guestPiDir}/auth.json"
       "--bind-ro=${hostPi.configDir}/extensions/pi-permission-system/config.json:${guestPiDir}/extensions/pi-permission-system/config.json"
+      "--bind-ro=${hostGitConfig}:${guestHome}/.config/git/config"
       "--bind-ro=${
         config.home-manager.users.${hostUser}.xdg.configHome
       }/mcp/mcp.json:${guestHome}/.config/mcp/mcp.json"
@@ -68,13 +70,28 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
           "${guestPiDir}/extensions"
           "${guestPiDir}/extensions/pi-permission-system"
           "${guestHome}/.config"
+          "${guestHome}/.config/git"
           "${guestHome}/.config/mcp"
         ];
 
-        environment.systemPackages = [
-          pkgs.pi-coding-agent
-        ]
-        ++ hostPi.extraPackages;
+        programs.neovim = {
+          enable = true;
+          defaultEditor = true;
+          viAlias = true;
+          vimAlias = true;
+        };
+
+        environment.systemPackages =
+          with pkgs;
+          [
+            delta
+            git
+            git-lfs
+            jq
+            pi-coding-agent
+            ripgrep
+          ]
+          ++ hostPi.extraPackages;
         environment.variables = {
           TERM = "xterm-256color";
           JITI_FS_CACHE = "${guestHome}/.cache/jiti";

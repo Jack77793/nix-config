@@ -13,11 +13,8 @@ lib.mkIf osConfig.custom.desktop.enable {
       context = ./AGENTS.md;
       extraPackages = with pkgs; [
         ffmpeg
-        git
-        jq
         mcp-nixos
         nodejs
-        ripgrep
         yt-dlp
       ];
       settings = {
