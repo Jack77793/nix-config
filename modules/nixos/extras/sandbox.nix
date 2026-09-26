@@ -36,9 +36,9 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
       "--private-users-ownership=map"
       "--bind=${hostHome}/Projects:${hostHome}/Projects:idmap"
       "--bind=${hostPiRoot}/pi-sandboxed-sessions:${guestPiDir}/sessions:idmap"
+      "--bind=${hostPi.configDir}/auth.json:${guestPiDir}/auth.json:idmap"
       "--bind-ro=${hostPi.configDir}/settings.json:${guestPiDir}/settings.json"
       "--bind-ro=${hostPi.configDir}/AGENTS.md:${guestPiDir}/AGENTS.md"
-      "--bind-ro=${hostPi.configDir}/auth.json:${guestPiDir}/auth.json"
       "--bind-ro=${hostPi.configDir}/extensions/pi-permission-system/config.json:${guestPiDir}/extensions/pi-permission-system/config.json"
       "--bind-ro=${hostGitConfig}:${guestHome}/.config/git/config"
       "--bind-ro=${

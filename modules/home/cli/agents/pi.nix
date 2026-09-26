@@ -6,6 +6,22 @@
   ...
 }:
 
+let
+  piConfigDir = config.programs.pi-coding-agent.configDir;
+  authPath = "${piConfigDir}/auth.json";
+  authSeed = pkgs.writeText "pi-auth-seed.json" (
+    builtins.toJSON {
+      google = {
+        type = "api_key";
+        key = "!cat ${osConfig.age.secrets.gemini.path}";
+      };
+      deepseek = {
+        type = "api_key";
+        key = "!cat ${osConfig.age.secrets.deepseek.path}";
+      };
+    }
+  );
+in
 lib.mkIf osConfig.custom.desktop.enable {
   programs = {
     pi-coding-agent = {
@@ -66,36 +82,24 @@ lib.mkIf osConfig.custom.desktop.enable {
 
   home = {
     file = {
-      "${config.programs.pi-coding-agent.configDir}/auth.json".text = builtins.toJSON {
-        google = {
-          type = "api_key";
-          key = "!cat ${osConfig.age.secrets.gemini.path}";
-        };
-        deepseek = {
-          type = "api_key";
-          key = "!cat ${osConfig.age.secrets.deepseek.path}";
+      "${piConfigDir}/extensions/pi-permission-system/config.json".text = builtins.toJSON {
+        permission = {
+          "*" = "allow";
+          path = {
+            "*.env" = "deny";
+            "*.env.*" = "deny";
+            "~/.ssh" = "deny";
+            "~/.ssh/*" = "deny";
+            "~/.gnupg" = "deny";
+            "~/.gnupg/*" = "deny";
+          };
+          bash = {
+            "*" = "allow";
+            "rm -rf *" = "deny";
+            "sudo *" = "deny";
+          };
         };
       };
-      "${config.programs.pi-coding-agent.configDir}/extensions/pi-permission-system/config.json".text =
-        builtins.toJSON
-          {
-            permission = {
-              "*" = "allow";
-              path = {
-                "*.env" = "deny";
-                "*.env.*" = "deny";
-                "~/.ssh" = "deny";
-                "~/.ssh/*" = "deny";
-                "~/.gnupg" = "deny";
-                "~/.gnupg/*" = "deny";
-              };
-              bash = {
-                "*" = "allow";
-                "rm -rf *" = "deny";
-                "sudo *" = "deny";
-              };
-            };
-          };
       "${config.xdg.configHome}/mcp/mcp.json".text = builtins.toJSON {
         mcpServers = {
           chrome-devtools = {
@@ -117,8 +121,13 @@ lib.mkIf osConfig.custom.desktop.enable {
       };
     };
     activation = {
+      pi-auth = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        if [[ ! -e ${lib.escapeShellArg authPath} && ! -L ${lib.escapeShellArg authPath} ]]; then
+          run install -D -m 0600 ${authSeed} ${lib.escapeShellArg authPath}
+        fi
+      '';
       pi-mcp-sync = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        rm -f ${config.programs.pi-coding-agent.configDir}/mcp.json
+        rm -f ${piConfigDir}/mcp.json
       '';
     };
   };
