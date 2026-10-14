@@ -34,7 +34,7 @@ lib.mkIf osConfig.custom.desktop.enable {
         yt-dlp
       ];
       settings = {
-        theme = "dark";
+        theme = "system";
         enableInstallTelemetry = false;
         enableAnalytics = false;
         compaction = {
@@ -46,18 +46,16 @@ lib.mkIf osConfig.custom.desktop.enable {
           enabled = true;
           maxRetries = 3;
         };
-        terminal.showImages = true;
+        terminal.showImages = false;
+        tuiMode = "regular";
         defaultProvider = "deepseek";
         defaultModel = "deepseek-flash";
         packages = [
-          "npm:pi-codex-goal"
           "npm:pi-mcp-adapter"
-          "npm:pi-mono-context"
           "npm:pi-rewind-hook"
           "npm:pi-web-access"
-          "npm:@gotgenes/pi-permission-system"
-          "npm:@gotgenes/pi-subagents"
           "npm:@juicesharp/rpiv-ask-user-question"
+          "npm:@narumitw/pi-usage"
         ];
         skills = [
           "${pkgs.humanizer}/humanizer"
@@ -67,6 +65,9 @@ lib.mkIf osConfig.custom.desktop.enable {
           "${pkgs.anthropics-skills}/pdf"
           "${pkgs.anthropics-skills}/pptx"
           "${pkgs.anthropics-skills}/xlsx"
+        ];
+        extensions = [
+          "-builtin:mcp"
         ];
         rewind = {
           silentCheckpoints = false;
@@ -78,48 +79,32 @@ lib.mkIf osConfig.custom.desktop.enable {
         };
       };
     };
-  };
-
-  home = {
-    file = {
-      "${piConfigDir}/extensions/pi-permission-system/config.json".text = builtins.toJSON {
-        permission = {
-          "*" = "allow";
-          path = {
-            "*.env" = "deny";
-            "*.env.*" = "deny";
-            "~/.ssh" = "deny";
-            "~/.ssh/*" = "deny";
-            "~/.gnupg" = "deny";
-            "~/.gnupg/*" = "deny";
-          };
-          bash = {
-            "*" = "allow";
-            "rm -rf *" = "deny";
-            "sudo *" = "deny";
-          };
+    mcp = {
+      enable = true;
+      servers = {
+        chrome-devtools = {
+          command = "npx";
+          args = [
+            "-y"
+            "chrome-devtools-mcp@latest"
+            "--no-usage-statistics"
+            "--executable-path=${pkgs.chromium}/bin/chromium"
+            "--headless"
+            "--isolated"
+            "--chromeArg=--no-first-run"
+            "--chromeArg=--no-default-browser-check"
+            "--chromeArg=--disable-search-engine-choice-screen"
+            "--chrome-arg=--disable-blink-features=AutomationControlled"
+          ];
         };
-      };
-      "${config.xdg.configHome}/mcp/mcp.json".text = builtins.toJSON {
-        mcpServers = {
-          chrome-devtools = {
-            command = "npx";
-            args = [
-              "-y"
-              "chrome-devtools-mcp@latest"
-              "--no-usage-statistics"
-              "--executable-path=${pkgs.chromium}/bin/chromium"
-              "--headless"
-              "--isolated"
-            ];
-          };
-          nixos = {
-            command = "mcp-nixos";
-            lifecycle = "lazy";
-          };
+        nixos = {
+          command = "mcp-nixos";
         };
       };
     };
+  };
+
+  home = {
     activation = {
       pi-auth = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
         if [[ ! -e ${lib.escapeShellArg authPath} && ! -L ${lib.escapeShellArg authPath} ]]; then

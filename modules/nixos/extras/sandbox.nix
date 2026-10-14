@@ -37,9 +37,9 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
       "--bind=${hostHome}/Projects:${hostHome}/Projects:idmap"
       "--bind=${hostPiRoot}/pi-sandboxed-sessions:${guestPiDir}/sessions:idmap"
       "--bind=${hostPi.configDir}/auth.json:${guestPiDir}/auth.json:idmap"
+      "--bind=${hostHome}/.codex:${hostHome}/.codex:idmap"
       "--bind-ro=${hostPi.configDir}/settings.json:${guestPiDir}/settings.json"
       "--bind-ro=${hostPi.configDir}/AGENTS.md:${guestPiDir}/AGENTS.md"
-      "--bind-ro=${hostPi.configDir}/extensions/pi-permission-system/config.json:${guestPiDir}/extensions/pi-permission-system/config.json"
       "--bind-ro=${hostGitConfig}:${guestHome}/.config/git/config"
       "--bind-ro=${
         config.home-manager.users.${hostUser}.xdg.configHome
@@ -68,7 +68,6 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
           "${guestHome}/.pi"
           "${guestPiDir}"
           "${guestPiDir}/extensions"
-          "${guestPiDir}/extensions/pi-permission-system"
           "${guestHome}/.config"
           "${guestHome}/.config/git"
           "${guestHome}/.config/mcp"
@@ -84,11 +83,13 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
         environment.systemPackages =
           with pkgs;
           [
+            codex
             delta
             git
             git-lfs
             jq
             pi-coding-agent
+            python3
             ripgrep
           ]
           ++ hostPi.extraPackages;
