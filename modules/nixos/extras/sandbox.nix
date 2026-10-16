@@ -1,15 +1,18 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
   hostUser = config.custom.mainUser;
   hostHome = config.users.users.${hostUser}.home;
-  hostPi = config.home-manager.users.${hostUser}.programs.pi-coding-agent;
+  hostHM = config.home-manager.users.${hostUser};
+  hostPi = hostHM.programs.pi-coding-agent;
   hostPiRoot = dirOf hostPi.configDir;
-  hostGitConfig = "${config.home-manager.users.${hostUser}.xdg.configHome}/git/config";
+  hostGitConfig = "${hostHM.xdg.configHome}/git/config";
+  hostPkgs = pkgs;
   guestName = "asuka";
   guestHome = hostHome;
   guestPiDir = "${guestHome}/.pi/agent";
@@ -41,9 +44,7 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
       "--bind-ro=${hostPi.configDir}/settings.json:${guestPiDir}/settings.json"
       "--bind-ro=${hostPi.configDir}/AGENTS.md:${guestPiDir}/AGENTS.md"
       "--bind-ro=${hostGitConfig}:${guestHome}/.config/git/config"
-      "--bind-ro=${
-        config.home-manager.users.${hostUser}.xdg.configHome
-      }/mcp/mcp.json:${guestHome}/.config/mcp/mcp.json"
+      "--bind-ro=${hostHM.xdg.configHome}/mcp/mcp.json:${guestHome}/.config/mcp/mcp.json"
       "--bind-ro=${hostPi.configDir}/npm:${guestPiDir}/npm:idmap"
       "--bind-ro=${config.age.secrets."gemini-sandbox".path}:${config.age.secrets.gemini.path}:idmap"
       "--bind-ro=${config.age.secrets."deepseek-sandbox".path}:${config.age.secrets.deepseek.path}:idmap"
@@ -52,6 +53,8 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
     config =
       { pkgs, ... }:
       {
+        nixpkgs.pkgs = hostPkgs;
+
         system.stateVersion = config.custom.stateVersion;
 
         users.mutableUsers = false;
@@ -85,16 +88,30 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
           [
             codex
             delta
+            eza
+            fzf
+            gh
             git
             git-lfs
+            gnumake
             jq
             pi-coding-agent
+            pnpm
             python3
             ripgrep
+            unzipNLS
+            uv
+            zip
           ]
           ++ hostPi.extraPackages;
+
+        environment.etc."uv/uv.toml".source =
+          (pkgs.formats.toml { }).generate "uv.toml"
+            hostHM.programs.uv.settings;
+
         environment.variables = {
           TERM = "xterm-256color";
+          UV_CONFIG_FILE = "/etc/uv/uv.toml";
           JITI_FS_CACHE = "${guestHome}/.cache/jiti";
           npm_config_cache = "${guestHome}/.cache/npm";
         };
@@ -102,6 +119,7 @@ lib.mkIf config.custom.extras.agentSandbox.enable {
         nix = {
           daemon.enable = false;
           settings.experimental-features = config.nix.settings.experimental-features;
+          nixPath = [ "nixpkgs=${hostPkgs.path}" ];
         };
       };
   };
