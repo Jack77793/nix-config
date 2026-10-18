@@ -17,9 +17,9 @@
 
     users.${config.custom.mainUser} = {
       imports = [
-        ./base
-        ./cli
-        ./gui
+        ../home/base
+        ../home/cli
+        ../home/gui
       ];
       programs.home-manager.enable = true;
       home = {

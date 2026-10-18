@@ -6,40 +6,11 @@
 
 {
   imports = [
+    ./base
     ./nixos
-    ./home
   ];
 
   config = lib.mkMerge [
-    {
-      _module.args = {
-        myVars = import ./vars.nix;
-      };
-      nixpkgs.overlays = (import ../pkgs);
-      system.stateVersion = config.custom.stateVersion;
-    }
-
-    (lib.mkIf (config.custom.profile == "desktop") {
-      custom = {
-        desktop = {
-          enable = lib.mkDefault true;
-          gui = lib.mkDefault "gnome";
-        };
-        networking.manager = lib.mkDefault "nm";
-        defaultUser.enable = lib.mkDefault true;
-        nvim.extended = lib.mkDefault true;
-      };
-    })
-
-    (lib.mkIf (config.custom.profile == "headless") {
-      custom = {
-        desktop.enable = lib.mkDefault false;
-        networking.manager = lib.mkDefault "networkd";
-        defaultUser.enable = lib.mkDefault true;
-        nvim.extended = lib.mkDefault false;
-      };
-    })
-
     (lib.mkIf (!config.custom.desktop.enable) {
       assertions = [
         {

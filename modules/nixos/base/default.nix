@@ -12,7 +12,6 @@
     ./power.nix
     ./smartd.nix
     ./snapper.nix
-    ./users.nix
     ./zram.nix
   ];
 }
