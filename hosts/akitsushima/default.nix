@@ -12,22 +12,17 @@
   custom = {
     profile = "headless";
 
-    networking.hostname = "Akitsushima";
-
-    extras = {
-      agenix.enable = true;
-      qbittorrent.enable = true;
-      secureboot.enable = true;
-      sing-box.enable = true;
-      smartdns.enable = true;
-      tailscale.enable = true;
-      virtualization.podman.enable = true;
-    };
+    extras.agenix.enable = true;
 
     stateVersion = "26.11";
   };
 
-  networking.useDHCP = false;
+  boot.lanzaboote.enable = true;
+
+  networking = {
+    hostName = "Akitsushima";
+    useDHCP = false;
+  };
   systemd.network.networks."20-ethernet" = {
     matchConfig.Name = "en*";
     address = [ "192.168.1.72/24" ];
@@ -42,11 +37,20 @@
     22267
   ];
 
-  services.tuned.ppdSettings.main.default = lib.mkForce "throughput-performance";
-
-  services.qbittorrent.torrentingPort = 44678;
+  services = {
+    qbittorrent = {
+      enable = true;
+      torrentingPort = 44678;
+    };
+    sing-box.enable = true;
+    smartdns.enable = true;
+    tailscale.enable = true;
+    tuned.ppdSettings.main.default = lib.mkForce "throughput-performance";
+  };
 
   programs.dconf.enable = true;
+
+  virtualisation.podman.enable = true;
 
   virtualisation.oci-containers.containers = {
     alas = {

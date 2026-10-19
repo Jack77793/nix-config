@@ -6,11 +6,8 @@
 }:
 
 {
-  options.custom.extras.smartdns.enable = lib.mkEnableOption "smartdns";
-
-  config = lib.mkIf config.custom.extras.smartdns.enable {
+  config = lib.mkIf config.services.smartdns.enable {
     services.smartdns = {
-      enable = true;
       settings = {
         bind = "[::]:53";
         cache-checkpoint-time = 43200;

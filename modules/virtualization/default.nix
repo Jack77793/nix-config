@@ -7,17 +7,15 @@
 
 {
   options.custom.extras.virtualization = {
-    podman.enable = lib.mkEnableOption "podman";
     qemu.enable = lib.mkEnableOption "qemu";
   };
 
   config = lib.mkMerge [
     { virtualisation.docker.enable = lib.mkDefault false; }
 
-    (lib.mkIf config.custom.extras.virtualization.podman.enable {
+    (lib.mkIf config.virtualisation.podman.enable {
       virtualisation = {
         podman = {
-          enable = config.custom.extras.virtualization.podman.enable;
           defaultNetwork.settings.dns_enabled = false;
           autoPrune = {
             enable = true;
@@ -35,7 +33,6 @@
             "quay.io"
           ];
         };
-        oci-containers.backend = "podman";
       };
     })
 

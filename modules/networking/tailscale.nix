@@ -1,11 +1,8 @@
 { config, lib, ... }:
 
 {
-  options.custom.extras.tailscale.enable = lib.mkEnableOption "tailscale";
-
-  config = lib.mkIf config.custom.extras.tailscale.enable {
+  config = lib.mkIf config.services.tailscale.enable {
     services.tailscale = {
-      enable = true;
       interfaceName = "tailscale0";
       openFirewall = true;
     };

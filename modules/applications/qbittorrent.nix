@@ -6,11 +6,8 @@
 }:
 
 {
-  options.custom.extras.qbittorrent.enable = lib.mkEnableOption "qbittorrent service";
-
-  config = lib.mkIf config.custom.extras.qbittorrent.enable {
+  config = lib.mkIf config.services.qbittorrent.enable {
     services.qbittorrent = {
-      enable = true;
       package = pkgs.qbittorrent-nox;
       webuiPort = 28080;
       openFirewall = true;

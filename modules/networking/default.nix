@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 {
   imports = [
@@ -13,12 +13,6 @@
   ];
 
   options.custom.networking = {
-    hostname = lib.mkOption {
-      default = "";
-      type = lib.types.str;
-      description = "Hostname of the machine";
-    };
-
     manager = lib.mkOption {
       type = lib.types.enum [
         "nm"
@@ -33,8 +27,6 @@
     services.resolved.enable = true;
 
     networking = {
-      hostName = config.custom.networking.hostname;
-
       timeServers = [
         "ntp.ntsc.ac.cn"
         "ntp.aliyun.com"

@@ -6,11 +6,6 @@
 }:
 
 {
-  options.custom.extras = {
-    dae.enable = lib.mkEnableOption "dae";
-    sing-box.enable = lib.mkEnableOption "sing-box";
-  };
-
   config = lib.mkMerge [
     {
       programs.proxychains = {
@@ -25,9 +20,7 @@
       };
     }
 
-    (lib.mkIf config.custom.extras.sing-box.enable {
-      services.sing-box.enable = true;
-
+    (lib.mkIf config.services.sing-box.enable {
       systemd.services.sing-box.environment = {
         RUNTIME_DIRECTORY = "/etc/sing-box";
       };
@@ -43,9 +36,8 @@
       ];
     })
 
-    (lib.mkIf config.custom.extras.dae.enable {
+    (lib.mkIf config.services.dae.enable {
       services.dae = {
-        enable = true;
         configFile = config.age.secrets."config.dae".path;
       };
     })

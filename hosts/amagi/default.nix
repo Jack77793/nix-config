@@ -11,17 +11,13 @@
   custom = {
     profile = "headless";
 
-    networking.hostname = "Amagi";
-
-    extras = {
-      secureboot.enable = true;
-      tailscale.enable = true;
-    };
-
     stateVersion = "26.11";
   };
 
+  boot.lanzaboote.enable = true;
+
   networking = {
+    hostName = "Amagi";
     useDHCP = false;
     nameservers = [ "192.168.1.72" ];
   };
@@ -37,7 +33,10 @@
 
   networking.firewall.allowedTCPPorts = [ 25565 ];
 
-  services.tuned.ppdSettings.main.default = lib.mkForce "throughput-performance";
+  services = {
+    tailscale.enable = true;
+    tuned.ppdSettings.main.default = lib.mkForce "throughput-performance";
+  };
 
   programs.proxychains.proxies = lib.mkForce {
     sing-box = {

@@ -6,8 +6,6 @@
 }:
 
 {
-  options.custom.extras.secureboot.enable = lib.mkEnableOption "secureboot";
-
   config = lib.mkMerge [
     {
       boot = {
@@ -30,14 +28,13 @@
       };
     }
 
-    (lib.mkIf config.custom.extras.secureboot.enable {
+    (lib.mkIf config.boot.lanzaboote.enable {
       environment.systemPackages = [ pkgs.sbctl ];
 
       boot = {
         loader.systemd-boot.enable = lib.mkForce false;
 
         lanzaboote = {
-          enable = true;
           pkiBundle = "/var/lib/sbctl";
         };
       };

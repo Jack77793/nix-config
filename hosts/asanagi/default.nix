@@ -12,25 +12,27 @@
   custom = {
     profile = "desktop";
 
-    networking.hostname = "Asanagi";
-
     extras = {
       agenix.enable = true;
-      dae.enable = true;
-      fingerprint.enable = true;
       gaming.enable = true;
       agentSandbox.enable = true;
-      secureboot.enable = true;
-      sing-box.enable = true;
-      tailscale.enable = true;
-      virtualization = {
-        podman.enable = true;
-        qemu.enable = true;
-      };
+      virtualization.qemu.enable = true;
     };
 
     stateVersion = "25.11";
   };
+
+  boot.lanzaboote.enable = true;
+  networking.hostName = "Asanagi";
+
+  services = {
+    dae.enable = true;
+    fprintd.enable = true;
+    sing-box.enable = true;
+    tailscale.enable = true;
+  };
+
+  virtualisation.podman.enable = true;
 
   home-manager.users.${config.custom.mainUser}.dconf.settings."org/gnome/mutter".experimental-features =
     [
