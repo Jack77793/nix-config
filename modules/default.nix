@@ -7,7 +7,14 @@
 {
   imports = [
     ./base
-    ./nixos
+    ./platform
+    ./networking
+    ./security
+    ./desktop
+    ./terminal
+    ./development
+    ./applications
+    ./virtualization
   ];
 
   config = lib.mkMerge [

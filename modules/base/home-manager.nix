@@ -16,11 +16,6 @@
     };
 
     users.${config.custom.mainUser} = {
-      imports = [
-        ../home/base
-        ../home/cli
-        ../home/gui
-      ];
       programs.home-manager.enable = true;
       home = {
         username = config.custom.mainUser;
