@@ -6,18 +6,29 @@
   ...
 }:
 
-lib.mkIf config.custom.defaultUser.enable {
-  users = {
-    mutableUsers = false;
-    users.${myVars.username} = {
-      isNormalUser = true;
-      initialHashedPassword = myVars.initialHashedPassword;
-      uid = 1000;
-      shell = pkgs.zsh;
-      home = "/home/${myVars.username}";
-      extraGroups = myVars.usergroups;
-      openssh.authorizedKeys.keys = myVars.sshKeys;
+{
+  options.custom = {
+    defaultUser.enable = lib.mkEnableOption "default user";
+    mainUser = lib.mkOption {
+      default = "";
+      type = lib.types.str;
+      description = "The username of main user, will be automatically set if defaultUser is set";
     };
   };
-  custom.mainUser = myVars.username;
+
+  config = lib.mkIf config.custom.defaultUser.enable {
+    users = {
+      mutableUsers = false;
+      users.${myVars.username} = {
+        isNormalUser = true;
+        initialHashedPassword = myVars.initialHashedPassword;
+        uid = 1000;
+        shell = pkgs.zsh;
+        home = "/home/${myVars.username}";
+        extraGroups = myVars.usergroups;
+        openssh.authorizedKeys.keys = myVars.sshKeys;
+      };
+    };
+    custom.mainUser = myVars.username;
+  };
 }

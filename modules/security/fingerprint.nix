@@ -1,11 +1,15 @@
 { config, lib, ... }:
 
-lib.mkIf config.custom.extras.fingerprint.enable {
-  services.fprintd = {
-    enable = true;
-  };
+{
+  options.custom.extras.fingerprint.enable = lib.mkEnableOption "fingerprint";
 
-  environment.persistence."/nix/persist".directories = [
-    "/var/lib/fprint"
-  ];
+  config = lib.mkIf config.custom.extras.fingerprint.enable {
+    services.fprintd = {
+      enable = true;
+    };
+
+    environment.persistence."/nix/persist".directories = [
+      "/var/lib/fprint"
+    ];
+  };
 }

@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   agenix,
   impermanence,
   lanzaboote,
@@ -13,9 +14,17 @@
     lanzaboote.nixosModules.lanzaboote
   ];
 
-  _module.args = {
-    myVars = import ./vars.nix;
+  options.custom.stateVersion = lib.mkOption {
+    default = "";
+    type = lib.types.str;
+    description = "The state version of host, will be applied to system and home-manager";
   };
-  nixpkgs.overlays = import ../../pkgs;
-  system.stateVersion = config.custom.stateVersion;
+
+  config = {
+    _module.args = {
+      myVars = import ./vars.nix;
+    };
+    nixpkgs.overlays = import ../../pkgs;
+    system.stateVersion = config.custom.stateVersion;
+  };
 }

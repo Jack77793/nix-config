@@ -5,42 +5,49 @@
   ...
 }:
 
-lib.mkMerge [
-  {
-    programs.proxychains = {
-      enable = true;
-      package = pkgs.proxychains-ng;
-      proxies.sing-box = {
+{
+  options.custom.extras = {
+    dae.enable = lib.mkEnableOption "dae";
+    sing-box.enable = lib.mkEnableOption "sing-box";
+  };
+
+  config = lib.mkMerge [
+    {
+      programs.proxychains = {
         enable = true;
-        type = "socks5";
-        host = "127.0.0.1";
-        port = 2012;
+        package = pkgs.proxychains-ng;
+        proxies.sing-box = {
+          enable = true;
+          type = "socks5";
+          host = "127.0.0.1";
+          port = 2012;
+        };
       };
-    };
-  }
+    }
 
-  (lib.mkIf config.custom.extras.sing-box.enable {
-    services.sing-box.enable = true;
+    (lib.mkIf config.custom.extras.sing-box.enable {
+      services.sing-box.enable = true;
 
-    systemd.services.sing-box.environment = {
-      RUNTIME_DIRECTORY = "/etc/sing-box";
-    };
+      systemd.services.sing-box.environment = {
+        RUNTIME_DIRECTORY = "/etc/sing-box";
+      };
 
-    # networking.firewall.trustedInterfaces = [ "sing-tun" ];
+      # networking.firewall.trustedInterfaces = [ "sing-tun" ];
 
-    environment.persistence."/nix/persist".directories = [
-      {
-        directory = "/var/lib/sing-box";
-        user = "sing-box";
-        mode = "0700";
-      }
-    ];
-  })
+      environment.persistence."/nix/persist".directories = [
+        {
+          directory = "/var/lib/sing-box";
+          user = "sing-box";
+          mode = "0700";
+        }
+      ];
+    })
 
-  (lib.mkIf config.custom.extras.dae.enable {
-    services.dae = {
-      enable = true;
-      configFile = config.age.secrets."config.dae".path;
-    };
-  })
-]
+    (lib.mkIf config.custom.extras.dae.enable {
+      services.dae = {
+        enable = true;
+        configFile = config.age.secrets."config.dae".path;
+      };
+    })
+  ];
+}

@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   imports = [
@@ -12,14 +12,33 @@
     ./tailscale.nix
   ];
 
-  services.resolved.enable = true;
+  options.custom.networking = {
+    hostname = lib.mkOption {
+      default = "";
+      type = lib.types.str;
+      description = "Hostname of the machine";
+    };
 
-  networking = {
-    hostName = config.custom.networking.hostname;
+    manager = lib.mkOption {
+      type = lib.types.enum [
+        "nm"
+        "networkd"
+      ];
+      default = "nm";
+      description = "The network backend to use. when set to networkd, systemd-networkd network unit(s) must be configured per host";
+    };
+  };
 
-    timeServers = [
-      "ntp.ntsc.ac.cn"
-      "ntp.aliyun.com"
-    ];
+  config = {
+    services.resolved.enable = true;
+
+    networking = {
+      hostName = config.custom.networking.hostname;
+
+      timeServers = [
+        "ntp.ntsc.ac.cn"
+        "ntp.aliyun.com"
+      ];
+    };
   };
 }

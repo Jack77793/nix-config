@@ -1,22 +1,26 @@
 { config, lib, ... }:
 
-lib.mkIf config.custom.extras.tailscale.enable {
-  services.tailscale = {
-    enable = true;
-    interfaceName = "tailscale0";
-    openFirewall = true;
+{
+  options.custom.extras.tailscale.enable = lib.mkEnableOption "tailscale";
+
+  config = lib.mkIf config.custom.extras.tailscale.enable {
+    services.tailscale = {
+      enable = true;
+      interfaceName = "tailscale0";
+      openFirewall = true;
+    };
+
+    networking.firewall = {
+      trustedInterfaces = [ "tailscale0" ];
+      allowedUDPPorts = [ config.services.tailscale.port ];
+    };
+
+    systemd.services.tailscaled.serviceConfig.Environment = [
+      "TS_DEBUG_FIREWALL_MODE=nftables"
+    ];
+
+    environment.persistence."/nix/persist".directories = [
+      "/var/lib/tailscale"
+    ];
   };
-
-  networking.firewall = {
-    trustedInterfaces = [ "tailscale0" ];
-    allowedUDPPorts = [ config.services.tailscale.port ];
-  };
-
-  systemd.services.tailscaled.serviceConfig.Environment = [
-    "TS_DEBUG_FIREWALL_MODE=nftables"
-  ];
-
-  environment.persistence."/nix/persist".directories = [
-    "/var/lib/tailscale"
-  ];
 }
