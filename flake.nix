@@ -90,6 +90,25 @@
         };
       };
 
+      packages.x86_64-linux =
+        let
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+            overlays = import ./pkgs;
+          };
+        in
+        {
+          inherit (pkgs)
+            anthropics-skills
+            eisvogel-template
+            humanizer
+            humanizer-zh
+            spotify-adblock
+            wechat
+            ;
+        };
+
       formatter = eachSystem (pkgs: treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
     };
 }

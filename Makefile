@@ -13,8 +13,9 @@ endif
 all: help
 
 buildpkg: ## Build specified custom package
+	@test "$(words $(RUNARGS))" -eq 1 || { printf '%s\n' 'Usage: make buildpkg <package>' >&2; exit 2; }
 	@echo -e "\033[32mBuilding the package $(RUNARGS)...\033[0m"
-	nix-build -E 'with import <nixpkgs> {}; callPackage $(ROOTDIR)/pkgs/$(RUNARGS) {}'
+	nix build --no-write-lock-file "$(ROOTDIR)#$(RUNARGS)"
 
 check: ## Check whether the flake evaluates and run its tests
 	@echo -e "\033[32mChecking the flake...\033[0m"
