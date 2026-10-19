@@ -8,26 +8,24 @@ A personal NixOS configuration flake for multiple hosts.
 
 ```
 .
-├── flake.nix              # Flake entry point, defines hosts and inputs
-├── Makefile               # Convenience targets: rebuild, gc, check, livecd, ...
+├── flake.nix              # Flake entry point, defines hosts, inputs and package outputs
+├── Makefile               # Convenience targets: buildpkg, rebuild, gc, check, livecd, ...
 ├── hosts/                 # Per-machine configurations
 ├── modules/
-│   ├── default.nix        # Module options and profile defaults
-│   ├── vars.nix           # Global variables (username, ssh keys, etc.)
-│   ├── nixos/
-│   │   ├── default.nix    # Entry point, imports agenix, impermanence, lanzaboote modules
-│   │   ├── base/          # System-level base configuration
-│   │   ├── desktop/       # Desktop-related system config
-│   │   └── extras/        # Optional features, enabled per-host
-│   └── home/
-│       ├── default.nix    # Home-manager entry point
-│       ├── base/          # Core home-manager modules
-│       ├── cli/           # CLI tools
-│       └── gui/           # GUI applications
+│   ├── default.nix        # Explicit imports of feature domains
+│   ├── base/              # External modules, users, Home Manager and profile defaults
+│   ├── platform/          # Boot, hardware, storage, locale and Nix settings
+│   ├── networking/        # Network backends and services
+│   ├── security/          # Secrets, fingerprint authentication, GPG and KeePassXC
+│   ├── desktop/           # Desktop environment, fonts and peripherals
+│   ├── terminal/          # Shell, terminal emulators and CLI tools
+│   ├── development/       # Git, Neovim, Python and coding agents
+│   ├── applications/      # Applications and gaming
+│   └── virtualization/    # Container presets and QEMU
 └── pkgs/
     ├── default.nix        # Overlay aggregator
     ├── pkgs.toml          # Package metadata for nvchecker
-    ├── overlays/
+    ├── overlays/          # Overlay of packages
     └── ...                # Custom packages
 ```
 
