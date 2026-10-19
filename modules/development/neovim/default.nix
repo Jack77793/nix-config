@@ -6,7 +6,7 @@
 }:
 
 {
-  options.custom.nvim.extended = lib.mkEnableOption "extended neovim";
+  options.custom.development.neovim.extended = lib.mkEnableOption "extended neovim";
 
   config = {
     programs = {
@@ -28,7 +28,7 @@
             [
               tree-sitter
             ]
-            ++ lib.optionals config.custom.nvim.extended (
+            ++ lib.optionals config.custom.development.neovim.extended (
               with pkgs;
               [
                 bash-language-server
@@ -49,7 +49,9 @@
           initLua =
             builtins.readFile ./config/init.lua
             + builtins.readFile ./config/keybinds.lua
-            + lib.optionalString config.custom.nvim.extended (builtins.readFile ./config/keybindsext.lua);
+            + lib.optionalString config.custom.development.neovim.extended (
+              builtins.readFile ./config/keybindsext.lua
+            );
           plugins =
             with pkgs.vimPlugins;
             [
@@ -112,7 +114,12 @@
                   builtins.replaceStrings
                     [ "-- @extended_sources@" ]
                     [
-                      (if config.custom.nvim.extended then ''{ name = "nvim_lsp", max_item_count = 240 },'' else "")
+                      (
+                        if config.custom.development.neovim.extended then
+                          ''{ name = "nvim_lsp", max_item_count = 240 },''
+                        else
+                          ""
+                      )
                     ]
                     (builtins.readFile ./config/plugins/cmp.lua);
               }
@@ -171,7 +178,7 @@
                 config = builtins.readFile ./config/plugins/illuminate.lua;
               }
             ]
-            ++ lib.optionals config.custom.nvim.extended (
+            ++ lib.optionals config.custom.development.neovim.extended (
               with pkgs.vimPlugins;
               [
                 {

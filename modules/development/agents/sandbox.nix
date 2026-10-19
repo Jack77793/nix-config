@@ -18,9 +18,9 @@ let
   guestPiDir = "${guestHome}/.pi/agent";
 in
 {
-  options.custom.extras.agentSandbox.enable = lib.mkEnableOption "sandbox for coding agents";
+  options.custom.development.agentSandbox.enable = lib.mkEnableOption "sandbox for coding agents";
 
-  config = lib.mkIf config.custom.extras.agentSandbox.enable {
+  config = lib.mkIf config.custom.development.agentSandbox.enable {
     boot.specialFileSystems."/run/agent-sandbox-secrets" = {
       fsType = "tmpfs";
       options = [

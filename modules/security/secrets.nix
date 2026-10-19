@@ -7,9 +7,9 @@
 }:
 
 {
-  options.custom.extras.agenix.enable = lib.mkEnableOption "agenix";
+  options.custom.security.agenix.enable = lib.mkEnableOption "agenix";
 
-  config = lib.mkIf config.custom.extras.agenix.enable {
+  config = lib.mkIf config.custom.security.agenix.enable {
     environment.systemPackages = [
       agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];

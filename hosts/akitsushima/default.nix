@@ -12,7 +12,7 @@
   custom = {
     profile = "headless";
 
-    extras.agenix.enable = true;
+    security.agenix.enable = true;
 
     stateVersion = "26.11";
   };

@@ -6,7 +6,7 @@
 }:
 
 {
-  options.custom.extras.virtualization = {
+  options.custom.virtualization = {
     qemu.enable = lib.mkEnableOption "qemu";
   };
 
@@ -36,7 +36,7 @@
       };
     })
 
-    (lib.mkIf config.custom.extras.virtualization.qemu.enable {
+    (lib.mkIf config.custom.virtualization.qemu.enable {
       environment.systemPackages = with pkgs; [
         qemu_kvm
       ];

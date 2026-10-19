@@ -23,7 +23,7 @@
         };
         networking.manager = lib.mkDefault "nm";
         defaultUser.enable = lib.mkDefault true;
-        nvim.extended = lib.mkDefault true;
+        development.neovim.extended = lib.mkDefault true;
       };
     })
 
@@ -32,7 +32,7 @@
         desktop.enable = lib.mkDefault false;
         networking.manager = lib.mkDefault "networkd";
         defaultUser.enable = lib.mkDefault true;
-        nvim.extended = lib.mkDefault false;
+        development.neovim.extended = lib.mkDefault false;
       };
     })
   ];

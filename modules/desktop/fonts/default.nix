@@ -99,7 +99,7 @@ lib.mkIf config.custom.desktop.enable (
       ];
     }
 
-    (lib.mkIf config.custom.extras.gaming.enable {
+    (lib.mkIf config.custom.applications.gaming.enable {
       home-manager.users.${config.custom.mainUser}.imports = [
         {
           fonts.fontconfig.configFile.steam = {

@@ -12,12 +12,10 @@
   custom = {
     profile = "desktop";
 
-    extras = {
-      agenix.enable = true;
-      gaming.enable = true;
-      agentSandbox.enable = true;
-      virtualization.qemu.enable = true;
-    };
+    applications.gaming.enable = true;
+    development.agentSandbox.enable = true;
+    security.agenix.enable = true;
+    virtualization.qemu.enable = true;
 
     stateVersion = "25.11";
   };

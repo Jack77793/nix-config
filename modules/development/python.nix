@@ -14,7 +14,7 @@ lib.mkMerge [
             ps:
             with ps;
             (
-              lib.optionals config.custom.nvim.extended [
+              lib.optionals config.custom.development.neovim.extended [
                 black
                 flake8
                 isort

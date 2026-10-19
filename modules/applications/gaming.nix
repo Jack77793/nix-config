@@ -7,9 +7,9 @@
 }:
 
 {
-  options.custom.extras.gaming.enable = lib.mkEnableOption "gaming related accessories";
+  options.custom.applications.gaming.enable = lib.mkEnableOption "gaming related accessories";
 
-  config = lib.mkIf config.custom.extras.gaming.enable {
+  config = lib.mkIf config.custom.applications.gaming.enable {
     assertions = [
       {
         assertion = config.custom.desktop.enable;
