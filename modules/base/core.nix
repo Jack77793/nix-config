@@ -15,8 +15,7 @@
   ];
 
   options.custom.stateVersion = lib.mkOption {
-    default = "";
-    type = lib.types.str;
+    type = lib.types.nonEmptyStr;
     description = "The state version of host, will be applied to system and home-manager";
   };
 

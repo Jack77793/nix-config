@@ -10,8 +10,7 @@
   options.custom = {
     defaultUser.enable = lib.mkEnableOption "default user";
     mainUser = lib.mkOption {
-      default = "";
-      type = lib.types.str;
+      type = lib.types.nonEmptyStr;
       description = "The username of main user, will be automatically set if defaultUser is set";
     };
   };
