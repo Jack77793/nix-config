@@ -7,15 +7,10 @@
 
 lib.mkIf config.custom.desktop.enable {
   home-manager.users.${config.custom.mainUser}.imports = [
+    ../../home/modules/security/gpg.nix
     {
-      programs.gpg.enable = true;
-
-      services.gpg-agent = {
-        enable = true;
-        pinentry.package = pkgs.pinentry-gnome3;
-      };
-
-      home.packages = with pkgs; [ gcr_4 ];
+      services.gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
+      home.packages = [ pkgs.gcr_4 ];
     }
   ];
 }
