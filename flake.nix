@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
 
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,6 +42,7 @@
     {
       self,
       nixpkgs,
+      nix-darwin,
       treefmt-nix,
       ...
     }@inputs:
@@ -88,6 +94,11 @@
             ./hosts/asanagi
           ];
         };
+      };
+
+      darwinConfigurations.Akatsuki = nix-darwin.lib.darwinSystem {
+        specialArgs = inputs;
+        modules = [ ./hosts/akatsuki ];
       };
 
       packages.x86_64-linux =
