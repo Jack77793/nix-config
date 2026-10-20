@@ -1,16 +1,23 @@
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs = {
     pi-coding-agent = {
       enable = true;
       context = ../../../../modules/development/agents/AGENTS.md;
-      extraPackages = with pkgs; [
-        ffmpeg
-        mcp-nixos
-        nodejs
-        yt-dlp
-      ];
+      extraPackages =
+        with pkgs;
+        [ ffmpeg ]
+        ++ lib.optionals config.programs.mcp.enable [ mcp-nixos ]
+        ++ [
+          nodejs
+          yt-dlp
+        ];
       settings = {
         theme = "system";
         enableInstallTelemetry = false;
@@ -28,8 +35,7 @@
         tuiMode = "regular";
         defaultProvider = "deepseek";
         defaultModel = "deepseek-flash";
-        packages = [
-          "npm:pi-mcp-adapter"
+        packages = lib.optionals config.programs.mcp.enable [ "npm:pi-mcp-adapter" ] ++ [
           "npm:pi-rewind-hook"
           "npm:pi-web-access"
           "npm:@juicesharp/rpiv-ask-user-question"
