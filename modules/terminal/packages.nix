@@ -1,36 +1,16 @@
 { config, pkgs, ... }:
 
 {
-  home-manager.users.${config.custom.mainUser}.imports = [
-    {
-      home.packages = with pkgs; [
-        alsa-utils
-        duf
-        file
-        gawk
-        gdu
-        gnumake
-        gnupg
-        gnused
-        gnutar
-        lm_sensors
-        net-tools
-        nixfmt
-        p7zip
-        pciutils
-        rsync
-        squashfsTools
-        unrar
-        unzipNLS
-        usbutils
-        vulkan-tools
-        which
-        whois
-        xxd
-        xz
-        zip
-        zstd
-      ];
-    }
-  ];
+  home-manager.users.${config.custom.mainUser} = {
+    imports = [ ../../home/modules/terminal/packages.nix ];
+
+    home.packages = with pkgs; [
+      alsa-utils
+      lm_sensors
+      net-tools
+      pciutils
+      usbutils
+      vulkan-tools
+    ];
+  };
 }
