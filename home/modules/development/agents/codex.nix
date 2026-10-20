@@ -1,10 +1,20 @@
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
-    mcp-nixos
-    nodejs
-  ];
+  home.packages =
+    lib.optionals (builtins.hasAttr "nixos" (config.programs.codex.settings.mcp_servers or { }))
+      (
+        with pkgs;
+        [
+          mcp-nixos
+          nodejs
+        ]
+      );
 
   programs.codex = {
     enable = true;
