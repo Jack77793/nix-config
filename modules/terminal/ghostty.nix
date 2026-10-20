@@ -1,19 +1,7 @@
 { config, lib, ... }:
 
 lib.mkIf config.custom.desktop.enable {
-  home-manager.users.${config.custom.mainUser}.programs.ghostty = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      bold-color = "bright";
-      font-family = "monospace";
-      font-size = 15;
-      gtk-single-instance = false;
-      shell-integration-features = true;
-      theme = "Nord";
-      window-theme = "ghostty";
-      window-height = 36;
-      window-width = 128;
-    };
-  };
+  home-manager.users.${config.custom.mainUser}.imports = [
+    ../../home/modules/terminal/ghostty.nix
+  ];
 }
