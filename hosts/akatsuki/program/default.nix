@@ -12,8 +12,10 @@
     ./ghostty.nix
     ./git.nix
     ./mpv.nix
+    ./music.nix
     ./nvim.nix
     ./pi.nix
+    ./prismlauncher.nix
     ./zsh.nix
   ];
 

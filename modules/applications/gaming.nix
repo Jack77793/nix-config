@@ -18,6 +18,7 @@
     ];
 
     home-manager.users.${config.custom.mainUser}.imports = [
+      ../../home/modules/applications/prismlauncher.nix
       {
         home.packages = with pkgs; [
           gnome-mines
@@ -49,28 +50,15 @@
           };
 
           prismlauncher = {
-            enable = true;
             settings = {
-              ApplicationTheme = "system";
-              AutoCloseConsole = true;
-              AutomaticJavaDownload = false;
-              AutomaticJavaSwitch = true;
-              CloseAfterLaunch = false;
-              ConsoleFont = "sans-serif";
-              ConsoleFontSize = 13;
               EnableFeralGamemode = true;
               EnableMangoHud = true;
-              IconTheme = "flat";
-              IgnoreJavaWizard = true;
               JvmArgs = "-Djava.io.tmpdir=/run/user/${
                 toString config.users.users.${myVars.username}.uid
               }/prismlauncher";
-              Language = "zh";
               PreLaunchCommand = "mkdir -p /run/user/${
                 toString config.users.users.${myVars.username}.uid
               }/prismlauncher";
-              ShowConsole = true;
-              TheCat = false;
               UseNativeGLFW = true;
               UseNativeOpenAL = true;
             };
