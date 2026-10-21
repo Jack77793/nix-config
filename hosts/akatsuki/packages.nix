@@ -19,6 +19,7 @@
       lilypond
       mediainfo
       nmap
+      nodejs
       pnpm
       qpdf
       scrcpy

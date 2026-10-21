@@ -7,6 +7,7 @@
 
 lib.mkIf config.custom.desktop.enable {
   home-manager.users.${config.custom.mainUser}.imports = [
+    ../../home/modules/applications/mpv.nix
     {
       home.packages = with pkgs; [ soundfont-fluid ];
 
@@ -32,35 +33,11 @@ lib.mkIf config.custom.desktop.enable {
 
         mpv = {
           config = {
-            audio-pitch-correction = true;
-            border = true;
-            cache = true;
-            cache-on-disk = false;
-            cache-secs = 300;
-            cscale = "ewa_lanczossharp";
-            embeddedfonts = false;
             hwdec = "vaapi";
-            icc-profile-auto = true;
-            interpolation = true;
-            osd-bar = false;
-            profile = "high-quality";
-            scale = "ewa_lanczossharp";
-            screenshot-format = "png";
-            sub-ass-style-overrides = "FontName=sans-serif";
-            sub-auto = "fuzzy";
-            tscale = "oversample";
-            vf = "lavfi=\"fps=fps=60:round=down\"";
-            video-sync = "display-resample";
             vo = "dmabuf-wayland";
-            volume-max = 100;
             ytdl-raw-options = "cookies-from-browser=chromium";
           };
-          enable = true;
-          scripts = with pkgs.mpvScripts; [
-            mpris
-            uosc
-            thumbfast
-          ];
+          scripts = [ pkgs.mpvScripts.mpris ];
         };
 
         ncmpcpp = {
