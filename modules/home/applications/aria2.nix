@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, ... }:
 
 {
   programs.aria2 = {
@@ -12,7 +12,7 @@
       enable-dht = true;
       enable-dht6 = true;
       enable-rpc = true;
-      file-allocation = if pkgs.stdenv.hostPlatform.isLinux then "falloc" else "prealloc";
+      file-allocation = lib.mkDefault "falloc";
       max-concurrent-downloads = 16;
       max-connection-per-server = 16;
       min-split-size = "1M";

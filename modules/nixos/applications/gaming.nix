@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  myVars,
   ...
 }:
 
@@ -54,10 +53,10 @@
               EnableFeralGamemode = true;
               EnableMangoHud = true;
               JvmArgs = "-Djava.io.tmpdir=/run/user/${
-                toString config.users.users.${myVars.username}.uid
+                toString config.users.users.${config.custom.mainUser}.uid
               }/prismlauncher";
               PreLaunchCommand = "mkdir -p /run/user/${
-                toString config.users.users.${myVars.username}.uid
+                toString config.users.users.${config.custom.mainUser}.uid
               }/prismlauncher";
               UseNativeGLFW = true;
               UseNativeOpenAL = true;

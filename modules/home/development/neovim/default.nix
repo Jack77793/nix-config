@@ -43,6 +43,7 @@
             gnumake
             lua-language-server
             nixd
+            nixfmt
             prettier
             rust-analyzer
             rustfmt

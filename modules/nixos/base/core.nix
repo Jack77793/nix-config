@@ -21,5 +21,6 @@
 
   config = {
     system.stateVersion = config.custom.stateVersion;
+    home-manager.users.${config.custom.mainUser}.home.stateVersion = config.custom.stateVersion;
   };
 }

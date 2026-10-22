@@ -2,17 +2,17 @@
 
 {
   home-manager.users.${config.custom.mainUser} =
-    { config, lib, ... }:
+    { config, ... }:
     {
       programs = {
         ghostty.settings = {
-          font-family = lib.mkForce "Sarasa Fixed SC";
-          font-size = lib.mkForce 16;
+          font-family = "Sarasa Fixed SC";
+          font-size = 16;
           macos-titlebar-style = "tabs";
-          window-theme = lib.mkForce "auto";
+          window-theme = "auto";
         };
 
-        zsh.dotDir = lib.mkForce config.home.homeDirectory;
+        zsh.dotDir = config.home.homeDirectory;
       };
     };
 }

@@ -1,23 +1,17 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
+  imports = [ ./mcp.nix ];
+
   programs = {
     pi-coding-agent = {
       enable = true;
       context = ./AGENTS.md;
-      extraPackages =
-        with pkgs;
-        [ ffmpeg ]
-        ++ lib.optionals config.programs.mcp.enable [ mcp-nixos ]
-        ++ [
-          nodejs
-          yt-dlp
-        ];
+      extraPackages = with pkgs; [
+        ffmpeg
+        nodejs
+        yt-dlp
+      ];
       settings = {
         theme = "system";
         enableInstallTelemetry = false;
@@ -35,21 +29,13 @@
         tuiMode = "regular";
         defaultProvider = "deepseek";
         defaultModel = "deepseek-flash";
-        packages = lib.optionals config.programs.mcp.enable [ "npm:pi-mcp-adapter" ] ++ [
+        packages = [
           "npm:pi-rewind-hook"
           "npm:pi-web-access"
           "npm:@juicesharp/rpiv-ask-user-question"
           "npm:@narumitw/pi-usage"
         ];
-        skills = [
-          "${pkgs.humanizer}/humanizer"
-          "${pkgs.humanizer-zh}/humanizer-zh"
-          "${pkgs.anthropics-skills}/doc-coauthoring"
-          "${pkgs.anthropics-skills}/docx"
-          "${pkgs.anthropics-skills}/pdf"
-          "${pkgs.anthropics-skills}/pptx"
-          "${pkgs.anthropics-skills}/xlsx"
-        ];
+        skills = builtins.attrValues (import ./skills.nix { inherit pkgs; });
         extensions = [
           "-builtin:mcp"
         ];
@@ -62,10 +48,6 @@
           };
         };
       };
-    };
-    mcp = {
-      enable = true;
-      servers.nixos.command = "mcp-nixos";
     };
   };
 }

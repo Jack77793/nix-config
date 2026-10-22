@@ -14,16 +14,16 @@
   config = lib.mkIf config.custom.defaultUser.enable {
     users = {
       mutableUsers = false;
-      users.${myVars.username} = {
+      users.${config.custom.mainUser} = {
         isNormalUser = true;
         initialHashedPassword = myVars.initialHashedPassword;
         uid = 1000;
         shell = pkgs.zsh;
-        home = "/home/${myVars.username}";
+        home = "/home/${config.custom.mainUser}";
         extraGroups = myVars.usergroups;
         openssh.authorizedKeys.keys = myVars.sshKeys;
       };
     };
-    custom.mainUser = myVars.username;
+    custom.mainUser = lib.mkDefault myVars.username;
   };
 }

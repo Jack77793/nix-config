@@ -4,13 +4,10 @@
   home-manager.users.${config.custom.mainUser} =
     {
       config,
-      lib,
       pkgs,
       ...
     }:
     {
-      programs.aria2.settings.file-allocation = lib.mkForce "falloc";
-
       launchd.agents.aria2 = {
         enable = true;
         config = {

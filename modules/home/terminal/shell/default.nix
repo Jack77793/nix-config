@@ -70,6 +70,6 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    dotDir = "${config.xdg.configHome}/zsh";
+    dotDir = lib.mkDefault "${config.xdg.configHome}/zsh";
   };
 }
