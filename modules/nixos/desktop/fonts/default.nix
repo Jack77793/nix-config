@@ -31,49 +31,36 @@ let
     ];
   };
 in
-lib.mkIf config.custom.desktop.enable (
-  lib.mkMerge [
-    {
-      fonts = {
-        enableDefaultPackages = false;
-        fontDir.enable = true;
-        fontconfig = {
-          inherit defaultFonts;
-          enable = true;
-        };
-        packages = with pkgs; [
-          arphic-ukai
-          lmodern
-          source-han-sans
-          source-han-serif
-        ];
+lib.mkIf config.custom.desktop.enable {
+  fonts = {
+    enableDefaultPackages = false;
+    fontDir.enable = true;
+    fontconfig = {
+      inherit defaultFonts;
+      enable = true;
+    };
+    packages = with pkgs; [
+      arphic-ukai
+      lmodern
+      source-han-sans
+      source-han-serif
+    ];
+  };
+
+  home-manager.users.${config.custom.mainUser}.fonts.fontconfig = {
+    inherit defaultFonts;
+    enable = true;
+    configFile = {
+      mappings = {
+        enable = true;
+        priority = 80;
+        source = ./config/mappings.conf;
       };
-
-      home-manager.users.${config.custom.mainUser}.imports = [
-        {
-          fonts.fontconfig = {
-            configFile.mappings = {
-              enable = true;
-              priority = 80;
-              source = ./config/mappings.conf;
-            };
-            inherit defaultFonts;
-            enable = true;
-          };
-        }
-      ];
-    }
-
-    (lib.mkIf config.custom.applications.gaming.enable {
-      home-manager.users.${config.custom.mainUser}.imports = [
-        {
-          fonts.fontconfig.configFile.steam = {
-            enable = true;
-            priority = 75;
-            source = ./config/steam.conf;
-          };
-        }
-      ];
-    })
-  ]
-)
+      steam = lib.mkIf config.custom.applications.gaming.enable {
+        enable = true;
+        priority = 75;
+        source = ./config/steam.conf;
+      };
+    };
+  };
+}

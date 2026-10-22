@@ -30,66 +30,64 @@ lib.mkIf (config.custom.desktop.gui == "gnome") {
     ];
   };
 
-  home-manager.users.${config.custom.mainUser}.imports = [
-    {
-      home = {
-        packages = with pkgs; [
-          citations
-          decibels
-          endeavour
-          fractal
-          gnome-calendar
-          gnome-characters
-          gnome-clocks
-          gnome-logs
-          gnome-shell-extensions
-          gnome-sound-recorder
-          gnome-system-monitor
-          gnome-weather
-          loupe
-          newsflash
-          papirus-icon-theme
-          resources
-          snapshot
-          tangram
-        ];
-        pointerCursor = {
-          enable = true;
-          name = "Adwaita";
-          package = pkgs.adwaita-icon-theme;
-          size = 32;
+  home-manager.users.${config.custom.mainUser} = {
+    home = {
+      packages = with pkgs; [
+        citations
+        decibels
+        endeavour
+        fractal
+        gnome-calendar
+        gnome-characters
+        gnome-clocks
+        gnome-logs
+        gnome-shell-extensions
+        gnome-sound-recorder
+        gnome-system-monitor
+        gnome-weather
+        loupe
+        newsflash
+        papirus-icon-theme
+        resources
+        snapshot
+        tangram
+      ];
+      pointerCursor = {
+        enable = true;
+        name = "Adwaita";
+        package = pkgs.adwaita-icon-theme;
+        size = 32;
+      };
+    };
+
+    programs.gnome-shell = {
+      enable = true;
+      extensions = [
+        { package = pkgs.gnomeExtensions.appindicator; }
+        { package = pkgs.gnomeExtensions.alphabetical-app-grid; }
+        { package = pkgs.gnomeExtensions.caffeine; }
+        { package = pkgs.gnomeExtensions.clipboard-indicator; }
+        { package = pkgs.gnomeExtensions.gsconnect; }
+      ];
+    };
+
+    qt = {
+      enable = true;
+      kvantum = {
+        enable = true;
+        settings = {
+          General.theme = "KvArc";
         };
       };
+      platformTheme.name = "adwaita";
+      style.name = "kvantum";
+    };
 
-      programs.gnome-shell = {
-        enable = true;
-        extensions = [
-          { package = pkgs.gnomeExtensions.appindicator; }
-          { package = pkgs.gnomeExtensions.alphabetical-app-grid; }
-          { package = pkgs.gnomeExtensions.caffeine; }
-          { package = pkgs.gnomeExtensions.clipboard-indicator; }
-          { package = pkgs.gnomeExtensions.gsconnect; }
-        ];
-      };
-
-      qt = {
-        enable = true;
-        kvantum = {
-          enable = true;
-          settings = {
-            General.theme = "KvArc";
-          };
-        };
-        platformTheme.name = "adwaita";
-        style.name = "kvantum";
-      };
-
-      services = {
-        gnome-keyring.enable = true;
-        mpris-proxy.enable = true;
-      };
-    }
-  ];
+    services = {
+      gnome-keyring.enable = true;
+      mpris-proxy.enable = true;
+    };
+  };
 
   i18n.inputMethod = {
     enable = true;

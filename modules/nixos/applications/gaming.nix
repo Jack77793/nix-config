@@ -5,6 +5,11 @@
   ...
 }:
 
+let
+  prismRuntimeDirectory = "/run/user/${
+    toString config.users.users.${config.custom.mainUser}.uid
+  }/prismlauncher";
+in
 {
   options.custom.applications.gaming.enable = lib.mkEnableOption "gaming related accessories";
 
@@ -16,55 +21,49 @@
       }
     ];
 
-    home-manager.users.${config.custom.mainUser}.imports = [
-      ../../home/applications/prismlauncher.nix
-      {
-        home.packages = with pkgs; [
-          gnome-mines
-          gnome-sudoku
-          mindustry-wayland
-          osu-lazer-bin
-        ];
+    home-manager.users.${config.custom.mainUser} = {
+      imports = [ ../../home/applications/prismlauncher.nix ];
+      home.packages = with pkgs; [
+        gnome-mines
+        gnome-sudoku
+        mindustry-wayland
+        osu-lazer-bin
+      ];
 
-        programs = {
-          mangohud = {
-            enable = true;
-            settings = {
-              cpu_mhz = true;
-              cpu_power = true;
-              cpu_stats = true;
-              cpu_temp = true;
-              font_file = "${pkgs.nerd-fonts.iosevka-term}/share/fonts/truetype/NerdFonts/IosevkaTerm/IosevkaTermNerdFont-Bold.ttf";
-              fps = true;
-              frame_timing = true;
-              frametime = true;
-              gpu_core_clock = true;
-              gpu_stats = true;
-              gpu_temp = true;
-              proc_vram = true;
-              procmem = true;
-              text_outline = true;
-              throttling_status = true;
-            };
-          };
-
-          prismlauncher = {
-            settings = {
-              EnableFeralGamemode = true;
-              EnableMangoHud = true;
-              JvmArgs = "-Djava.io.tmpdir=/run/user/${
-                toString config.users.users.${config.custom.mainUser}.uid
-              }/prismlauncher";
-              PreLaunchCommand = "mkdir -p /run/user/${
-                toString config.users.users.${config.custom.mainUser}.uid
-              }/prismlauncher";
-              UseNativeGLFW = true;
-              UseNativeOpenAL = true;
-            };
+      programs = {
+        mangohud = {
+          enable = true;
+          settings = {
+            cpu_mhz = true;
+            cpu_power = true;
+            cpu_stats = true;
+            cpu_temp = true;
+            font_file = "${pkgs.nerd-fonts.iosevka-term}/share/fonts/truetype/NerdFonts/IosevkaTerm/IosevkaTermNerdFont-Bold.ttf";
+            fps = true;
+            frame_timing = true;
+            frametime = true;
+            gpu_core_clock = true;
+            gpu_stats = true;
+            gpu_temp = true;
+            proc_vram = true;
+            procmem = true;
+            text_outline = true;
+            throttling_status = true;
           };
         };
-      }
-    ];
+
+        prismlauncher = {
+          settings = {
+            EnableFeralGamemode = true;
+            EnableMangoHud = true;
+            JvmArgs = "-Djava.io.tmpdir=${prismRuntimeDirectory}";
+            PreLaunchCommand = "mkdir -p ${prismRuntimeDirectory}";
+            UseNativeGLFW = true;
+            UseNativeOpenAL = true;
+          };
+        };
+      };
+    };
 
     programs = {
       gamescope = {

@@ -75,17 +75,15 @@ lib.mkMerge [
   })
 
   {
-    home-manager.users.${config.custom.mainUser}.imports = [
-      {
-        xdg = {
+    home-manager.users.${config.custom.mainUser} = {
+      xdg = {
+        enable = true;
+        userDirs = {
           enable = true;
-          userDirs = {
-            enable = true;
-            createDirectories = true;
-            setSessionVariables = true;
-          };
+          createDirectories = true;
+          setSessionVariables = true;
         };
-      }
-    ];
+      };
+    };
   }
 ]
