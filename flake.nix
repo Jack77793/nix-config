@@ -98,7 +98,10 @@
 
       darwinConfigurations.Akatsuki = nix-darwin.lib.darwinSystem {
         specialArgs = inputs;
-        modules = [ ./hosts/akatsuki ];
+        modules = [
+          ./modules
+          ./hosts/akatsuki
+        ];
       };
 
       packages.x86_64-linux =
