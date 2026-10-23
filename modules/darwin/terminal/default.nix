@@ -1,6 +1,10 @@
 { config, ... }:
 
 {
+  programs.ssh.extraConfig = ''
+    AddKeysToAgent yes
+  '';
+
   home-manager.users.${config.custom.mainUser} =
     { config, ... }:
     {
