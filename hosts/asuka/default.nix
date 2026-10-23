@@ -49,14 +49,9 @@
   };
   security.sudo.wheelNeedsPassword = true;
 
-  home-manager.extraSpecialArgs = {
-    piAuthPath = "${
-      config.home-manager.users.${config.custom.mainUser}.programs.pi-coding-agent.configDir
-    }/auth.json";
-    piSecrets = {
-      gemini = config.age.secrets.gemini.path;
-      deepseek = config.age.secrets.deepseek.path;
-    };
+  home-manager.users.${config.custom.mainUser}.custom.development.agentSandbox.secretPaths = {
+    gemini = config.age.secrets.gemini.path;
+    deepseek = config.age.secrets.deepseek.path;
   };
 
   environment.persistence."/nix/persist" = {

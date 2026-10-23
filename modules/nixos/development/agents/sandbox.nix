@@ -9,18 +9,22 @@
 let
   hostUser = config.custom.mainUser;
   hostHome = config.users.users.${hostUser}.home;
-  hostPiConfigDir = config.home-manager.users.${hostUser}.programs.pi-coding-agent.configDir;
-  hostPiStateDir = dirOf hostPiConfigDir;
-  hostPiSessions = "${hostPiStateDir}/pi-sandboxed-sessions";
-  hostPiAuth = "${hostPiStateDir}/pi-sandboxed-auth";
-  hostPiSecrets = {
-    inherit (config.age.secrets) gemini deepseek;
+  hostPi = rec {
+    configDir = config.home-manager.users.${hostUser}.programs.pi-coding-agent.configDir;
+    stateDir = dirOf configDir;
+    sessionsDir = "${stateDir}/pi-sandboxed-sessions";
+    authDir = "${stateDir}/pi-sandboxed-auth";
+    secrets = {
+      inherit (config.age.secrets) gemini deepseek;
+    };
   };
 
-  guestPiSessions = "/var/lib/pi-sandboxed-sessions";
-  guestPiAuth = "/var/lib/pi-sandboxed-auth";
-  guestPiPackages = "/var/lib/pi-host-packages";
-  guestPiSecrets = "/run/pi-sandboxed-secrets";
+  guestPi = {
+    sessionsDir = "/var/lib/pi-sandboxed-sessions";
+    authDir = "/var/lib/pi-sandboxed-auth";
+    packagesDir = "/var/lib/pi-host-packages";
+    secretsDir = "/run/pi-sandboxed-secrets";
+  };
 
   piPackageDirs = [
     "npm"
@@ -32,8 +36,8 @@ in
 
   config = lib.mkIf config.custom.development.agentSandbox.enable {
     systemd.tmpfiles.rules = map (path: "d ${path} 0700 ${hostUser} users - -") [
-      hostPiSessions
-      hostPiAuth
+      hostPi.sessionsDir
+      hostPi.authDir
     ];
 
     home-manager.users.${hostUser} =
@@ -41,7 +45,7 @@ in
       {
         home.activation.piSandboxPackageDirs = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
           run mkdir -p -m 0700 -- ${
-            lib.escapeShellArgs (map (dir: "${hostPiConfigDir}/${dir}") piPackageDirs)
+            lib.escapeShellArgs (map (dir: "${hostPi.configDir}/${dir}") piPackageDirs)
           }
         '';
       };
@@ -55,13 +59,15 @@ in
         "--private-users-ownership=map"
         "--bind=${hostHome}/Projects:${hostHome}/Projects:idmap"
         # Keep nspawn from creating root-owned parents in Pi's configuration directory.
-        "--bind=${hostPiSessions}:${guestPiSessions}:idmap"
-        "--bind=${hostPiAuth}:${guestPiAuth}:idmap"
+        "--bind=${hostPi.sessionsDir}:${guestPi.sessionsDir}:idmap"
+        "--bind=${hostPi.authDir}:${guestPi.authDir}:idmap"
       ]
-      ++ map (dir: "--bind-ro=${hostPiConfigDir}/${dir}:${guestPiPackages}/${dir}:idmap") piPackageDirs
+      ++ map (
+        dir: "--bind-ro=${hostPi.configDir}/${dir}:${guestPi.packagesDir}/${dir}:idmap"
+      ) piPackageDirs
       ++ lib.mapAttrsToList (
-        name: secret: "--bind-ro=${secret.path}:${guestPiSecrets}/${name}:idmap"
-      ) hostPiSecrets;
+        name: secret: "--bind-ro=${secret.path}:${guestPi.secretsDir}/${name}:idmap"
+      ) hostPi.secrets;
 
       specialArgs = { inherit home-manager; };
       config = {
@@ -79,14 +85,15 @@ in
           };
         };
 
-        home-manager = {
-          extraSpecialArgs = {
-            piSandboxSessionsDir = guestPiSessions;
-            piSandboxPackagesDir = guestPiPackages;
-            piAuthPath = "${guestPiAuth}/auth.json";
-            piSecrets = lib.mapAttrs (name: _: "${guestPiSecrets}/${name}") hostPiSecrets;
+        home-manager.users.${hostUser} = {
+          imports = [ ../../../home/development/agents/sandbox-container.nix ];
+          custom.development.agentSandbox = {
+            authPath = "${guestPi.authDir}/auth.json";
+            secretPaths = lib.mapAttrs (name: _: "${guestPi.secretsDir}/${name}") hostPi.secrets;
+            container = {
+              inherit (guestPi) sessionsDir packagesDir;
+            };
           };
-          users.${hostUser}.imports = [ ../../../home/development/agents/sandbox-container.nix ];
         };
 
         nix.daemon.enable = false;
