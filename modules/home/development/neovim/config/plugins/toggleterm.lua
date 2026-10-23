@@ -23,5 +23,5 @@ require("toggleterm").setup({
 	persist_size = true,
 	direction = "horizontal",
 	close_on_exit = true, -- close the terminal window when the process exits
-	shell = "zsh", -- change the default shell
+	shell = vim.o.shell,
 })
