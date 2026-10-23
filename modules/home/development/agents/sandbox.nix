@@ -2,24 +2,21 @@
   config,
   lib,
   pkgs,
-  piSandboxSessionsDir,
-  piSandboxAuthDir,
-  piSandboxPackagesDir,
-  piSandboxSecretsDir,
+  piSecrets,
+  piAuthPath,
   ...
 }:
 
 let
   piSettings = "${config.programs.pi-coding-agent.configDir}/settings.json";
-  piAuth = "${piSandboxAuthDir}/auth.json";
   piAuthSeed = (pkgs.formats.json { }).generate "pi-sandbox-auth.json" {
     google = {
       type = "api_key";
-      key = "!cat ${piSandboxSecretsDir}/gemini";
+      key = "!cat ${piSecrets.gemini}";
     };
     deepseek = {
       type = "api_key";
-      key = "!cat ${piSandboxSecretsDir}/deepseek";
+      key = "!cat ${piSecrets.deepseek}";
     };
   };
 in
@@ -61,17 +58,7 @@ in
     };
     sessionPath = [ "${config.xdg.dataHome}/pnpm" ];
 
-    file = {
-      "${piSettings}".enable = false;
-      "${config.programs.pi-coding-agent.configDir}/sessions".source =
-        config.lib.file.mkOutOfStoreSymlink piSandboxSessionsDir;
-      "${config.programs.pi-coding-agent.configDir}/auth.json".source =
-        config.lib.file.mkOutOfStoreSymlink piAuth;
-      "${config.programs.pi-coding-agent.configDir}/npm".source =
-        config.lib.file.mkOutOfStoreSymlink "${piSandboxPackagesDir}/npm";
-      "${config.programs.pi-coding-agent.configDir}/git".source =
-        config.lib.file.mkOutOfStoreSymlink "${piSandboxPackagesDir}/git";
-    };
+    file."${piSettings}".enable = false;
     activation.piMutableSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] (
       lib.hm.generators.mkImpureConfigMerger {
         inherit pkgs;
@@ -91,7 +78,7 @@ in
         format = "json";
         empty = "{}";
         jqOperation = "$dynamic * $static";
-        path = piAuth;
+        path = piAuthPath;
         staticSettings = piAuthSeed;
         mode = "600";
       }

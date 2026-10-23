@@ -94,6 +94,12 @@
             ./hosts/asanagi
           ];
         };
+        Asuka = nixpkgs.lib.nixosSystem {
+          specialArgs = inputs;
+          modules = [
+            ./hosts/asuka
+          ];
+        };
       };
 
       darwinConfigurations.Akatsuki = nix-darwin.lib.darwinSystem {

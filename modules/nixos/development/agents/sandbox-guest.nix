@@ -23,7 +23,7 @@
       group = "users";
       home = lib.mkDefault "/home/${config.custom.mainUser}";
       linger = true;
-      hashedPassword = lib.mkDefault "!";
+      initialHashedPassword = lib.mkDefault "!";
     };
   };
 
@@ -34,7 +34,6 @@
     users.${config.custom.mainUser} = {
       imports = [ ../../../home/development/agents/sandbox.nix ];
       home.stateVersion = config.system.stateVersion;
-      programs.home-manager.enable = true;
     };
   };
 
