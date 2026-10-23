@@ -15,6 +15,10 @@ let
   guestPiSessions = "/var/lib/pi-sandboxed-sessions";
   guestPiAuth = "/var/lib/pi-sandboxed-auth";
   guestPiPackages = "/var/lib/pi-host-packages";
+  guestPiSecrets = "/run/pi-sandboxed-secrets";
+  piSecrets = {
+    inherit (config.age.secrets) gemini deepseek;
+  };
   piPackageDirs = [
     "npm"
     "git"
@@ -53,7 +57,10 @@ in
         "--bind=${piSessions}:${guestPiSessions}:idmap"
         "--bind=${piAuth}:${guestPiAuth}:idmap"
       ]
-      ++ map (dir: "--bind-ro=${piConfigDir}/${dir}:${guestPiPackages}/${dir}:idmap") piPackageDirs;
+      ++ map (dir: "--bind-ro=${piConfigDir}/${dir}:${guestPiPackages}/${dir}:idmap") piPackageDirs
+      ++ lib.mapAttrsToList (
+        name: secret: "--bind-ro=${secret.path}:${guestPiSecrets}/${name}:idmap"
+      ) piSecrets;
 
       specialArgs = { inherit home-manager; };
       config = {
@@ -73,6 +80,7 @@ in
           piSandboxSessionsDir = guestPiSessions;
           piSandboxAuthDir = guestPiAuth;
           piSandboxPackagesDir = guestPiPackages;
+          piSandboxSecretsDir = guestPiSecrets;
         };
 
         nix.daemon.enable = false;
