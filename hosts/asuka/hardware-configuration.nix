@@ -76,7 +76,7 @@
         "_netdev"
         "nofail"
         "msize=262144"
-        "cache=loose"
+        "cache=mmap"
       ];
     };
 

@@ -35,10 +35,12 @@
 
   homebrew = {
     enable = true;
-    onActivation.cleanup = "uninstall";
+    enableZshIntegration = true;
+    onActivation.cleanup = "zap";
     casks = [
       "audacity"
       "caffeine"
+      "calibre"
       "ghostty"
       "gimp"
       "google-chrome"

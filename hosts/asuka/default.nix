@@ -1,5 +1,6 @@
 {
   config,
+  home-manager,
   impermanence,
   myVars,
   pkgs,
@@ -10,10 +11,14 @@
   imports = [
     ./hardware-configuration.nix
     ./secrets.nix
+    home-manager.nixosModules.home-manager
     impermanence.nixosModules.impermanence
+    ../../modules/common/users.nix
+    ../../modules/common/home-manager.nix
     ../../modules/common/nix.nix
-    ../../modules/nixos/development/agents/sandbox-guest.nix
   ];
+
+  custom.mainUser = myVars.username;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -27,6 +32,7 @@
   };
 
   services = {
+    dbus.enable = true;
     qemuGuest.enable = true;
     openssh = {
       enable = true;
@@ -38,21 +44,33 @@
     };
   };
 
-  users.users.${config.custom.mainUser} = {
-    uid = 1000;
-    initialHashedPassword = myVars.initialHashedPassword;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
-    openssh.authorizedKeys.keys = myVars.sshKeys;
+  users = {
+    mutableUsers = false;
+    users.${config.custom.mainUser} = {
+      isNormalUser = true;
+      uid = 1000;
+      group = "users";
+      home = "/home/${config.custom.mainUser}";
+      linger = true;
+      initialHashedPassword = myVars.initialHashedPassword;
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+      ];
+      openssh.authorizedKeys.keys = myVars.sshKeys;
+    };
   };
   security.sudo.wheelNeedsPassword = true;
 
-  home-manager.users.${config.custom.mainUser}.custom.development.agentSandbox.secretPaths = {
-    gemini = config.age.secrets.gemini.path;
-    deepseek = config.age.secrets.deepseek.path;
+  home-manager = {
+    enableLegacyProfileManagement = false;
+    users.${config.custom.mainUser} = {
+      imports = [ ./agents.nix ];
+      home.stateVersion = config.system.stateVersion;
+    };
   };
+
+  nix.nixPath = [ "nixpkgs=${pkgs.path}" ];
 
   environment.persistence."/nix/persist" = {
     hideMounts = true;
