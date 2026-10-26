@@ -47,22 +47,14 @@
       ...
     }@inputs:
     let
-      eachSystem =
-        f:
-        nixpkgs.lib.genAttrs (builtins.attrNames nixpkgs.legacyPackages) (
-          system: f nixpkgs.legacyPackages.${system}
-        );
+      eachSystem = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
 
       treefmtEval = eachSystem (
-        pkgs:
-        treefmt-nix.lib.evalModule pkgs {
-          projectRootFile = "flake.nix";
-          programs.nixfmt.enable = true;
-          programs.prettier.enable = true;
-          programs.shfmt.enable = true;
-          programs.stylua.enable = true;
-          settings.global.excludes = [ "result/*" ];
-        }
+        system: treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix
       );
     in
     {
@@ -110,25 +102,11 @@
         ];
       };
 
-      packages.x86_64-linux =
-        let
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-            overlays = import ./pkgs;
-          };
-        in
-        {
-          inherit (pkgs)
-            anthropics-skills
-            eisvogel-template
-            humanizer
-            humanizer-zh
-            spotify-adblock
-            wechat
-            ;
-        };
+      packages.x86_64-linux = (import ./pkgs).packages {
+        inherit nixpkgs;
+        system = "x86_64-linux";
+      };
 
-      formatter = eachSystem (pkgs: treefmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
+      formatter = eachSystem (system: treefmtEval.${system}.config.build.wrapper);
     };
 }

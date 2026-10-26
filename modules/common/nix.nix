@@ -20,6 +20,6 @@
     channel.enable = false;
   };
 
-  nixpkgs.overlays = import ../../pkgs;
+  nixpkgs.overlays = (import ../../pkgs).overlays;
   nixpkgs.config.allowUnfree = lib.mkDefault true;
 }
