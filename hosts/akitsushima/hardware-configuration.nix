@@ -26,7 +26,6 @@
       kernelModules = [ "dm-snapshot" ];
       luks.devices."akitsushima" = {
         device = "/dev/disk/by-uuid/b31f3f31-ea3a-429f-aaef-bc171be99580";
-        preLVM = true;
         allowDiscards = true;
       };
     };

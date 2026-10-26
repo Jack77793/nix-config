@@ -7,7 +7,6 @@
 
 {
   imports = [
-    ./mcp.nix
     ./pi.nix
   ];
 

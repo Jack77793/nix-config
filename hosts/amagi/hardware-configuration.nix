@@ -26,7 +26,6 @@
       kernelModules = [ "dm-snapshot" ];
       luks.devices."amagi" = {
         device = "/dev/disk/by-uuid/242ecf80-4014-4dc8-9fe2-baa920cd37fc";
-        preLVM = true;
         allowDiscards = true;
       };
     };

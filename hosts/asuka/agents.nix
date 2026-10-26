@@ -25,7 +25,6 @@ in
   imports = [
     ../../modules/home/development/agents/codex.nix
     ../../modules/home/development/agents/pi.nix
-    ../../modules/home/development/agents/chrome-devtools.nix
     ../../modules/home/development/git.nix
     ../../modules/home/development/uv.nix
     ../../modules/home/development/neovim
