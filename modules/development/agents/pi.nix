@@ -2,11 +2,33 @@
   config,
   lib,
   pkgs,
+  osConfig,
   ...
 }:
 
+let
+  piConfigDir = config.programs.pi-coding-agent.configDir;
+  authPath = "${piConfigDir}/auth.json";
+  secrets =
+    if pkgs.stdenv.hostPlatform.isDarwin then
+      config.age.secrets or { }
+    else
+      osConfig.age.secrets or { };
+  authSeed = pkgs.writeText "pi-auth-seed.json" (
+    builtins.toJSON {
+      google = {
+        type = "api_key";
+        key = "!cat ${secrets.gemini.path}";
+      };
+      deepseek = {
+        type = "api_key";
+        key = "!cat ${secrets.deepseek.path}";
+      };
+    }
+  );
+in
 {
-  home.file."${config.programs.pi-coding-agent.configDir}/mcp.json".text = builtins.toJSON {
+  home.file."${piConfigDir}/mcp.json".text = builtins.toJSON {
     mcpServers = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       nixos.command = "mcp-nixos";
       chrome-devtools = {
@@ -26,6 +48,18 @@
       };
     };
   };
+
+  home.activation.piAuth = lib.hm.dag.entryAfter [ "linkGeneration" ] (
+    lib.hm.generators.mkImpureConfigMerger {
+      inherit pkgs;
+      format = "json";
+      empty = "{}";
+      jqOperation = "$dynamic * $static";
+      path = authPath;
+      staticSettings = authSeed;
+      mode = "600";
+    }
+  );
 
   programs = {
     pi-coding-agent = {

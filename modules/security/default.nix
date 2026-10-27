@@ -7,8 +7,10 @@
 }:
 
 {
-  imports = lib.optionals (_class == "nixos") [
+  imports = [
     ./secrets.nix
+  ]
+  ++ lib.optionals (_class == "nixos") [
     ./fingerprint.nix
     ./keepassxc.nix
   ];

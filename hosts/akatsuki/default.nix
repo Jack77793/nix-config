@@ -3,6 +3,10 @@ let
   homeDirectory = "/Users/${username}";
 in
 {
+  imports = [ ./secrets.nix ];
+
+  custom.security.agenix.enable = true;
+
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   system.primaryUser = username;

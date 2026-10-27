@@ -2,24 +2,12 @@
   config,
   lib,
   pkgs,
-  osConfig,
   ...
 }:
 
 let
   piConfigDir = config.programs.pi-coding-agent.configDir;
   piSettings = "${piConfigDir}/settings.json";
-  piAuthPath = "${piConfigDir}/auth.json";
-  piAuthSeed = (pkgs.formats.json { }).generate "pi-sandbox-auth.json" {
-    google = {
-      type = "api_key";
-      key = "!cat ${osConfig.age.secrets.gemini.path}";
-    };
-    deepseek = {
-      type = "api_key";
-      key = "!cat ${osConfig.age.secrets.deepseek.path}";
-    };
-  };
 in
 {
   imports = [
@@ -68,17 +56,6 @@ in
         staticSettings =
           (pkgs.formats.json { }).generate "pi-sandbox-settings.json"
             config.programs.pi-coding-agent.settings;
-        mode = "600";
-      }
-    );
-    activation.piAuth = lib.hm.dag.entryAfter [ "linkGeneration" ] (
-      lib.hm.generators.mkImpureConfigMerger {
-        inherit pkgs;
-        format = "json";
-        empty = "{}";
-        jqOperation = "$dynamic * $static";
-        path = piAuthPath;
-        staticSettings = piAuthSeed;
         mode = "600";
       }
     );
