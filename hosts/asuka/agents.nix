@@ -23,14 +23,13 @@ let
 in
 {
   imports = [
-    ../../modules/home/development/agents/codex.nix
-    ../../modules/home/development/agents/pi.nix
-    ../../modules/home/development/git.nix
-    ../../modules/home/development/uv.nix
-    ../../modules/home/development/neovim
-    ../../modules/home/security/gpg.nix
-    ../../modules/home/terminal/packages.nix
-    ../../modules/home/terminal/tools.nix
+    ../../modules/development/agents/home.nix
+    ../../modules/development/git.nix
+    ../../modules/development/uv.nix
+    ../../modules/development/neovim/home.nix
+    ../../modules/security/gpg.nix
+    ../../modules/terminal/packages.nix
+    ../../modules/terminal/tools.nix
   ];
 
   custom.development.neovim.extended = true;

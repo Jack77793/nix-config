@@ -1,6 +1,5 @@
 {
   config,
-  home-manager,
   impermanence,
   myVars,
   pkgs,
@@ -11,11 +10,10 @@
   imports = [
     ./hardware-configuration.nix
     ./secrets.nix
-    home-manager.nixosModules.home-manager
     impermanence.nixosModules.impermanence
-    ../../modules/common/users.nix
-    ../../modules/common/home-manager.nix
-    ../../modules/common/nix.nix
+    ../../modules/base/users.nix
+    ../../modules/base/home-manager.nix
+    ../../modules/platform/nix.nix
   ];
 
   custom.mainUser = myVars.username;

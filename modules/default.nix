@@ -1,21 +1,17 @@
-{ _class, home-manager, ... }:
+{ _class, lib, ... }:
 
 {
   imports = [
-    ./common
+    ./base
+    ./platform
+    ./desktop
+    ./terminal
+    ./development
+    ./applications
+    ./security
   ]
-  ++ (
-    if _class == "nixos" then
-      [
-        home-manager.nixosModules.home-manager
-        ./nixos
-      ]
-    else if _class == "darwin" then
-      [
-        home-manager.darwinModules.home-manager
-        ./darwin
-      ]
-    else
-      throw "Unsupported module class: ${toString _class}"
-  );
+  ++ lib.optionals (_class == "nixos") [
+    ./networking
+    ./virtualization
+  ];
 }

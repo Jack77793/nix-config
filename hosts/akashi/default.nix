@@ -12,7 +12,7 @@
   time.timeZone = "Asia/Shanghai";
 
   systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
-  users.users.nixos.openssh.authorizedKeys.keys = (import ../../modules/common/vars.nix).sshKeys;
+  users.users.nixos.openssh.authorizedKeys.keys = (import ../../modules/base/vars.nix).sshKeys;
 
   nix = {
     settings = {
