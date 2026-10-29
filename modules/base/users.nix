@@ -34,9 +34,9 @@
             isNormalUser = true;
             initialHashedPassword = myVars.initialHashedPassword;
             uid = 1000;
-            shell = pkgs.zsh;
+            shell = lib.mkOverride 900 pkgs.zsh;
             home = "/home/${config.custom.mainUser}";
-            extraGroups = myVars.usergroups;
+            extraGroups = lib.mkDefault myVars.usergroups;
             openssh.authorizedKeys.keys = myVars.sshKeys;
           };
         };

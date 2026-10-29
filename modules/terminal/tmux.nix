@@ -1,5 +1,3 @@
-{ pkgs, ... }:
-
 {
   programs.tmux = {
     enable = true;
@@ -8,7 +6,6 @@
     escapeTime = 50;
     historyLimit = 16384;
     keyMode = "vi";
-    shell = "${pkgs.zsh}/bin/zsh";
     terminal = "screen-256color";
     extraConfig = ''
       bind v split-window -h

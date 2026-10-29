@@ -13,6 +13,7 @@
     profile = "desktop";
 
     applications.gaming.enable = true;
+    development.enable = true;
     security.agenix.enable = true;
     virtualization.qemu.enable = true;
 

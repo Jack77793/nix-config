@@ -1,9 +1,14 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.ghostty = {
     enable = true;
-    enableZshIntegration = true;
+    enableZshIntegration = config.programs.zsh.enable;
     package = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin (lib.mkDefault null);
     settings = lib.mapAttrs (_: lib.mkDefault) (
       {

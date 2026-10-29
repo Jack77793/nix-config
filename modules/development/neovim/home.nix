@@ -1,5 +1,5 @@
 {
-  config,
+  osConfig,
   lib,
   pkgs,
   ...
@@ -8,12 +8,10 @@
 {
   imports = [ ../python.nix ];
 
-  options.custom.development.neovim.extended = lib.mkEnableOption "extended neovim";
-
   config = {
     custom.development.python.extraPackages =
       ps:
-      lib.optionals config.custom.development.neovim.extended (
+      lib.optionals osConfig.custom.development.enable (
         with ps;
         [
           black
@@ -32,7 +30,7 @@
         [
           tree-sitter
         ]
-        ++ lib.optionals config.custom.development.neovim.extended (
+        ++ lib.optionals osConfig.custom.development.enable (
           with pkgs;
           [
             bash-language-server
@@ -54,7 +52,7 @@
       initLua =
         builtins.readFile ./config/init.lua
         + builtins.readFile ./config/keybinds.lua
-        + lib.optionalString config.custom.development.neovim.extended (
+        + lib.optionalString osConfig.custom.development.enable (
           builtins.readFile ./config/keybindsext.lua
         );
       plugins =
@@ -120,10 +118,7 @@
                 [ "-- @extended_sources@" ]
                 [
                   (
-                    if config.custom.development.neovim.extended then
-                      ''{ name = "nvim_lsp", max_item_count = 240 },''
-                    else
-                      ""
+                    if osConfig.custom.development.enable then ''{ name = "nvim_lsp", max_item_count = 240 },'' else ""
                   )
                 ]
                 (builtins.readFile ./config/plugins/cmp.lua);
@@ -183,7 +178,7 @@
             config = builtins.readFile ./config/plugins/illuminate.lua;
           }
         ]
-        ++ lib.optionals config.custom.development.neovim.extended (
+        ++ lib.optionals osConfig.custom.development.enable (
           with pkgs.vimPlugins;
           [
             {

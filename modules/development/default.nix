@@ -12,15 +12,22 @@
     ./agents
   ];
 
-  home-manager.users.${config.custom.mainUser} = {
-    imports = [ ./git.nix ] ++ lib.optional config.custom.desktop.enable ./uv.nix;
+  options.custom.development.enable = lib.mkEnableOption "extended development tools";
+
+  config = {
+    home-manager.users.${config.custom.mainUser} = {
+      imports = [ ./git.nix ] ++ lib.optional config.custom.development.enable ./uv.nix;
+    }
+    // lib.optionalAttrs (_class == "nixos") {
+      custom.development.python.extraPackages = lib.mkAfter (
+        ps:
+        lib.optionals (config.custom.development.enable && config.custom.desktop.enable) [
+          ps.secretstorage
+        ]
+      );
+    };
   }
   // lib.optionalAttrs (_class == "nixos") {
-    custom.development.python.extraPackages = lib.mkAfter (
-      ps: lib.optionals config.custom.desktop.enable [ ps.secretstorage ]
-    );
+    environment.systemPackages = [ pkgs.git ];
   };
-}
-// lib.optionalAttrs (_class == "nixos") {
-  environment.systemPackages = [ pkgs.git ];
 }

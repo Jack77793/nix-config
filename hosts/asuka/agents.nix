@@ -20,8 +20,6 @@ in
     ../../modules/terminal/tools.nix
   ];
 
-  custom.development.neovim.extended = true;
-
   programs.bash.enable = true;
 
   home = {

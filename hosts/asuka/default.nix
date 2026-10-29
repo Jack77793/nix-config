@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   impermanence,
   myVars,
   pkgs,
@@ -14,9 +15,15 @@
     ../../modules/base/users.nix
     ../../modules/base/home-manager.nix
     ../../modules/platform/nix.nix
+    {
+      options.custom.development.enable = lib.mkEnableOption "extended development tools";
+    }
   ];
 
-  custom.mainUser = myVars.username;
+  custom = {
+    mainUser = myVars.username;
+    development.enable = true;
+  };
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

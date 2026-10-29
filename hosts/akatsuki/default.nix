@@ -5,7 +5,10 @@ in
 {
   imports = [ ./secrets.nix ];
 
-  custom.security.agenix.enable = true;
+  custom = {
+    development.enable = true;
+    security.agenix.enable = true;
+  };
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 

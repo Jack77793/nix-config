@@ -6,10 +6,9 @@
 }:
 
 {
-  home.shell.enableZshIntegration = true;
+  home.shell.enableZshIntegration = config.programs.zsh.enable;
 
   programs.zsh = {
-    enable = true;
     enableCompletion = true;
 
     autocd = true;
