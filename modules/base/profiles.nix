@@ -9,6 +9,7 @@
     type = lib.types.enum [
       "desktop"
       "headless"
+      "sandbox"
     ];
     default = "headless";
     description = "The profile to be used";
@@ -30,6 +31,14 @@
       custom = {
         desktop.enable = lib.mkDefault false;
         networking.manager = lib.mkDefault "networkd";
+        defaultUser.enable = lib.mkDefault true;
+      };
+    })
+
+    (lib.mkIf (config.custom.profile == "sandbox") {
+      custom = {
+        desktop.enable = lib.mkDefault false;
+        hostDefaults.enable = lib.mkDefault false;
         defaultUser.enable = lib.mkDefault true;
       };
     })
