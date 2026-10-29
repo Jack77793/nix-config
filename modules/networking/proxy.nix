@@ -7,7 +7,7 @@
 
 {
   config = lib.mkMerge [
-    {
+    (lib.mkIf config.custom.hostDefaults.enable {
       programs.proxychains = {
         enable = true;
         package = pkgs.proxychains-ng;
@@ -18,7 +18,7 @@
           port = 2012;
         };
       };
-    }
+    })
 
     (lib.mkIf config.services.sing-box.enable {
       systemd.services.sing-box.environment = {

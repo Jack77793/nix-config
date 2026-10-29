@@ -1,10 +1,15 @@
 {
+  config,
   _class,
   lib,
   pkgs,
   ...
 }:
 
+let
+  # Preserve standalone imports and Darwin, which do not declare this option.
+  hostDefaults = config.custom.hostDefaults.enable or true;
+in
 {
   nix = {
     settings = {
@@ -16,9 +21,9 @@
         "nix-command"
         "flakes"
       ];
-      auto-optimise-store = true;
+      auto-optimise-store = lib.mkIf hostDefaults true;
     };
-    gc = {
+    gc = lib.mkIf hostDefaults {
       automatic = true;
       options = "--delete-older-than 7d";
     };

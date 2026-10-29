@@ -1,4 +1,6 @@
-{
+{ config, lib, ... }:
+
+lib.mkIf config.custom.hostDefaults.enable {
   services.openssh = {
     enable = true;
     openFirewall = true;

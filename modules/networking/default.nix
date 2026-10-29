@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
 {
   imports = [
@@ -23,7 +23,7 @@
     };
   };
 
-  config = {
+  config = lib.mkIf config.custom.hostDefaults.enable {
     services.resolved.enable = true;
 
     networking = {

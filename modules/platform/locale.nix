@@ -1,4 +1,6 @@
-{
+{ config, lib, ... }:
+
+lib.mkIf config.custom.hostDefaults.enable {
   time.timeZone = "Asia/Shanghai";
 
   i18n = {

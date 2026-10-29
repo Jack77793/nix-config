@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-lib.mkIf (config.custom.networking.manager == "nm") {
+lib.mkIf (config.custom.hostDefaults.enable && config.custom.networking.manager == "nm") {
   networking = {
     networkmanager = {
       enable = true;

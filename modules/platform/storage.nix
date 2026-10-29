@@ -1,6 +1,6 @@
-{ config, ... }:
+{ config, lib, ... }:
 
-{
+lib.mkIf config.custom.hostDefaults.enable {
   services = {
     btrfs.autoScrub = {
       enable = true;

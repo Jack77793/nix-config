@@ -5,8 +5,8 @@
   ...
 }:
 
-{
-  config = lib.mkMerge [
+lib.mkIf config.custom.hostDefaults.enable (
+  lib.mkMerge [
     {
       boot = {
         kernelPackages = pkgs.linuxPackages_latest;
@@ -46,5 +46,5 @@
         }
       ];
     })
-  ];
-}
+  ]
+)

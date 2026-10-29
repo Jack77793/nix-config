@@ -1,4 +1,9 @@
-{ _class, lib, ... }:
+{
+  config,
+  _class,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -13,6 +18,6 @@
   ];
 
   config = lib.optionalAttrs (_class == "nixos") {
-    nix.gc.dates = "weekly";
+    nix.gc.dates = lib.mkIf config.custom.hostDefaults.enable "weekly";
   };
 }

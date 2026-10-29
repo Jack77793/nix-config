@@ -1,6 +1,11 @@
-{ pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+lib.mkIf config.custom.hostDefaults.enable {
   environment.systemPackages = with pkgs; [
     btrfs-progs
     dosfstools

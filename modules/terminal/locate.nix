@@ -1,10 +1,12 @@
 {
+  config,
+  lib,
   pkgs,
   options,
   ...
 }:
 
-{
+lib.mkIf config.custom.hostDefaults.enable {
   environment = {
     persistence."/nix/persist".directories = [
       "/var/lib/plocate"

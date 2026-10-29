@@ -1,4 +1,6 @@
-{
+{ config, lib, ... }:
+
+lib.mkIf config.custom.hostDefaults.enable {
   networking = {
     nftables.enable = true;
     firewall = {
