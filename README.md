@@ -1,8 +1,8 @@
 # Jack77793's NixOS Config
 
-A personal NixOS configuration flake for multiple hosts.
+A personal Nix flake for NixOS and macOS (nix-darwin).
 
-> **Note:** This configuration contains hardware-specific settings and references a private secrets repository. Do not deploy it directly on your machine — use it as a reference instead.
+> Do not deploy this configuration unchanged. It includes hardware-specific settings.
 
 ## Structure
 
@@ -21,7 +21,7 @@ A personal NixOS configuration flake for multiple hosts.
 │   ├── terminal/          # Shell, terminal emulators and CLI tools
 │   ├── development/       # Git, Neovim, Python and coding agents
 │   ├── applications/      # Applications and gaming
-│   └── virtualization/    # Container presets and QEMU
+│   └── virtualization/    # Podman defaults and QEMU tools
 └── pkgs/
     ├── default.nix        # Overlay aggregator
     ├── pkgs.toml          # Package metadata for nvchecker
@@ -46,9 +46,9 @@ A personal NixOS configuration flake for multiple hosts.
 | Filesystem           | tmpfs /, Btrfs on LUKS |
 | Secure Boot          | lanzaboote             |
 
-## Secrets Management
+## Secrets
 
-Secrets are managed with [agenix](https://github.com/ryantm/agenix) and stored in a private repository, referenced as the `mySecrets` flake input. This configuration cannot be deployed without access to that repository.
+Secrets use [agenix](https://github.com/ryantm/agenix) and the private `mySecrets` flake input. Deployment requires access to that repository.
 
 ## References
 
