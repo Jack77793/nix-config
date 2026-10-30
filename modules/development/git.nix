@@ -1,14 +1,24 @@
-{ myVars, ... }:
+{
+  myVars,
+  osConfig,
+  ...
+}:
 
 {
   programs.git = {
     enable = true;
     lfs.enable = true;
-    signing = {
-      format = "openpgp";
-      signByDefault = true;
-      key = "CAE07E085EB3F663";
-    };
+    signing =
+      if (osConfig.custom.profile or null) == "sandbox" then
+        {
+          signByDefault = false;
+        }
+      else
+        {
+          format = "openpgp";
+          signByDefault = true;
+          key = "CAE07E085EB3F663";
+        };
     settings = {
       user = {
         name = myVars.username;

@@ -1,15 +1,21 @@
 { config, lib, ... }:
 
-lib.mkIf config.custom.hostDefaults.enable {
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-    ports = [ 484 ];
-    settings = {
-      PasswordAuthentication = false;
-      PermitRootLogin = "no";
-    };
-  };
+lib.mkMerge [
+  {
+    services.openssh.enable = lib.mkDefault config.custom.hostDefaults.enable;
+  }
 
-  environment.enableAllTerminfo = true;
-}
+  (lib.mkIf config.services.openssh.enable {
+    services.openssh = {
+      openFirewall = true;
+      ports = lib.mkDefault [ 484 ];
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = lib.mkDefault false;
+        PermitRootLogin = "no";
+      };
+    };
+
+    environment.enableAllTerminfo = true;
+  })
+]

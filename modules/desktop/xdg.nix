@@ -78,7 +78,7 @@ lib.mkMerge [
     home-manager.users.${config.custom.mainUser} = {
       xdg = {
         enable = true;
-        userDirs = {
+        userDirs = lib.mkIf config.custom.hostDefaults.enable {
           enable = true;
           createDirectories = true;
           setSessionVariables = true;

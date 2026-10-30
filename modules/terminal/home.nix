@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  osConfig,
+  ...
+}:
 
 {
   imports = [
@@ -8,15 +13,17 @@
     ./shell/home.nix
   ];
 
-  home.packages = lib.optionals pkgs.stdenv.hostPlatform.isLinux (
-    with pkgs;
-    [
-      alsa-utils
-      lm_sensors
-      net-tools
-      pciutils
-      usbutils
-      vulkan-tools
-    ]
-  );
+  home.packages =
+    lib.optionals (pkgs.stdenv.hostPlatform.isLinux && osConfig.custom.hostDefaults.enable)
+      (
+        with pkgs;
+        [
+          alsa-utils
+          lm_sensors
+          net-tools
+          pciutils
+          usbutils
+          vulkan-tools
+        ]
+      );
 }

@@ -89,6 +89,7 @@
         Asuka = nixpkgs.lib.nixosSystem {
           specialArgs = inputs;
           modules = [
+            ./modules
             ./hosts/asuka
           ];
         };

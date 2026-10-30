@@ -9,6 +9,8 @@
 let
   piConfigDir = config.programs.pi-coding-agent.configDir;
   authPath = "${piConfigDir}/auth.json";
+  settingsPath = "${piConfigDir}/settings.json";
+  sandbox = (osConfig.custom.profile or null) == "sandbox";
   secrets =
     if pkgs.stdenv.hostPlatform.isDarwin then
       config.age.secrets or { }
@@ -48,6 +50,25 @@ in
       };
     };
   };
+
+  home.packages = lib.optionals sandbox config.programs.pi-coding-agent.extraPackages;
+
+  home.file."${settingsPath}".enable = lib.mkIf sandbox false;
+  home.activation.piMutableSettings = lib.mkIf sandbox (
+    lib.hm.dag.entryAfter [ "linkGeneration" ] (
+      lib.hm.generators.mkImpureConfigMerger {
+        inherit pkgs;
+        format = "json";
+        empty = "{}";
+        jqOperation = "$dynamic * $static";
+        path = settingsPath;
+        staticSettings =
+          (pkgs.formats.json { }).generate "pi-sandbox-settings.json"
+            config.programs.pi-coding-agent.settings;
+        mode = "600";
+      }
+    )
+  );
 
   home.activation.piAuth = lib.hm.dag.entryAfter [ "linkGeneration" ] (
     lib.hm.generators.mkImpureConfigMerger {

@@ -1,8 +1,5 @@
 {
   config,
-  lib,
-  impermanence,
-  myVars,
   pkgs,
   ...
 }:
@@ -11,18 +8,13 @@
   imports = [
     ./hardware-configuration.nix
     ./secrets.nix
-    impermanence.nixosModules.impermanence
-    ../../modules/base/users.nix
-    ../../modules/base/home-manager.nix
-    ../../modules/platform/nix.nix
-    {
-      options.custom.development.enable = lib.mkEnableOption "extended development tools";
-    }
   ];
 
   custom = {
-    mainUser = myVars.username;
+    profile = "sandbox";
     development.enable = true;
+    security.agenix.enable = true;
+    stateVersion = "26.05";
   };
 
   boot = {
@@ -39,43 +31,30 @@
   services = {
     dbus.enable = true;
     qemuGuest.enable = true;
-    openssh = {
-      enable = true;
-      settings = {
-        PasswordAuthentication = false;
-        KbdInteractiveAuthentication = false;
-        PermitRootLogin = "no";
-      };
-    };
+    openssh.enable = true;
   };
 
-  users = {
-    mutableUsers = false;
-    users.${config.custom.mainUser} = {
-      isNormalUser = true;
-      uid = 1000;
-      group = "users";
-      home = "/home/${config.custom.mainUser}";
-      linger = true;
-      initialHashedPassword = myVars.initialHashedPassword;
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-      ];
-      openssh.authorizedKeys.keys = myVars.sshKeys;
-    };
+  users.users.${config.custom.mainUser} = {
+    group = "users";
+    shell = pkgs.bashInteractive;
+    linger = true;
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
   };
   security.sudo.wheelNeedsPassword = true;
 
-  home-manager = {
-    enableLegacyProfileManagement = false;
-    users.${config.custom.mainUser} = {
-      imports = [ ./agents.nix ];
-      home.stateVersion = config.system.stateVersion;
+  home-manager.enableLegacyProfileManagement = false;
+
+  nix = {
+    nixPath = [ "nixpkgs=${pkgs.path}" ];
+    settings.auto-optimise-store = true;
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 7d";
     };
   };
-
-  nix.nixPath = [ "nixpkgs=${pkgs.path}" ];
 
   environment.persistence."/nix/persist" = {
     hideMounts = true;
@@ -102,15 +81,9 @@
       ".config/git"
       ".config/gh"
       {
-        directory = ".gnupg";
-        mode = "0700";
-      }
-      {
         directory = ".ssh";
         mode = "0700";
       }
     ];
   };
-
-  system.stateVersion = "26.05";
 }
