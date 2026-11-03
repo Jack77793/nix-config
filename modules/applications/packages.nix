@@ -48,6 +48,7 @@ if _class == "darwin" then
         "keepassxc"
         "localsend"
         "moonlight"
+        "musescore"
         "obs"
         "prismlauncher"
         "sfm"
