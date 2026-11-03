@@ -4,6 +4,7 @@
   imports = [
     ./mpv.nix
     ./mpd.nix
+    ./mpd-now-playable.nix
     ./ncmpcpp.nix
     ./cava.nix
   ];
