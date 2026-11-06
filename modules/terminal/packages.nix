@@ -14,9 +14,6 @@
       gawk
       gdu
       gnumake
-    ]
-    ++ lib.optional ((osConfig.custom.profile or null) != "sandbox") gnupg
-    ++ [
       gnused
       gnutar
       nixfmt
@@ -31,5 +28,6 @@
       xz
       zip
       zstd
-    ];
+    ]
+    ++ lib.optional ((osConfig.custom.profile or null) != "sandbox") gnupg;
 }

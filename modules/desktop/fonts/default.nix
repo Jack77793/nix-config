@@ -35,19 +35,27 @@ in
 lib.mkIf config.custom.desktop.enable (
   lib.mkMerge [
     {
-      fonts.packages = with pkgs; [
-        iosevka
-        nerd-fonts.iosevka-term
-        (noto-fonts.overrideAttrs (old: {
-          postPatch = (old.postPatch or "") + ''
-            rm -rf fonts/*/unhinted/variable-ttf
-          '';
-        }))
-        noto-fonts-cjk-sans-static
-        noto-fonts-cjk-serif-static
-        noto-fonts-color-emoji
-        sarasa-gothic
-      ];
+      fonts.packages =
+        with pkgs;
+        [
+          iosevka
+          nerd-fonts.iosevka-term
+          (noto-fonts.overrideAttrs (old: {
+            postPatch = (old.postPatch or "") + ''
+              rm -rf fonts/*/unhinted/variable-ttf
+            '';
+          }))
+          noto-fonts-cjk-sans-static
+          noto-fonts-cjk-serif-static
+          noto-fonts-color-emoji
+          sarasa-gothic
+        ]
+        ++ lib.optionals (_class == "nixos") [
+          arphic-ukai
+          lmodern
+          source-han-sans
+          source-han-serif
+        ];
     }
     (
       if _class == "nixos" then
@@ -59,12 +67,6 @@ lib.mkIf config.custom.desktop.enable (
               inherit defaultFonts;
               enable = true;
             };
-            packages = with pkgs; [
-              arphic-ukai
-              lmodern
-              source-han-sans
-              source-han-serif
-            ];
           };
 
           home-manager.users.${config.custom.mainUser}.fonts.fontconfig = {

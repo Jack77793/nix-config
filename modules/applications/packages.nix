@@ -42,6 +42,7 @@ if _class == "darwin" then
         "audacity"
         "caffeine"
         "calibre"
+        "element"
         "ghostty"
         "gimp"
         "google-chrome"
@@ -56,6 +57,7 @@ if _class == "darwin" then
         "telegram-desktop"
         "thunderbird"
         "utm"
+        "zotero"
       ];
     };
   }
@@ -118,5 +120,6 @@ else
       wemeet
       wineWow64Packages.staging
       wl-clipboard
+      zotero
     ];
   }
