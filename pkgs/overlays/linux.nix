@@ -11,7 +11,6 @@ let
         inherit (prev)
           prismlauncher
           glfw
-          zulu8
           zulu17
           zulu21
           ;
