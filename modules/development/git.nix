@@ -1,4 +1,5 @@
 {
+  lib,
   myVars,
   osConfig,
   ...
@@ -8,17 +9,15 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    signing =
-      if (osConfig.custom.profile or null) == "sandbox" then
-        {
-          signByDefault = false;
-        }
-      else
-        {
-          format = "openpgp";
-          signByDefault = true;
-          key = "CAE07E085EB3F663";
-        };
+    signing = lib.mkMerge [
+      {
+        signByDefault = (osConfig.custom.profile or null) != "sandbox";
+      }
+      (lib.mkIf ((osConfig.custom.profile or null) != "sandbox") {
+        format = "openpgp";
+        key = "CAE07E085EB3F663";
+      })
+    ];
     settings = {
       user = {
         name = myVars.username;

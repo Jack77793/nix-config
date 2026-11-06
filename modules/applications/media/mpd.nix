@@ -22,35 +22,31 @@ in
         replaygain_missing_preamp "0"
         filesystem_charset "UTF-8"
       '')
-      (
-        if pkgs.stdenv.hostPlatform.isDarwin then
-          ''
-            audio_output {
-                type "osx"
-                name "MPD CoreAudio Output"
-                mixer_type "software"
-            }
-            audio_output {
-                type "fifo"
-                name "MPD FIFO"
-                path "${mpd.dataDir}/ncmpcpp.fifo"
-                format "44100:16:2"
-            }
-          ''
-        else
-          ''
-            audio_output {
-                type "pipewire"
-                name "MPD PipeWire Output"
-            }
-            audio_output {
-                type "fifo"
-                name "MPD FIFO Output"
-                path "/tmp/mpd.fifo"
-                format "44100:16:2"
-            }
-          ''
-      )
+      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin ''
+        audio_output {
+            type "osx"
+            name "MPD CoreAudio Output"
+            mixer_type "software"
+        }
+        audio_output {
+            type "fifo"
+            name "MPD FIFO"
+            path "${mpd.dataDir}/ncmpcpp.fifo"
+            format "44100:16:2"
+        }
+      '')
+      (lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) ''
+        audio_output {
+            type "pipewire"
+            name "MPD PipeWire Output"
+        }
+        audio_output {
+            type "fifo"
+            name "MPD FIFO Output"
+            path "/tmp/mpd.fifo"
+            format "44100:16:2"
+        }
+      '')
     ];
   };
 

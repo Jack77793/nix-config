@@ -1,5 +1,4 @@
 {
-  config,
   _class,
   lib,
   ...
@@ -16,8 +15,4 @@
     ./locale.nix
     ./packages.nix
   ];
-
-  config = lib.optionalAttrs (_class == "nixos") {
-    nix.gc.dates = lib.mkIf config.custom.hostDefaults.enable "weekly";
-  };
 }

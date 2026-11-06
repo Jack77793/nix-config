@@ -6,22 +6,20 @@
   ...
 }:
 
-let
-  prismRuntimeDirectory = "/run/user/${
-    toString config.users.users.${config.custom.mainUser}.uid
-  }/prismlauncher";
-in
 {
   options = lib.optionalAttrs (_class == "nixos") {
     custom.applications.gaming.enable = lib.mkEnableOption "gaming related accessories";
   };
 
-  config =
-    if _class == "darwin" then
-      {
-        home-manager.users.${config.custom.mainUser}.imports = [ ./prismlauncher.nix ];
-      }
-    else
+  config = lib.mkMerge [
+    {
+      home-manager.users =
+        lib.mkIf (_class == "darwin" || (_class == "nixos" && config.custom.applications.gaming.enable))
+          {
+            ${config.custom.mainUser}.imports = [ ./prismlauncher.nix ];
+          };
+    }
+    (lib.optionalAttrs (_class == "nixos") (
       lib.mkIf config.custom.applications.gaming.enable {
         assertions = [
           {
@@ -31,7 +29,6 @@ in
         ];
 
         home-manager.users.${config.custom.mainUser} = {
-          imports = [ ./prismlauncher.nix ];
           home.packages = with pkgs; [
             gnome-mines
             gnome-sudoku
@@ -60,17 +57,6 @@ in
                 throttling_status = true;
               };
             };
-
-            prismlauncher = {
-              settings = {
-                EnableFeralGamemode = true;
-                EnableMangoHud = true;
-                JvmArgs = "-Djava.io.tmpdir=${prismRuntimeDirectory}";
-                PreLaunchCommand = "mkdir -p ${prismRuntimeDirectory}";
-                UseNativeGLFW = true;
-                UseNativeOpenAL = true;
-              };
-            };
           };
         };
 
@@ -84,5 +70,7 @@ in
             protontricks.enable = true;
           };
         };
-      };
+      }
+    ))
+  ];
 }

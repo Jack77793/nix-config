@@ -38,6 +38,7 @@ lib.mkIf config.custom.desktop.enable (
       fonts.packages =
         with pkgs;
         [
+          corefonts
           iosevka
           nerd-fonts.iosevka-term
           (noto-fonts.overrideAttrs (old: {
@@ -49,6 +50,9 @@ lib.mkIf config.custom.desktop.enable (
           noto-fonts-cjk-serif-static
           noto-fonts-color-emoji
           sarasa-gothic
+          vista-fonts
+          vista-fonts-chs
+          vista-fonts-cht
         ]
         ++ lib.optionals (_class == "nixos") [
           arphic-ukai
@@ -57,41 +61,37 @@ lib.mkIf config.custom.desktop.enable (
           source-han-serif
         ];
     }
-    (
-      if _class == "nixos" then
-        {
-          fonts = {
-            enableDefaultPackages = false;
-            fontDir.enable = true;
-            fontconfig = {
-              inherit defaultFonts;
-              enable = true;
-            };
-          };
+    (lib.optionalAttrs (_class == "nixos") {
+      fonts = {
+        enableDefaultPackages = false;
+        fontDir.enable = true;
+        fontconfig = {
+          inherit defaultFonts;
+          enable = true;
+        };
+      };
 
-          home-manager.users.${config.custom.mainUser}.fonts.fontconfig = {
-            inherit defaultFonts;
+      home-manager.users.${config.custom.mainUser}.fonts.fontconfig = {
+        inherit defaultFonts;
+        enable = true;
+        configFile = {
+          mappings = {
             enable = true;
-            configFile = {
-              mappings = {
-                enable = true;
-                priority = 80;
-                source = ./config/mappings.conf;
-              };
-              steam = lib.mkIf config.custom.applications.gaming.enable {
-                enable = true;
-                priority = 75;
-                source = ./config/steam.conf;
-              };
-            };
+            priority = 80;
+            source = ./config/mappings.conf;
           };
-        }
-      else
-        {
-          system.activationScripts.fonts.text = lib.mkAfter ''
-            ${pkgs.coreutils}/bin/touch -c "/Library/Fonts/Nix Fonts"
-          '';
-        }
-    )
+          steam = lib.mkIf config.custom.applications.gaming.enable {
+            enable = true;
+            priority = 75;
+            source = ./config/steam.conf;
+          };
+        };
+      };
+    })
+    (lib.optionalAttrs (_class == "darwin") {
+      system.activationScripts.fonts.text = lib.mkAfter ''
+        ${pkgs.coreutils}/bin/touch -c "/Library/Fonts/Nix Fonts"
+      '';
+    })
   ]
 )

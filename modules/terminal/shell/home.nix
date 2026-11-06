@@ -28,16 +28,18 @@
       "MAGIC_EQUAL_SUBST"
     ];
 
-    shellAliases = {
-      ":q" = "exit";
-      ls = "eza";
-      ll = "eza -lb";
-      la = "eza -lab";
-      tree = "eza -Ta";
-    }
-    // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-      open = "xdg-open";
-    };
+    shellAliases = lib.mkMerge [
+      {
+        ":q" = "exit";
+        ls = "eza";
+        ll = "eza -lb";
+        la = "eza -lab";
+        tree = "eza -Ta";
+      }
+      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+        open = "xdg-open";
+      })
+    ];
 
     siteFunctions = {
       mkcd = ''

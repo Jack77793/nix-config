@@ -16,31 +16,25 @@
   };
 
   config = lib.mkMerge [
+    {
+      custom = {
+        defaultUser.enable = lib.mkDefault true;
+        desktop.enable = lib.mkDefault (config.custom.profile == "desktop");
+      };
+    }
     (lib.mkIf (config.custom.profile == "desktop") {
       custom = {
-        desktop = {
-          enable = lib.mkDefault true;
-          gui = lib.mkDefault "gnome";
-        };
+        desktop.gui = lib.mkDefault "gnome";
         networking.manager = lib.mkDefault "nm";
-        defaultUser.enable = lib.mkDefault true;
       };
     })
 
     (lib.mkIf (config.custom.profile == "headless") {
-      custom = {
-        desktop.enable = lib.mkDefault false;
-        networking.manager = lib.mkDefault "networkd";
-        defaultUser.enable = lib.mkDefault true;
-      };
+      custom.networking.manager = lib.mkDefault "networkd";
     })
 
     (lib.mkIf (config.custom.profile == "sandbox") {
-      custom = {
-        desktop.enable = lib.mkDefault false;
-        hostDefaults.enable = lib.mkDefault false;
-        defaultUser.enable = lib.mkDefault true;
-      };
+      custom.hostDefaults.enable = lib.mkDefault false;
     })
   ];
 }

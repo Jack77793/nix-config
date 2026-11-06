@@ -19,10 +19,9 @@
     (lib.mkIf config.custom.desktop.enable {
       home-manager.users.${config.custom.mainUser} = {
         imports = [ ./gpg.nix ];
-      }
-      // lib.optionalAttrs (_class == "nixos") {
-        services.gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
-        home.packages = [ pkgs.gcr_4 ];
+        config = lib.optionalAttrs (_class == "nixos") {
+          home.packages = [ pkgs.gcr_4 ];
+        };
       };
     })
     (lib.optionalAttrs (_class == "darwin") {

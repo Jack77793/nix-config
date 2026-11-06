@@ -9,7 +9,7 @@
     ./cava.nix
   ];
 
-  home.packages = if pkgs.stdenv.hostPlatform.isLinux then [ pkgs.soundfont-fluid ] else [ pkgs.mpc ];
+  home.packages = lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.soundfont-fluid ];
 
   programs.obs-studio.enable = pkgs.stdenv.hostPlatform.isLinux;
 
