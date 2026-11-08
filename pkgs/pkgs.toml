@@ -16,6 +16,12 @@ github = "blader/humanizer"
 source = "github"
 github = "op7418/Humanizer-zh"
 
+[mpd-now-playable]
+source = "github"
+github = "00dani/mpd-now-playable"
+use_max_tag = true
+prefix = "v"
+
 [spotify-adblock]
 source = "github"
 github = "abba23/spotify-adblock"
