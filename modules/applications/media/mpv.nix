@@ -6,7 +6,6 @@
     config = lib.mkMerge [
       {
         audio-pitch-correction = true;
-        border = true;
         cache = true;
         cache-on-disk = false;
         cache-secs = 300;
@@ -14,7 +13,6 @@
         embeddedfonts = false;
         icc-profile-auto = true;
         interpolation = true;
-        osd-bar = false;
         profile = "high-quality";
         scale = "ewa_lanczossharp";
         screenshot-format = "png";
@@ -27,21 +25,22 @@
       }
       (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
         hwdec = "videotoolbox";
-        vo = "gpu-next";
         ytdl-raw-options = "cookies-from-browser=chrome";
       })
-      (lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
+      (lib.mkIf (pkgs.stdenv.hostPlatform.isLinux) {
+        border = true;
         hwdec = "vaapi";
+        osd-bar = false;
         vo = "dmabuf-wayland";
         ytdl-raw-options = "cookies-from-browser=chromium";
       })
     ];
     scripts =
       with pkgs.mpvScripts;
-      [
-        uosc
+      lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+        mpris
         thumbfast
-      ]
-      ++ lib.optional pkgs.stdenv.hostPlatform.isLinux mpris;
+        uosc
+      ];
   };
 }

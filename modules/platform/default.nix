@@ -8,6 +8,9 @@
   imports = [
     ./nix.nix
   ]
+  ++ lib.optionals (_class == "darwin") [
+    ./darwin.nix
+  ]
   ++ lib.optionals (_class == "nixos") [
     ./boot.nix
     ./storage.nix

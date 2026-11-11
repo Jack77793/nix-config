@@ -2,11 +2,11 @@
 
 {
   imports = [
+    ./core.nix
     ./users.nix
     ./home-manager.nix
   ]
   ++ lib.optionals (_class == "nixos") [
-    ./core.nix
     ./profiles.nix
   ];
 }

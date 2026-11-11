@@ -55,3 +55,11 @@ vim.opt.clipboard:prepend("unnamedplus")
 -- decoration
 vim.opt.background = "dark"
 vim.opt.termguicolors = true
+
+if vim.g.neovide then
+	vim.o.guifont = "Sarasa Fixed SC:h16"
+	vim.g.neovide_scroll_animation_length = 0.1
+	vim.g.neovide_theme = "bg_color"
+	vim.g.neovide_cursor_short_animation_length = 0.01
+	vim.g.neovide_cursor_vfx_mode = "pixiedust"
+end
