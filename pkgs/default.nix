@@ -1,7 +1,6 @@
 let
   overlays = [
     (import ./overlays/common.nix)
-    (import ./overlays/darwin.nix)
     (import ./overlays/linux.nix)
   ];
 in
