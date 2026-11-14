@@ -29,7 +29,6 @@ lib.mkMerge [
               imagemagick
               lilypond
               mediainfo
-              mpc
               nmap
               pnpm
               qpdf
@@ -68,6 +67,7 @@ lib.mkMerge [
               meld
               mesa-demos
               moonlight-qt
+              mpc
               musescore
               nvme-cli
               nvtopPackages.intel

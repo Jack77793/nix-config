@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   programs.ncmpcpp = {
@@ -35,7 +30,6 @@
         key = "ctrl-d";
       }
     ];
-    mpdMusicDir = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin config.services.mpd.musicDirectory;
     settings = {
       clock_display_seconds = true;
       display_volume_level = true;
@@ -44,11 +38,7 @@
       mpd_port = 6600;
       use_console_editor = true;
       user_interface = "alternative";
-      visualizer_data_source =
-        if pkgs.stdenv.hostPlatform.isDarwin then
-          "${config.services.mpd.dataDir}/ncmpcpp.fifo"
-        else
-          "/tmp/mpd.fifo";
+      visualizer_data_source = "/tmp/mpd.fifo";
       visualizer_in_stereo = true;
       visualizer_look = "+|";
       visualizer_output_name = "MPD FIFO";

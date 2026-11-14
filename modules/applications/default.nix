@@ -16,9 +16,15 @@
     ./mail.nix
   ];
 
-  home-manager.users.${config.custom.mainUser}.imports = lib.optionals config.custom.desktop.enable [
-    ./documents.nix
-    ./downloads/home.nix
-    ./media/home.nix
-  ];
+  home-manager.users.${config.custom.mainUser}.imports = lib.optionals config.custom.desktop.enable (
+    [
+      ./documents.nix
+      ./downloads/home.nix
+      ./media/home.nix
+    ]
+    ++ lib.optionals (_class == "nixos") [
+      ./media/mpd.nix
+      ./media/ncmpcpp.nix
+    ]
+  );
 }
