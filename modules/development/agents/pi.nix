@@ -112,7 +112,6 @@ in
         defaultModel = "deepseek-flash";
         packages = [
           "npm:pi-mcp-adapter"
-          "npm:pi-rewind-hook"
           "npm:pi-web-access"
           "npm:@juicesharp/rpiv-ask-user-question"
           "npm:@narumitw/pi-usage"
@@ -121,14 +120,6 @@ in
         extensions = [
           "-builtin:mcp"
         ];
-        rewind = {
-          silentCheckpoints = false;
-          retention = {
-            maxSnapshots = 256;
-            maxAgeDays = 7;
-            pinLabeledEntries = false;
-          };
-        };
       };
     };
   };

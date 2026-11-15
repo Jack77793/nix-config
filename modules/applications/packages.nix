@@ -29,7 +29,6 @@ lib.mkMerge [
               imagemagick
               lilypond
               mediainfo
-              mpc
               nmap
               pnpm
               qpdf
@@ -68,6 +67,7 @@ lib.mkMerge [
               meld
               mesa-demos
               moonlight-qt
+              mpc
               musescore
               nvme-cli
               nvtopPackages.intel
@@ -105,13 +105,20 @@ lib.mkMerge [
         "kde-connect"
         "keepassxc"
         "keka"
+        "libreoffice"
+        {
+          name = "libreoffice-language-pack";
+          args.language = "zh-CN";
+        }
         "localsend"
         "moonlight"
         "musescore"
         "musicbrainz-picard"
         "neovide-app"
         "obs"
+        "petrichor"
         "prismlauncher"
+        "puremac"
         "sfm"
         "squirrel-app"
         "telegram-desktop"
