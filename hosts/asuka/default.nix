@@ -13,9 +13,12 @@
   custom = {
     profile = "sandbox";
     development.enable = true;
+    development.agents.enable = true;
     security.agenix.enable = true;
     stateVersion = "26.05";
   };
+
+  time.timeZone = "Asia/Shanghai";
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

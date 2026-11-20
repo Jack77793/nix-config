@@ -1,83 +1,22 @@
-# RULES - Global Agent Baseline
+# Global Agent Instructions
 
-This file defines the cross-project baseline for AI coding agents. It focuses on safety, boundaries, and portable behavior.
+## Environment
 
-## 1) Instruction Priority
+- OS: Declarative **NixOS** (non-FHS, immutable `/nix/store`, `nix-command` and `flakes` enabled, legacy channels disabled).
+- Filesystem: Root `/` may be an ephemeral `tmpfs` (`impermanence`); keep persistent work inside the approved workspace and avoid filling `/` or `/tmp` with large files.
+- Shell & runtime: Standard POSIX/bash/zsh environment. Unpatched dynamically-linked prebuilt binaries typically do not run directly on NixOS.
 
-Apply instructions in this order:
+## Nix & Tooling
 
-1. Runtime system/developer instructions
-2. User task request
-3. Project-local policy (`AGENTS.md`, `CLAUDE.md`, repo docs)
-4. This global RULES
+- **No imperative system installs**: Never run commands that mutate global system state (e.g., `nix-env -i`, `pip install`, `npm install -g`, `curl | bash`, `make install`).
+- **Ephemeral & project environments**: When a command or toolchain is missing, prefer the project's `flake.nix` / `shell.nix` (`nix develop` / `nix-shell`), or run ephemerally via `nix run nixpkgs#<pkg>` / `nix shell nixpkgs#<pkg>`. For language-level dependencies, use isolated environments (`uv` with Nix-provided Python, or `pnpm`). If still unavailable, stop and ask the user.
+- **NixOS lookup**: Prefer the configured `nixos` MCP server (`mcp-nixos`) to verify NixOS/Home Manager options and package names instead of guessing.
+- **No store scans**: Never run `find`, `grep`, or `rg` over `/nix/store`, `/nix`, or `/`.
+- **Safe verification**: For Nix/IaC changes, prefer read-only evaluation and checks (`nix flake check`, `nix eval`, `nix build`) and project task runners (`make`, `just`); do not run system switches (`nixos-rebuild switch`, etc.) unless explicitly requested.
 
-If rules conflict, follow the higher-priority source and state the conflict briefly.
+## Core Principles
 
-## 2) Hard Safety Boundaries (MUST NOT)
-
-- MUST NOT read/write outside the approved workspace.
-- MUST NOT perform broad operations on the entire home directory.
-- MUST NOT run `find` or `grep` over `/nix/store` or any parent directory, e.g., `/`, `/nix`.
-- MUST NOT mutate remote Git state unless explicitly requested.
-  - Examples: `git push`, creating/updating remote PRs/Issues via `gh`.
-- MUST NOT auto-run remote-mutating commands unless explicitly requested.
-  - Examples: `kubectl apply/delete`, `helm upgrade`, `terraform apply`, remote `ssh` mutation.
-- MUST NOT run commands that modify system state EVEN if explicitly requested.
-  - Examples: `pip install`, `npm install -g`, `make install` from source code, `curl | bash`.
-  - Note that this does not apply to commands executed within virtual environments or run ephemerally via `nix`.
-- MUST NOT use destructive/force/delete options EVEN if explicitly requested.
-  - Examples: `--force`, `rm -rf`, `git reset --hard`, `gh repo delete`, `terraform destroy`.
-- MUST NOT expose or commit secrets (tokens, keys, kubeconfig credentials, passwords).
-
-## 3) Security and Secrets Handling
-
-- Never write secret literals into tracked files.
-- Use environment variables, secret managers, or placeholders.
-- Redact sensitive output in logs and summaries.
-- For infra/IaC changes, prefer plan/eval/check before apply/switch.
-
-## 4) Scope Discipline
-
-- Keep changes strictly within requested scope.
-- Do not refactor unrelated areas unless user asks.
-- Preserve backward compatibility unless a breaking change is explicitly requested.
-
-## 5) Change Hygiene
-
-- Keep diffs minimal and reviewable.
-- Group logically related edits together.
-- Do not revert user/unrelated changes unless explicitly asked.
-- Do not claim verification you did not run.
-
-## 6) Tooling Defaults
-
-- Prefer structural search tools first for code find/replace (`ast-grep`/`jq`/`yq`), then text tools (`rg`, `fd`).
-- Prefer project task runners (`just`, `make`, `task`, `npm scripts`, etc.) over ad-hoc commands when equivalent.
-- If a required command is not already available, use only `nix run`, `flake.nix`/`shell.nix` or `uv`/`pnpm` to provide it.
-- If that is still insufficient, stop and ask the user to prepare the environment instead of using any other installation method.
-- Use `gh` CLI for GitHub operations, especially code/PR/issue search and inspection.
-
-## 7) Environment Defaults
-
-- Primary OS: NixOS.
-- Shell: default to `zsh`, `bash` also exists.
-
-## 8) Script Engineering Principles
-
-Treat scripts as interruptible jobs that must be diagnosable and safe to rerun:
-
-- Split workflows into explicit stages; allow running a selected stage via flags/arguments.
-- Make reruns idempotent; persist progress after each stage and support resume.
-- Cache external data with invalidation strategy to speed retries and improve reproducibility.
-- For HTTP flows, separate transport success from business success; support retry/backoff.
-- Provide independent verification commands/checks for key outputs (counts, samples, invariants).
-
-## 9) Communication Defaults
-
-- Respond in the language the user is currently using, prefer English & Chinese.
-- Code, commands, identifiers, and code comments: English.
-- Be concise, concrete, and action-oriented.
-
-## 10) Project Overlay
-
-Project-local policy may add stricter constraints (build/test/deploy/style/ownership/environment). It must not weaken this baseline.
+- **Priority**: Follow runtime system instructions > user request > project-local instructions (`AGENTS.md`/`CLAUDE.md`) > this file.
+- **Boundaries & safety**: Stay within the approved workspace; never commit or expose secrets; do not run destructive/force commands (`rm -rf`, `--force`, `git reset --hard`) or remote-mutating actions (`git push`, remote `gh` writes, remote deployments) unless explicitly requested.
+- **Change hygiene**: Keep edits minimal, scoped, and reviewable; do not revert unrelated changes; never claim verification you did not run.
+- **Communication**: Reply concisely in the user's language (English/Chinese); write code, commands, identifiers, and comments in English.

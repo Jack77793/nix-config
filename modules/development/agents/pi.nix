@@ -1,98 +1,32 @@
 {
   config,
-  lib,
   pkgs,
   osConfig,
   ...
 }:
 
 let
-  piConfigDir = config.programs.pi-coding-agent.configDir;
-  authPath = "${piConfigDir}/auth.json";
-  settingsPath = "${piConfigDir}/settings.json";
-  sandbox = (osConfig.custom.profile or null) == "sandbox";
-  secrets =
-    if pkgs.stdenv.hostPlatform.isDarwin then
-      config.age.secrets or { }
-    else
-      osConfig.age.secrets or { };
-  authSeed = pkgs.writeText "pi-auth-seed.json" (
-    builtins.toJSON {
-      google = {
-        type = "api_key";
-        key = "!cat ${secrets.gemini.path}";
-      };
-      deepseek = {
-        type = "api_key";
-        key = "!cat ${secrets.deepseek.path}";
-      };
-    }
-  );
+  secrets = if pkgs.stdenv.hostPlatform.isDarwin then config.age.secrets else osConfig.age.secrets;
 in
 {
-  home.file."${piConfigDir}/mcp.json".text = builtins.toJSON {
-    mcpServers = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-      nixos.command = "mcp-nixos";
-      chrome-devtools = {
-        command = "${pkgs.nodejs}/bin/npx";
-        args = [
-          "-y"
-          "chrome-devtools-mcp@latest"
-          "--no-usage-statistics"
-          "--executable-path=${pkgs.chromium}/bin/chromium"
-          "--headless"
-          "--isolated"
-          "--chromeArg=--no-first-run"
-          "--chromeArg=--no-default-browser-check"
-          "--chromeArg=--disable-search-engine-choice-screen"
-          "--chrome-arg=--disable-blink-features=AutomationControlled"
-        ];
-      };
-    };
+  home.file."${config.programs.pi-coding-agent.configDir}/mcp.json" = {
+    enable = config.programs.mcp.enable;
+    source = config.xdg.configFile."mcp/mcp.json".source;
   };
-
-  home.packages = lib.optionals sandbox config.programs.pi-coding-agent.extraPackages;
-
-  home.file."${settingsPath}".enable = lib.mkIf sandbox false;
-  home.activation.piMutableSettings = lib.mkIf sandbox (
-    lib.hm.dag.entryAfter [ "linkGeneration" ] (
-      lib.hm.generators.mkImpureConfigMerger {
-        inherit pkgs;
-        format = "json";
-        empty = "{}";
-        jqOperation = "$dynamic * $static";
-        path = settingsPath;
-        staticSettings =
-          (pkgs.formats.json { }).generate "pi-sandbox-settings.json"
-            config.programs.pi-coding-agent.settings;
-        mode = "600";
-      }
-    )
-  );
-
-  home.activation.piAuth = lib.hm.dag.entryAfter [ "linkGeneration" ] (
-    lib.hm.generators.mkImpureConfigMerger {
-      inherit pkgs;
-      format = "json";
-      empty = "{}";
-      jqOperation = "$dynamic * $static";
-      path = authPath;
-      staticSettings = authSeed;
-      mode = "600";
-    }
-  );
 
   programs = {
     pi-coding-agent = {
       enable = true;
       context = ./AGENTS.md;
-      extraPackages =
-        (with pkgs; [
-          ffmpeg
-          nodejs
-          yt-dlp
-        ])
-        ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.mcp-nixos ];
+      extraPackages = with pkgs; [
+        ffmpeg
+        nodejs
+        yt-dlp
+      ];
+      models.providers = {
+        google.apiKey = "!cat ${secrets.gemini.path}";
+        deepseek.apiKey = "!cat ${secrets.deepseek.path}";
+      };
       settings = {
         theme = "system";
         enableInstallTelemetry = false;
@@ -110,10 +44,19 @@ in
         tuiMode = "regular";
         defaultProvider = "deepseek";
         defaultModel = "deepseek-flash";
+        defaultTools = [
+          "+read"
+          "+bash"
+          "+edit"
+          "+write"
+          "+ls"
+          "+codemode"
+        ];
         packages = [
           "npm:pi-mcp-adapter"
           "npm:pi-web-access"
           "npm:@juicesharp/rpiv-ask-user-question"
+          "npm:@monotykamary/pi-tps"
           "npm:@narumitw/pi-usage"
         ];
         skills = builtins.attrValues (import ./skills.nix { inherit pkgs; });
