@@ -6,10 +6,6 @@
   ...
 }:
 
-let
-  # Preserve standalone imports and Darwin, which do not declare this option.
-  hostDefaults = config.custom.hostDefaults.enable or true;
-in
 lib.mkMerge [
   {
     nix = {
@@ -22,11 +18,11 @@ lib.mkMerge [
           "nix-command"
           "flakes"
         ];
-        auto-optimise-store = lib.mkIf hostDefaults true;
+        auto-optimise-store = lib.mkDefault true;
       };
-      gc = lib.mkIf hostDefaults {
-        automatic = true;
-        options = "--delete-older-than 7d";
+      gc = {
+        automatic = lib.mkDefault true;
+        options = lib.mkDefault "--delete-older-than 7d";
       };
       channel.enable = false;
     };

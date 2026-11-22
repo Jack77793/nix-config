@@ -16,7 +16,7 @@
           "--chromeArg=--no-first-run"
           "--chromeArg=--no-default-browser-check"
           "--chromeArg=--disable-search-engine-choice-screen"
-          "--chrome-arg=--disable-blink-features=AutomationControlled"
+          "--chromeArg=--disable-blink-features=AutomationControlled"
         ];
       };
       nixos.command = "${pkgs.mcp-nixos}/bin/mcp-nixos";

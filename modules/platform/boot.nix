@@ -5,46 +5,62 @@
   ...
 }:
 
-lib.mkIf config.custom.hostDefaults.enable (
-  lib.mkMerge [
+{
+  config = lib.mkMerge [
     {
-      boot = {
-        kernelPackages = pkgs.linuxPackages_latest;
-        loader = {
-          systemd-boot = {
-            enable = true;
-            configurationLimit = 12;
-            consoleMode = "max";
-          };
-          timeout = 5;
-          efi.canTouchEfiVariables = true;
-        };
-      };
+      assertions = [
+        {
+          assertion = !config.boot.lanzaboote.enable || config.custom.hostDefaults.enable;
+          message = "boot.lanzaboote.enable requires custom.hostDefaults.enable.";
+        }
+      ];
 
-      console = {
-        font = "Lat2-Terminus16";
-        keyMap = "us";
-        # useXkbConfig = true; # use xkb.options in tty.
+      boot = {
+        kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+        loader = {
+          systemd-boot.enable = lib.mkDefault true;
+          efi.canTouchEfiVariables = lib.mkDefault true;
+        };
       };
     }
 
-    (lib.mkIf config.boot.lanzaboote.enable {
-      environment.systemPackages = [ pkgs.sbctl ];
-
-      boot = {
-        loader.systemd-boot.enable = lib.mkForce false;
-
-        lanzaboote = {
-          pkiBundle = "/var/lib/sbctl";
-        };
-      };
-
-      environment.persistence."/nix/persist".directories = [
+    (lib.mkIf config.custom.hostDefaults.enable (
+      lib.mkMerge [
         {
-          directory = "/var/lib/sbctl";
-          mode = "0700";
+          boot.loader = {
+            systemd-boot = {
+              configurationLimit = 12;
+              consoleMode = "max";
+            };
+            timeout = 5;
+          };
+
+          console = {
+            font = "Lat2-Terminus16";
+            keyMap = "us";
+            # useXkbConfig = true; # use xkb.options in tty.
+          };
         }
-      ];
-    })
-  ]
-)
+
+        (lib.mkIf config.boot.lanzaboote.enable {
+          environment.systemPackages = [ pkgs.sbctl ];
+
+          boot = {
+            loader.systemd-boot.enable = lib.mkForce false;
+
+            lanzaboote = {
+              pkiBundle = "/var/lib/sbctl";
+            };
+          };
+
+          environment.persistence."/nix/persist".directories = [
+            {
+              directory = "/var/lib/sbctl";
+              mode = "0700";
+            }
+          ];
+        })
+      ]
+    ))
+  ];
+}

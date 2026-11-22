@@ -1,5 +1,4 @@
 {
-  lib,
   ...
 }:
 
@@ -48,10 +47,14 @@ in
     linkConfig.RequiredForOnline = "routable";
   };
 
-  networking.firewall.allowedTCPPorts = [
-    2012
-    22267
-  ];
+  networking.firewall = {
+    allowedTCPPorts = [
+      53
+      2012
+      22267
+    ];
+    allowedUDPPorts = [ 53 ];
+  };
 
   services = {
     qbittorrent = {
@@ -61,7 +64,6 @@ in
     sing-box.enable = true;
     smartdns.enable = true;
     tailscale.enable = true;
-    tuned.ppdSettings.main.default = lib.mkForce "throughput-performance";
   };
 
   virtualisation.podman.enable = true;

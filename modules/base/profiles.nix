@@ -31,6 +31,7 @@
 
     (lib.mkIf (config.custom.profile == "headless") {
       custom.networking.manager = lib.mkDefault "networkd";
+      services.tuned.ppdSettings.main.default = lib.mkOverride 900 "throughput-performance";
     })
 
     (lib.mkIf (config.custom.profile == "sandbox") {

@@ -1,8 +1,6 @@
 { config, ... }:
 
 {
-  imports = [ ./secrets.nix ];
-
   custom = {
     mainUser = "jack77793";
     development.enable = true;

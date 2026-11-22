@@ -8,7 +8,7 @@ lib.mkIf config.custom.hostDefaults.enable {
       enable = true;
       settings.dynamic_tuning = true;
       ppdSupport = true;
-      ppdSettings.main.default = "balanced";
+      ppdSettings.main.default = lib.mkDefault "balanced";
     };
 
     logind.settings.Login = {

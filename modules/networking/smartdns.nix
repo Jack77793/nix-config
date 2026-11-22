@@ -110,7 +110,6 @@
         wants = [ "network-online.target" ];
         serviceConfig = {
           Type = "oneshot";
-          Restart = "on-failure";
         };
       };
     };

@@ -18,14 +18,6 @@
     stateVersion = "26.05";
   };
 
-  time.timeZone = "Asia/Shanghai";
-
-  boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-  };
-
   networking = {
     hostName = "Asuka";
     networkmanager.enable = true;
@@ -50,33 +42,14 @@
 
   home-manager.enableLegacyProfileManagement = false;
 
-  nix = {
-    nixPath = [ "nixpkgs=${pkgs.path}" ];
-    settings.auto-optimise-store = true;
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 7d";
-    };
-  };
+  nix.nixPath = [ "nixpkgs=${pkgs.path}" ];
 
   environment.persistence."/nix/persist" = {
-    hideMounts = true;
     directories = [
-      "/etc/nixos"
-      "/var/log"
-      "/var/lib/systemd/coredump"
-      "/var/lib/nixos"
       {
         directory = "/etc/NetworkManager/system-connections";
         mode = "0700";
       }
-    ];
-    files = [
-      "/etc/machine-id"
-      "/etc/ssh/ssh_host_rsa_key"
-      "/etc/ssh/ssh_host_rsa_key.pub"
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
     ];
     users.${config.custom.mainUser}.directories = [
       ".codex"

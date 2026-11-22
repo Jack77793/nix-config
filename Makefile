@@ -34,7 +34,7 @@ livecd: ## Build the livecd 'Akashi'
 
 nvcheck: ## Run nvchecker for custom packages
 	@echo -e "\033[32mRunning nvchecker...\033[0m"
-	nix run nixpkgs#nvchecker -- -c nvchecker -c $(ROOTDIR)/pkgs/pkgs.toml
+	nix run nixpkgs#nvchecker -- -c $(ROOTDIR)/pkgs/pkgs.toml
 
 rebuild: ## Rebuild current host
 	@echo -e "\033[32mRebuilding current system...\033[0m"

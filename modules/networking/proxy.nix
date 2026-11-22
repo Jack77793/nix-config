@@ -11,7 +11,7 @@
       programs.proxychains = {
         enable = true;
         package = pkgs.proxychains-ng;
-        proxies.sing-box = {
+        proxies.sing-box = lib.mapAttrs (_: lib.mkDefault) {
           enable = true;
           type = "socks5";
           host = "127.0.0.1";
@@ -24,8 +24,6 @@
       systemd.services.sing-box.environment = {
         RUNTIME_DIRECTORY = "/etc/sing-box";
       };
-
-      # networking.firewall.trustedInterfaces = [ "sing-tun" ];
 
       environment.persistence."/nix/persist".directories = [
         {

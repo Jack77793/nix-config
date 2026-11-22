@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
@@ -33,19 +32,9 @@
 
   networking.firewall.allowedTCPPorts = [ 25565 ];
 
-  services = {
-    tailscale.enable = true;
-    tuned.ppdSettings.main.default = lib.mkForce "throughput-performance";
-  };
+  services.tailscale.enable = true;
 
-  programs.proxychains.proxies = lib.mkForce {
-    sing-box = {
-      enable = true;
-      type = "socks5";
-      host = "192.168.1.72";
-      port = 2012;
-    };
-  };
+  programs.proxychains.proxies.sing-box.host = "192.168.1.72";
 
   home-manager.users.${config.custom.mainUser} = {
     home.packages = with pkgs; [

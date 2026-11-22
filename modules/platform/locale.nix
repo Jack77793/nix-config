@@ -1,9 +1,9 @@
 { config, lib, ... }:
 
-lib.mkIf config.custom.hostDefaults.enable {
-  time.timeZone = "Asia/Shanghai";
+{
+  time.timeZone = lib.mkDefault "Asia/Shanghai";
 
-  i18n = {
+  i18n = lib.mkIf config.custom.hostDefaults.enable {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
       LC_ADDRESS = "zh_CN.UTF-8";

@@ -5,9 +5,6 @@
   ...
 }:
 
-let
-  secrets = if pkgs.stdenv.hostPlatform.isDarwin then config.age.secrets else osConfig.age.secrets;
-in
 {
   home.file."${config.programs.pi-coding-agent.configDir}/mcp.json" = {
     enable = config.programs.mcp.enable;
@@ -24,8 +21,8 @@ in
         yt-dlp
       ];
       models.providers = {
-        google.apiKey = "!cat ${secrets.gemini.path}";
-        deepseek.apiKey = "!cat ${secrets.deepseek.path}";
+        google.apiKey = "!cat ${osConfig.age.secrets.gemini.path}";
+        deepseek.apiKey = "!cat ${osConfig.age.secrets.deepseek.path}";
       };
       settings = {
         theme = "system";
