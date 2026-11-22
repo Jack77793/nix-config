@@ -1,6 +1,6 @@
-{ stdenvNoCC, fetchFromGitHub, ... }:
+{ stdenvNoCC, fetchFromGitHub }:
 
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "anthropics-skills";
   version = "20260813";
   src = fetchFromGitHub {

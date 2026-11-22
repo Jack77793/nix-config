@@ -31,6 +31,13 @@ in
       };
     }
     (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+      package = pkgs.prismlauncher.override {
+        additionalPrograms = [ pkgs.glfw ];
+        jdks = with pkgs; [
+          zulu17
+          zulu21
+        ];
+      };
       settings = {
         EnableFeralGamemode = true;
         EnableMangoHud = true;

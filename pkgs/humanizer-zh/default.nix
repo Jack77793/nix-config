@@ -1,11 +1,11 @@
-{ stdenvNoCC, fetchurl, ... }:
+{ stdenvNoCC, fetchurl }:
 
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "humanizer-zh";
   version = "20260119";
   src = fetchurl {
     url = "https://raw.githubusercontent.com/op7418/Humanizer-zh/91f3d394db8419c20d67ebe22a96cf8fee0a404b/SKILL.md";
-    sha256 = "1sxywjd9xmxz298c76gxi3hr8my9xadvagspsmil4r08j2ybvvg0";
+    hash = "sha256-4O29vJAIZEJj1Vc/tZvqyVeU4Yj9mcNQEr/Xnprkvus=";
   };
 
   dontUnpack = true;

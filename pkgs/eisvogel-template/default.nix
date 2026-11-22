@@ -1,12 +1,16 @@
-{ stdenvNoCC }:
+{ stdenvNoCC, fetchzip }:
 
-stdenvNoCC.mkDerivation rec {
-  pname = "eisvogel-template";
+let
   version = "3.5.1";
+in
+stdenvNoCC.mkDerivation {
+  pname = "eisvogel-template";
+  inherit version;
 
-  src = fetchTarball {
+  src = fetchzip {
     url = "https://github.com/Wandmalfarbe/pandoc-latex-template/releases/download/v${version}/Eisvogel-${version}.tar.gz";
-    sha256 = "1f47w7zpnqm60kkmwg3n3vpb64l10ayjfi4c3m047bqm1kicl5xd";
+    stripRoot = false;
+    hash = "sha256-rRfK4gwVr0NAHYxEJ70CgRKz7h52PF7nBKZie//hh7g=";
   };
 
   installPhase = ''

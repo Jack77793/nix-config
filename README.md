@@ -23,9 +23,8 @@ A personal Nix flake for NixOS and macOS (nix-darwin).
 │   ├── applications/      # Applications and gaming
 │   └── virtualization/    # Podman defaults and QEMU tools
 └── pkgs/
-    ├── default.nix        # Overlay aggregator
+    ├── default.nix        # Custom packages and overlay
     ├── pkgs.toml          # Package metadata for nvchecker
-    ├── overlays/          # Overlay of packages
     └── ...                # Custom packages
 ```
 

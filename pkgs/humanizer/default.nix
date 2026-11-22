@@ -1,6 +1,6 @@
-{ stdenvNoCC, fetchurl, ... }:
+{ stdenvNoCC, fetchurl }:
 
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "humanizer";
   version = "20260722";
   src = fetchurl {

@@ -1,27 +1,26 @@
 let
-  overlays = [
-    (import ./overlays/common.nix)
-    (import ./overlays/linux.nix)
-  ];
+  overlay =
+    _final: prev:
+    {
+      anthropics-skills = prev.callPackage ./anthropics-skills { };
+      eisvogel-template = prev.callPackage ./eisvogel-template { };
+      humanizer = prev.callPackage ./humanizer { };
+      humanizer-zh = prev.callPackage ./humanizer-zh { };
+    }
+    // prev.lib.optionalAttrs prev.stdenv.hostPlatform.isLinux {
+      wechat = prev.callPackage ./wechat { };
+    };
 in
 {
-  inherit overlays;
+  overlays = [ overlay ];
 
   packages =
     { nixpkgs, system }:
     let
       pkgs = import nixpkgs {
-        inherit system overlays;
+        inherit system;
         config.allowUnfree = true;
       };
     in
-    {
-      inherit (pkgs)
-        anthropics-skills
-        eisvogel-template
-        humanizer
-        humanizer-zh
-        wechat
-        ;
-    };
+    overlay pkgs pkgs;
 }

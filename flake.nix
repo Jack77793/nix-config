@@ -103,10 +103,12 @@
         ];
       };
 
-      packages.x86_64-linux = (import ./pkgs).packages {
-        inherit nixpkgs;
-        system = "x86_64-linux";
-      };
+      packages = eachSystem (
+        system:
+        (import ./pkgs).packages {
+          inherit nixpkgs system;
+        }
+      );
 
       formatter = eachSystem (system: treefmtEval.${system}.config.build.wrapper);
     };
