@@ -75,7 +75,6 @@ lib.mkMerge [
           qbittorrent-enhanced
           qq
           remmina
-          spotify
           telegram-desktop
           wechat
           wemeet

@@ -21,7 +21,6 @@ in
         eisvogel-template
         humanizer
         humanizer-zh
-        spotify-adblock
         wechat
         ;
     };
