@@ -1,17 +1,16 @@
-args@{ lib, pkgs, ... }:
+{ pkgs, osConfig, ... }:
 
 {
   programs.gpg.enable = true;
 
   services.gpg-agent = {
     enable = true;
-    pinentry.package = lib.mkMerge [
-      (lib.mkDefault (
-        if pkgs.stdenv.hostPlatform.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-curses
-      ))
-      (lib.mkIf (
-        pkgs.stdenv.hostPlatform.isLinux && (args.osConfig.custom.desktop.enable or false)
-      ) pkgs.pinentry-gnome3)
-    ];
+    pinentry.package =
+      if pkgs.stdenv.hostPlatform.isDarwin then
+        pkgs.pinentry_mac
+      else if osConfig.custom.desktop.enable then
+        pkgs.pinentry-gnome3
+      else
+        pkgs.pinentry-curses;
   };
 }

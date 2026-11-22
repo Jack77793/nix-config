@@ -47,8 +47,6 @@
     };
   };
 
-  programs.dconf.enable = true;
-
   home-manager.users.${config.custom.mainUser} = {
     home.packages = with pkgs; [
       frp

@@ -1,33 +1,28 @@
 {
-  lib,
   pkgs,
-  osConfig,
   ...
 }:
 
 {
-  home.packages =
-    with pkgs;
-    [
-      duf
-      file
-      gawk
-      gdu
-      gnumake
-      gnused
-      gnutar
-      nixfmt
-      p7zip
-      rsync
-      squashfsTools
-      unrar
-      unzipNLS
-      which
-      whois
-      xxd
-      xz
-      zip
-      zstd
-    ]
-    ++ lib.optional ((osConfig.custom.profile or null) != "sandbox") gnupg;
+  home.packages = with pkgs; [
+    duf
+    file
+    gawk
+    gdu
+    gnumake
+    gnused
+    gnutar
+    nixfmt
+    p7zip
+    rsync
+    squashfsTools
+    unrar
+    unzipNLS
+    which
+    whois
+    xxd
+    xz
+    zip
+    zstd
+  ];
 }

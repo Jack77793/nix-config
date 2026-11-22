@@ -1,13 +1,14 @@
-args@{
+{
   config,
   lib,
   pkgs,
+  osConfig,
   ...
 }:
 
 let
   prismRuntimeDirectory = "/run/user/${
-    toString args.osConfig.users.users.${config.home.username}.uid
+    toString osConfig.users.users.${config.home.username}.uid
   }/prismlauncher";
 in
 {
@@ -29,19 +30,16 @@ in
         TheCat = false;
       };
     }
-    (lib.mkIf
-      (pkgs.stdenv.hostPlatform.isLinux && (args.osConfig.custom.applications.gaming.enable or false))
-      {
-        settings = {
-          EnableFeralGamemode = true;
-          EnableMangoHud = true;
-          JvmArgs = "-Djava.io.tmpdir=${prismRuntimeDirectory}";
-          PreLaunchCommand = "mkdir -p ${prismRuntimeDirectory}";
-          UseNativeGLFW = true;
-          UseNativeOpenAL = true;
-        };
-      }
-    )
+    (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+      settings = {
+        EnableFeralGamemode = true;
+        EnableMangoHud = true;
+        JvmArgs = "-Djava.io.tmpdir=${prismRuntimeDirectory}";
+        PreLaunchCommand = "mkdir -p ${prismRuntimeDirectory}";
+        UseNativeGLFW = true;
+        UseNativeOpenAL = true;
+      };
+    })
     (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       settings = {
         EnableFeralGamemode = false;

@@ -2,15 +2,9 @@
 
 {
   config = lib.mkIf config.services.tailscale.enable {
-    services.tailscale = {
-      interfaceName = "tailscale0";
-      openFirewall = true;
-    };
+    services.tailscale.openFirewall = true;
 
-    networking.firewall = {
-      trustedInterfaces = [ "tailscale0" ];
-      allowedUDPPorts = [ config.services.tailscale.port ];
-    };
+    networking.firewall.trustedInterfaces = [ config.services.tailscale.interfaceName ];
 
     systemd.services.tailscaled.serviceConfig.Environment = [
       "TS_DEBUG_FIREWALL_MODE=nftables"

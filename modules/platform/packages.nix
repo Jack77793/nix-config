@@ -13,7 +13,6 @@ lib.mkIf config.custom.hostDefaults.enable {
     exfatprogs
     kexec-tools
     psmisc
-    sbctl
     smartmontools
     wget
     xfsprogs

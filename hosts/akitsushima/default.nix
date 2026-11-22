@@ -3,6 +3,22 @@
   ...
 }:
 
+let
+  mkRedroid = name: port: {
+    image = "docker.io/redroid/redroid:10.0.0-latest";
+    autoStart = true;
+    privileged = true;
+    ports = [ "127.0.0.1:${toString port}:5555" ];
+    volumes = [ "/var/lib/redroid/${name}:/data:rw" ];
+    cmd = [
+      "androidboot.redroid_width=1280"
+      "androidboot.redroid_height=720"
+      "androidboot.redroid_dpi=160"
+      "androidboot.use_memfd=true"
+      "androidboot.redroid_gpu_mode=host"
+    ];
+  };
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -48,8 +64,6 @@
     tuned.ppdSettings.main.default = lib.mkForce "throughput-performance";
   };
 
-  programs.dconf.enable = true;
-
   virtualisation.podman.enable = true;
 
   virtualisation.oci-containers.containers = {
@@ -62,42 +76,8 @@
         "/etc/localtime:/etc/localtime:ro"
       ];
     };
-    android1 = {
-      image = "docker.io/redroid/redroid:10.0.0-latest";
-      autoStart = true;
-      privileged = true;
-      ports = [
-        "127.0.0.1:5555:5555"
-      ];
-      volumes = [
-        "/var/lib/redroid/android1:/data:rw"
-      ];
-      cmd = [
-        "androidboot.redroid_width=1280"
-        "androidboot.redroid_height=720"
-        "androidboot.redroid_dpi=160"
-        "androidboot.use_memfd=true"
-        "androidboot.redroid_gpu_mode=host"
-      ];
-    };
-    android2 = {
-      image = "docker.io/redroid/redroid:10.0.0-latest";
-      autoStart = true;
-      privileged = true;
-      ports = [
-        "127.0.0.1:5556:5555"
-      ];
-      volumes = [
-        "/var/lib/redroid/android2:/data:rw"
-      ];
-      cmd = [
-        "androidboot.redroid_width=1280"
-        "androidboot.redroid_height=720"
-        "androidboot.redroid_dpi=160"
-        "androidboot.use_memfd=true"
-        "androidboot.redroid_gpu_mode=host"
-      ];
-    };
+    android1 = mkRedroid "android1" 5555;
+    android2 = mkRedroid "android2" 5556;
   };
 
   environment.persistence."/nix/persist".directories = [

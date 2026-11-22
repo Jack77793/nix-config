@@ -19,7 +19,6 @@ lib.mkIf config.custom.hostDefaults.enable {
   services.locate = {
     enable = true;
     output = "/var/lib/plocate/plocate.db";
-    package = pkgs.plocate;
     prunePaths = options.services.locate.prunePaths.default ++ [ "/home/.snapshots" ];
   };
 }

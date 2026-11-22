@@ -37,8 +37,6 @@
       };
     };
 
-    environment.systemPackages = with pkgs; [ vuetorrent ];
-
     environment.persistence."/nix/persist".directories = [
       config.services.qbittorrent.profileDir
     ];
