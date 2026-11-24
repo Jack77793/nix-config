@@ -111,6 +111,7 @@ lib.mkMerge [
         "musescore"
         "musicbrainz-picard"
         "neovide-app"
+        "netnewswire"
         "obs"
         "openinterminal-lite"
         "petrichor"
@@ -121,7 +122,6 @@ lib.mkMerge [
         "telegram-desktop"
         "thunderbird"
         "utm"
-        "vienna"
         "zotero"
       ];
     };

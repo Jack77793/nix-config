@@ -1,15 +1,10 @@
 let
-  overlay =
-    _final: prev:
-    {
-      anthropics-skills = prev.callPackage ./anthropics-skills { };
-      eisvogel-template = prev.callPackage ./eisvogel-template { };
-      humanizer = prev.callPackage ./humanizer { };
-      humanizer-zh = prev.callPackage ./humanizer-zh { };
-    }
-    // prev.lib.optionalAttrs prev.stdenv.hostPlatform.isLinux {
-      wechat = prev.callPackage ./wechat { };
-    };
+  overlay = _final: prev: {
+    anthropics-skills = prev.callPackage ./anthropics-skills { };
+    eisvogel-template = prev.callPackage ./eisvogel-template { };
+    humanizer = prev.callPackage ./humanizer { };
+    humanizer-zh = prev.callPackage ./humanizer-zh { };
+  };
 in
 {
   overlays = [ overlay ];

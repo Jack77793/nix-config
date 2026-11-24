@@ -11,6 +11,7 @@
     ./security
   ]
   ++ lib.optionals (_class == "nixos") [
+    ./hardening
     ./networking
     ./virtualization
   ];

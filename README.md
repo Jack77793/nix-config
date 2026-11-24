@@ -17,6 +17,7 @@ A personal Nix flake for NixOS and macOS (nix-darwin).
 │   ├── platform/          # Boot, hardware, storage, locale and Nix settings
 │   ├── networking/        # Network backends and services
 │   ├── security/          # Secrets, fingerprint authentication, GPG and KeePassXC
+│   ├── hardening/         # System hardening and application sandboxing
 │   ├── desktop/           # Desktop environment, fonts and peripherals
 │   ├── terminal/          # Shell, terminal emulators and CLI tools
 │   ├── development/       # Git, Neovim, Python and coding agents
